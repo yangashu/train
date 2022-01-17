@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.EctOutwarehouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.EctOutwarehouse">
+        <id column="OUTWAREHOUSE_ID" property="outwarehouseId" />
+        <result column="OUTWAREHOUSE_NUMBER" property="outwarehouseNumber" />
+        <result column="OUTWAREHOUSE_TIME" property="outwarehouseTime" />
+        <result column="CLASSES_ID" property="classesId" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="WAREHOUSE_ID" property="warehouseId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        OUTWAREHOUSE_ID, OUTWAREHOUSE_NUMBER, OUTWAREHOUSE_TIME, CLASSES_ID, STAFF_ID, STAFF_ID2, WAREHOUSE_ID, DELETED
+    </sql>
+
+</mapper>

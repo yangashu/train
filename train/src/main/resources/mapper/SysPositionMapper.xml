@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.SysPositionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.SysPosition">
+        <id column="POSITION_ID" property="positionId" />
+        <result column="POSITION_NAME" property="positionName" />
+        <result column="POSITION_CODE" property="positionCode" />
+        <result column="POSITION_REMARK" property="positionRemark" />
+        <result column="POSITION_CREATED" property="positionCreated" />
+        <result column="POSITION_UPDATED" property="positionUpdated" />
+        <result column="POSITION_STATE" property="positionState" />
+        <result column="DEPT_ID" property="deptId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        POSITION_ID, POSITION_NAME, POSITION_CODE, POSITION_REMARK, POSITION_CREATED, POSITION_UPDATED, POSITION_STATE, DEPT_ID, DELETED
+    </sql>
+
+</mapper>

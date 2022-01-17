@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.PersonalDraftMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.PersonalDraft">
+        <id column="DRAFT_ID" property="draftId" />
+        <result column="DRAFT_TITLE" property="draftTitle" />
+        <result column="DRAFT_CONTENT" property="draftContent" />
+        <result column="DRAFT_DATE" property="draftDate" />
+        <result column="STAFF_ID1" property="staffId1" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        DRAFT_ID, DRAFT_TITLE, DRAFT_CONTENT, DRAFT_DATE, STAFF_ID1, STAFF_ID2, DELETED
+    </sql>
+
+</mapper>

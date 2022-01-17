@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.RecruitStudentfilesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.RecruitStudentfiles">
+        <id column="STUDENTFILES_ID" property="studentfilesId" />
+        <result column="STUDENTFILES_NAME" property="studentfilesName" />
+        <result column="STUDENTFILES_SEX" property="studentfilesSex" />
+        <result column="STUDENTFILES_AGE" property="studentfilesAge" />
+        <result column="STUDENTFILES_BIRTHDAY" property="studentfilesBirthday" />
+        <result column="STUDENTFILES_PHONE" property="studentfilesPhone" />
+        <result column="PARENT_PHONE" property="parentPhone" />
+        <result column="STUDENTFILES_SCHOOL" property="studentfilesSchool" />
+        <result column="STUDENTFILES_LOC" property="studentfilesLoc" />
+        <result column="STUDENTFILES_REMARKS" property="studentfilesRemarks" />
+        <result column="CHANNEL_ID" property="channelId" />
+        <result column="STUDENTFILES_STATE" property="studentfilesState" />
+        <result column="COURSE_ID" property="courseId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        STUDENTFILES_ID, STUDENTFILES_NAME, STUDENTFILES_SEX, STUDENTFILES_AGE, STUDENTFILES_BIRTHDAY, STUDENTFILES_PHONE, PARENT_PHONE, STUDENTFILES_SCHOOL, STUDENTFILES_LOC, STUDENTFILES_REMARKS, CHANNEL_ID, STUDENTFILES_STATE, COURSE_ID, DELETED
+    </sql>
+
+</mapper>

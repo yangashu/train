@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.PersonalReceivingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.PersonalReceiving">
+        <id column="RECEIVING_ID" property="receivingId" />
+        <result column="RECEIVING_TITLE" property="receivingTitle" />
+        <result column="RECEIVING_CONTENT" property="receivingContent" />
+        <result column="RECEIVING_DATE" property="receivingDate" />
+        <result column="RECEIVING_STATE" property="receivingState" />
+        <result column="STAFF_ID1" property="staffId1" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        RECEIVING_ID, RECEIVING_TITLE, RECEIVING_CONTENT, RECEIVING_DATE, RECEIVING_STATE, STAFF_ID1, STAFF_ID2, DELETED
+    </sql>
+
+</mapper>

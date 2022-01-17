@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.SysMenu">
+        <id column="MENU_ID" property="menuId" />
+        <result column="MENU_PID" property="menuPid" />
+        <result column="MENU_NAME" property="menuName" />
+        <result column="MENU_URL" property="menuUrl" />
+        <result column="MENU_PERMS" property="menuPerms" />
+        <result column="MENU_COMPONENT" property="menuComponent" />
+        <result column="MENU_TYPE" property="menuType" />
+        <result column="MENU_ICON" property="menuIcon" />
+        <result column="MENU_ORDERNUM" property="menuOrdernum" />
+        <result column="MENU_CREATED" property="menuCreated" />
+        <result column="MENU_UPDATED" property="menuUpdated" />
+        <result column="MENU_STATE" property="menuState" />
+        <result column="MENU_DESCRIBE" property="menuDescribe" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        MENU_ID, MENU_PID, MENU_NAME, MENU_URL, MENU_PERMS, MENU_COMPONENT, MENU_TYPE, MENU_ICON, MENU_ORDERNUM, MENU_CREATED, MENU_UPDATED, MENU_STATE, MENU_DESCRIBE, DELETED
+    </sql>
+    <select id="selectPermsByStaffId" resultType="java.lang.String">
+        SELECT
+            DISTINCT m.menu_perms
+        FROM
+            SYS_STAFF_POSITION sp
+                LEFT JOIN SYS_POSITION p ON sp.POSITION_ID=p.POSITION_ID
+                LEFT JOIN SYS_POSITION_MENU pm ON sp.POSITION_ID=pm.POSITIONMENU_ID
+                LEFT JOIN SYS_MENU m ON pm.MENU_ID=m.MENU_ID
+        WHERE
+            STAFF_ID=#{staffid}
+          AND p.POSITION_STATE=0
+          AND m.MENU_TYPE=0
+    </select>
+
+</mapper>

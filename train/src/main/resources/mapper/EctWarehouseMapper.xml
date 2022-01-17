@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.EctWarehouseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.EctWarehouse">
+        <id column="WAREHOUSE_ID" property="warehouseId" />
+        <result column="WAREHOUSE_NAME" property="warehouseName" />
+        <result column="WAREHOUSE_NUMBER" property="warehouseNumber" />
+        <result column="WAREHOUSE_PRICE" property="warehousePrice" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        WAREHOUSE_ID, WAREHOUSE_NAME, WAREHOUSE_NUMBER, WAREHOUSE_PRICE, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

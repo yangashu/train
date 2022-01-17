@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.PersonalNotepadMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.PersonalNotepad">
+        <id column="NOTEPAD_ID" property="notepadId" />
+        <result column="NOTEPAD_THEME" property="notepadTheme" />
+        <result column="NOTEPAD_TYPE" property="notepadType" />
+        <result column="BEGIN_TIME" property="beginTime" />
+        <result column="END_TIME" property="endTime" />
+        <result column="NOTEPAD_PLACE" property="notepadPlace" />
+        <result column="NOTEPAD_CONTENT" property="notepadContent" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        NOTEPAD_ID, NOTEPAD_THEME, NOTEPAD_TYPE, BEGIN_TIME, END_TIME, NOTEPAD_PLACE, NOTEPAD_CONTENT, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

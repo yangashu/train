@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.RecruitStundentpunishMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.RecruitStundentpunish">
+        <id column="STUNDENTPUNISH_ID" property="stundentpunishId" />
+        <result column="STUNDENTPUNISH_GRADE" property="stundentpunishGrade" />
+        <result column="STUNDENTPUNISH_DATE" property="stundentpunishDate" />
+        <result column="STUNDENTPUNISH_REASON" property="stundentpunishReason" />
+        <result column="STUDENT_ID" property="studentId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        STUNDENTPUNISH_ID, STUNDENTPUNISH_GRADE, STUNDENTPUNISH_DATE, STUNDENTPUNISH_REASON, STUDENT_ID, DELETED
+    </sql>
+
+</mapper>

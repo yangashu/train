@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.CantonStaffapproveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.CantonStaffapprove">
+        <id column="APPROVE_ID" property="approveId" />
+        <result column="APPROVE_TYPE" property="approveType" />
+        <result column="APPROVE_REMARKS" property="approveRemarks" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        APPROVE_ID, APPROVE_TYPE, APPROVE_REMARKS, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

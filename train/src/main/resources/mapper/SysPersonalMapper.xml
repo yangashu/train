@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.SysPersonalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.SysPersonal">
+        <id column="PERSONAL_ID" property="personalId" />
+        <result column="PERSONAL_AVATAR" property="personalAvatar" />
+        <result column="PERSONAL_NAME" property="personalName" />
+        <result column="PERSONAL_SEX" property="personalSex" />
+        <result column="PERSONAL_AGE" property="personalAge" />
+        <result column="PERSONAL_BIRTHDAY" property="personalBirthday" />
+        <result column="PERSONAL_IDCARD" property="personalIdcard" />
+        <result column="PERSONAL_PHONE" property="personalPhone" />
+        <result column="PERSONAL_MAIL" property="personalMail" />
+        <result column="PERSONAL_EDUCATION" property="personalEducation" />
+        <result column="PERSONAL_NFAMILY" property="personalNfamily" />
+        <result column="PERSONAL_ADDRESS" property="personalAddress" />
+        <result column="PERSONAL_GRADUATION" property="personalGraduation" />
+        <result column="PERSONAL_EXPERIENCE" property="personalExperience" />
+        <result column="PERSONAL_MONNEY" property="personalMonney" />
+        <result column="PERSONAL_POSITION" property="personalPosition" />
+        <result column="PERSONAL_INTERVIEW" property="personalInterview" />
+        <result column="ENTRY_TIME" property="entryTime" />
+        <result column="PERSONAL_TYPE" property="personalType" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PERSONAL_ID, PERSONAL_AVATAR, PERSONAL_NAME, PERSONAL_SEX, PERSONAL_AGE, PERSONAL_BIRTHDAY, PERSONAL_IDCARD, PERSONAL_PHONE, PERSONAL_MAIL, PERSONAL_EDUCATION, PERSONAL_NFAMILY, PERSONAL_ADDRESS, PERSONAL_GRADUATION, PERSONAL_EXPERIENCE, PERSONAL_MONNEY, PERSONAL_POSITION, PERSONAL_INTERVIEW, ENTRY_TIME, PERSONAL_TYPE, DELETED
+    </sql>
+
+</mapper>

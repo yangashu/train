@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.EctTeachingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.EctTeaching">
+        <id column="TEACHING_ID" property="teachingId" />
+        <result column="BEGIN_DATE" property="beginDate" />
+        <result column="END_TIME" property="endTime" />
+        <result column="CLASSES_STATE" property="classesState" />
+        <result column="CLASSES_ID" property="classesId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        TEACHING_ID, BEGIN_DATE, END_TIME, CLASSES_STATE, CLASSES_ID, DELETED
+    </sql>
+
+</mapper>

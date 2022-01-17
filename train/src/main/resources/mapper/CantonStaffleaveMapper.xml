@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.CantonStaffleaveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.CantonStaffleave">
+        <id column="LEAVE_ID" property="leaveId" />
+        <result column="LEAVE_CONTENT" property="leaveContent" />
+        <result column="BEGIN_TIME" property="beginTime" />
+        <result column="END_TIME" property="endTime" />
+        <result column="LEAVE_STATE" property="leaveState" />
+        <result column="STAFF_ID1" property="staffId1" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        LEAVE_ID, LEAVE_CONTENT, BEGIN_TIME, END_TIME, LEAVE_STATE, STAFF_ID1, STAFF_ID2, DELETED
+    </sql>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.FinancePurchaseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.FinancePurchase">
+        <id column="PURCHASE_ID" property="purchaseId" />
+        <result column="PURCHASE_NAME" property="purchaseName" />
+        <result column="PURCHASE_REMARKS" property="purchaseRemarks" />
+        <result column="PURCHASE_NUMBER" property="purchaseNumber" />
+        <result column="PURCHASE_PRICE" property="purchasePrice" />
+        <result column="PURCHASE_AOUNT" property="purchaseAount" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="COURSE_ID" property="courseId" />
+        <result column="PURCHASE_DATE" property="purchaseDate" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PURCHASE_ID, PURCHASE_NAME, PURCHASE_REMARKS, PURCHASE_NUMBER, PURCHASE_PRICE, PURCHASE_AOUNT, STAFF_ID, COURSE_ID, PURCHASE_DATE, DELETED
+    </sql>
+
+</mapper>

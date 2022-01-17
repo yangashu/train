@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.EctRefundMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.EctRefund">
+        <id column="REFUND_ID" property="refundId" />
+        <result column="REFUND_DATE" property="refundDate" />
+        <result column="REFUND_MONEY" property="refundMoney" />
+        <result column="REFUND_STATE" property="refundState" />
+        <result column="LEAVESCHOOL_ID" property="leaveschoolId" />
+        <result column="CLASSRECORD_ID" property="classrecordId" />
+        <result column="COURSE_ID" property="courseId" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        REFUND_ID, REFUND_DATE, REFUND_MONEY, REFUND_STATE, LEAVESCHOOL_ID, CLASSRECORD_ID, COURSE_ID, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.RecruitFollowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.RecruitFollow">
+        <id column="FOLLOW_ID" property="followId" />
+        <result column="FOLLOW_CONTENT" property="followContent" />
+        <result column="FOLLOW_DATE" property="followDate" />
+        <result column="STUDENTFILES_ID" property="studentfilesId" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        FOLLOW_ID, FOLLOW_CONTENT, FOLLOW_DATE, STUDENTFILES_ID, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

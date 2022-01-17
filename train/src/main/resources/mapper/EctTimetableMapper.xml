@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.EctTimetableMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.EctTimetable">
+        <id column="TIMETABLE_ID" property="timetableId" />
+        <result column="TIMETABLE_MORNING" property="timetableMorning" />
+        <result column="TIMETABLE_AFTERNOON" property="timetableAfternoon" />
+        <result column="TIMETABLE_TIME" property="timetableTime" />
+        <result column="TIMETABLE_MORNINGEND" property="timetableMorningend" />
+        <result column="TIMETABLE_AFTERNOONSTART" property="timetableAfternoonstart" />
+        <result column="TIMETABLE_AFTERNOONEND" property="timetableAfternoonend" />
+        <result column="TIMETABLE_DATE" property="timetableDate" />
+        <result column="TIMETABLE_STATE" property="timetableState" />
+        <result column="CLASSES_ID" property="classesId" />
+        <result column="TEACHING_ID" property="teachingId" />
+        <result column="STAFF_ID1" property="staffId1" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        TIMETABLE_ID, TIMETABLE_MORNING, TIMETABLE_AFTERNOON, TIMETABLE_TIME, TIMETABLE_MORNINGEND, TIMETABLE_AFTERNOONSTART, TIMETABLE_AFTERNOONEND, TIMETABLE_DATE, TIMETABLE_STATE, CLASSES_ID, TEACHING_ID, STAFF_ID1, STAFF_ID2, DELETED
+    </sql>
+
+</mapper>

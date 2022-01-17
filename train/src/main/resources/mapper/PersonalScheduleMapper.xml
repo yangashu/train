@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.PersonalScheduleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.PersonalSchedule">
+        <id column="SCHEDULE_ID" property="scheduleId" />
+        <result column="SCHEDULE_THEME" property="scheduleTheme" />
+        <result column="SCHEDULE_TYPE" property="scheduleType" />
+        <result column="BEGIN_TIME" property="beginTime" />
+        <result column="END_TIME" property="endTime" />
+        <result column="SCHEDULE_PLACE" property="schedulePlace" />
+        <result column="SCHEDULE_CONTENT" property="scheduleContent" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        SCHEDULE_ID, SCHEDULE_THEME, SCHEDULE_TYPE, BEGIN_TIME, END_TIME, SCHEDULE_PLACE, SCHEDULE_CONTENT, STAFF_ID, DELETED
+    </sql>
+
+</mapper>

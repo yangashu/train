@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.PersonalSendMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.PersonalSend">
+        <id column="SEND_ID" property="sendId" />
+        <result column="SEND_TITLE" property="sendTitle" />
+        <result column="SEND_CONTENT" property="sendContent" />
+        <result column="SEND_DATE" property="sendDate" />
+        <result column="STAFF_ID1" property="staffId1" />
+        <result column="STAFF_ID2" property="staffId2" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        SEND_ID, SEND_TITLE, SEND_CONTENT, SEND_DATE, STAFF_ID1, STAFF_ID2, DELETED
+    </sql>
+
+</mapper>

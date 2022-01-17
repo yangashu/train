@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.FinancePayMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.FinancePay">
+        <id column="PAYMONEY_ID" property="paymoneyId" />
+        <result column="PAYMONEY_MONEY" property="paymoneyMoney" />
+        <result column="PAYMONEY_DATE" property="paymoneyDate" />
+        <result column="PAYMONEY_MODE" property="paymoneyMode" />
+        <result column="COURSE_ID" property="courseId" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="STUDENT_ID" property="studentId" />
+        <result column="INCOME_STATE" property="incomeState" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PAYMONEY_ID, PAYMONEY_MONEY, PAYMONEY_DATE, PAYMONEY_MODE, COURSE_ID, STAFF_ID, STUDENT_ID, INCOME_STATE, DELETED
+    </sql>
+
+</mapper>

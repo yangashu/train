@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trkj.train.mapper.FinanceExpenditureMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.trkj.train.entity.FinanceExpenditure">
+        <id column="EXPENDITURE_ID" property="expenditureId" />
+        <result column="EXPENDITURE_MONEY" property="expenditureMoney" />
+        <result column="EXPENDITURE_DATE" property="expenditureDate" />
+        <result column="PURCHASE_ID" property="purchaseId" />
+        <result column="REFUND_ID" property="refundId" />
+        <result column="PAYAPPROVAL_STATE" property="payapprovalState" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        EXPENDITURE_ID, EXPENDITURE_MONEY, EXPENDITURE_DATE, PURCHASE_ID, REFUND_ID, PAYAPPROVAL_STATE, STAFF_ID, DELETED
+    </sql>
+
+</mapper>
