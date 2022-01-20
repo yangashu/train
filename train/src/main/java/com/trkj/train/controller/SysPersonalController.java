@@ -1,9 +1,10 @@
 package com.trkj.train.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.trkj.train.config.Result;
+import com.trkj.train.service.ISysPersonalService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>

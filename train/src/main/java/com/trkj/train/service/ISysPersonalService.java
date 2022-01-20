@@ -1,5 +1,6 @@
 package com.trkj.train.service;
 
+import com.trkj.train.config.Result;
 import com.trkj.train.entity.SysPersonal;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface ISysPersonalService extends IService<SysPersonal> {
+
 
 }

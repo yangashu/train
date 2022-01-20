@@ -17,5 +17,8 @@
     <sql id="Base_Column_List">
         STAFF_ID, STAFF_NAME, STAFF_PASS, STAFF_STATE, STAFF_TIME, PERSONAL_ID, DELETED
     </sql>
+    <select id="findByid" resultType="com.trkj.train.entity.SysStaff">
+        select * from sys_staff s left join sys_personal p on s.personal_id=p.personal_id where s.staff_id=#{id}
+    </select>
 
 </mapper>

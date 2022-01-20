@@ -1,10 +1,12 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.util.ArrayList;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,11 +26,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("SYS_POSITION")
 @ApiModel(value="SysPosition对象", description="")
+@KeySequence(value = "position_seq")
 public class SysPosition implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("POSITION_ID")
+    @TableId(value = "POSITION_ID",type = IdType.INPUT)
     private Integer positionId;
 
     @TableField("POSITION_NAME")
@@ -54,6 +57,12 @@ public class SysPosition implements Serializable {
 
     @TableField("DELETED")
     private Integer deleted;
+
+    @TableField(exist = false)
+    private List<SysDept> depts=new ArrayList<>();
+
+    @TableField(exist = false)
+    private List<Integer> menus = new ArrayList<>();
 
 
 }

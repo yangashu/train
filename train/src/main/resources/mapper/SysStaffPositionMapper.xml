@@ -15,4 +15,51 @@
         STAFFPOSITION_ID, STAFF_ID, POSITION_ID, DELETED
     </sql>
 
+    <!--<insert id="insertBatch" parameterType="java.util.List">
+        　　insert into sys_staff_position (
+        　　　　staffPosition_id,
+        　　　　staff_id,
+        　　　　position_id
+        　　)
+        values
+        　　<foreach collection="list" item="item" index="index" separator=",">
+        　　　(position_menu_seq.nextval,
+        　　　　#{item.staffId, jdbcType = NUMERIC},
+        　　　　#{item.positionId, jdbcType = NUMERIC}
+        )
+        　　</foreach>
+
+    </insert>-->
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        　　insert into sys_staff_position (
+        　　　　staffPosition_id,
+        　　　　staff_id,
+        　　　　position_id
+        )
+        select position_menu_seq.nextval,A.* from(
+        　　<foreach collection="list" item="item" index="index" separator="UNION ALL">
+            select
+        　　　　#{item.staffId, jdbcType = NUMERIC},
+        　　　　#{item.positionId, jdbcType = NUMERIC}
+        from dual
+        　　</foreach>
+        ) A
+    </insert>
+
+    <delete id="deleteByStaffId">
+        delete from sys_staff_position where staff_id=#{staffId,jdbcType=NUMERIC}
+    </delete>
+
+    <select id="selectBystaffid" resultType="com.trkj.train.entity.SysPosition">
+        select
+            DISTINCT	p.*
+        from
+            sys_STAFF_POSITION sp
+                LEFT JOIN sys_POSITION p on sp.POSITION_ID=p.POSITION_ID
+                LEFT JOIN SYS_STAFF s on sp.STAFF_ID=s.STAFF_ID
+        WHERE
+            s.STAFF_ID=#{staffid}
+    </select>
+
 </mapper>

@@ -1,6 +1,10 @@
 package com.trkj.train.controller;
 
 
+import com.trkj.train.config.Result;
+import com.trkj.train.service.ISysDeptService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sys-dept")
 public class SysDeptController {
-
+    @Autowired
+    private ISysDeptService service;
+    @GetMapping("/list")
+    public Result list(){
+        return Result.success(service.list());
+    }
 }
