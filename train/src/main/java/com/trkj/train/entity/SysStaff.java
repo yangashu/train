@@ -26,11 +26,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("SYS_STAFF")
 @ApiModel(value="SysStaff对象", description="")
+@KeySequence(value = "staff_seq")
 public class SysStaff implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("STAFF_ID")
+    @TableId(value = "STAFF_ID",type = IdType.INPUT)
     private Integer staffId;
 
     @TableField("STAFF_NAME")

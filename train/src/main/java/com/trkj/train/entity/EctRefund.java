@@ -1,9 +1,8 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,11 +23,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("ECT_REFUND")
 @ApiModel(value="EctRefund对象", description="")
+@KeySequence(value = "refund_seq")
 public class EctRefund implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("REFUND_ID")
+    @TableId(value = "REFUND_ID",type = IdType.INPUT)
     private Integer refundId;
 
     @TableField("REFUND_DATE")

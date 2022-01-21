@@ -1,5 +1,6 @@
 package com.trkj.train.entity;
 
+import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -24,6 +25,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("ECT_LEAVERECORD")
 @ApiModel(value="EctLeaverecord对象", description="")
+@KeySequence(value = "satffsign_seq")
 public class EctLeaverecord implements Serializable {
 
     private static final long serialVersionUID = 1L;

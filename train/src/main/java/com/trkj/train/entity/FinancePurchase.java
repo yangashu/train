@@ -1,9 +1,8 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,11 +23,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("FINANCE_PURCHASE")
 @ApiModel(value="FinancePurchase对象", description="")
+@KeySequence(value = "purchase_seq")
 public class FinancePurchase implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("PURCHASE_ID")
+    @TableId(value = "PURCHASE_ID",type = IdType.INPUT)
     private Integer purchaseId;
 
     @TableField("PURCHASE_NAME")

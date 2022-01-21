@@ -1,9 +1,8 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,11 +23,12 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("SYS_DEPT")
 @ApiModel(value="SysDept对象", description="")
+@KeySequence(value = "dept_seq")
 public class SysDept implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("DEPT_ID")
+    @TableId(value = "DEPT_ID",type = IdType.INPUT)
     private Integer deptId;
 
     @TableField("DEPT_NAME")
