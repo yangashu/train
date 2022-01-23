@@ -1,7 +1,10 @@
 package com.trkj.train.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.entity.FinancePay;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface FinancePayMapper extends BaseMapper<FinancePay> {
 
+    int saveAll(FinancePay item);
 }

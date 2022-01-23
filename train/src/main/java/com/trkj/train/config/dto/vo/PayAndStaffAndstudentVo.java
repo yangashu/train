@@ -1,42 +1,34 @@
-package com.trkj.train.entity;
+package com.trkj.train.config.dto.vo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
 import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.util.Date;
-import java.io.Serializable;
+import com.trkj.train.entity.RecruitStudent;
+import com.trkj.train.entity.SysStaff;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.util.Date;
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 沈杨卓
- * @since 2022-01-17
+ * @since 2022-01-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("FINANCE_PAY")
-@ApiModel(value="FinancePay对象", description="")
-@KeySequence(value = "pay_seq")
-@ExcelTarget("FinancePays")
-public class FinancePay implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @ExcelIgnore
-    @TableId(value = "PAYMONEY_ID",type = IdType.INPUT)
-    private Integer paymoneyId;
-
+@ApiModel(value="PayAndStaffAndstudentVo对象", description="")
+@ExcelTarget("学员退费")
+public class PayAndStaffAndstudentVo implements Serializable {
     @Excel(name = "缴费金额",suffix = " ￥")
     @TableField("PAYMONEY_MONEY")
     private Integer paymoneyMoney;
@@ -49,33 +41,16 @@ public class FinancePay implements Serializable {
     @TableField("PAYMONEY_MODE")
     private String paymoneyMode;
 
-    @ExcelIgnore
-    @TableField("COURSE_ID")
-    private Integer courseId;
-
-    @ExcelIgnore
-    @TableField("STAFF_ID")
-    private Integer staffId;
-
-    @ExcelIgnore
-    @TableField("STUDENT_ID")
-    private Integer studentId;
-
     @Excel(name = "交易状态",replace = {"已到账_0","未到账_1"})
     @TableField("INCOME_STATE")
     private Integer incomeState;
 
-    @ExcelIgnore
-    @TableField("DELETED")
-    private Integer deleted;
 
+    @Excel(name = "录入人")
+    @TableField("STAFF_NAME")
+    private String staffName;
 
-    @ExcelEntity
-    @TableField(exist = false)
-    private SysStaff staff;
-
-    @ExcelEntity
-    @TableField(exist = false)
-    private RecruitStudent student;
-
+    @Excel(name = "缴费学员")
+    @TableField("STUDENT_NAME")
+    private String studentName;
 }

@@ -19,5 +19,18 @@
     <sql id="Base_Column_List">
         PAYMONEY_ID, PAYMONEY_MONEY, PAYMONEY_DATE, PAYMONEY_MODE, COURSE_ID, STAFF_ID, STUDENT_ID, INCOME_STATE, DELETED
     </sql>
+    <insert id="saveAll">
+        insert into finance_pay values (
+                                         pay_seq.nextval,
+                                          #{paymoneyMoney},
+                                       #{paymoneyDate},
+                                       #{paymoneyMode},
+                                       #{courseId},
+                                       #{staffId},
+                                       #{studentId},
+                                       #{incomeState},
+                                       #{deleted}
+                                       )
+    </insert>
 
 </mapper>
