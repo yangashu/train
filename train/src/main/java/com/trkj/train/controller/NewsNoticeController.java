@@ -1,6 +1,9 @@
 package com.trkj.train.controller;
 
 
+import com.trkj.train.service.INewsNoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/news-notice")
 public class NewsNoticeController {
+    @Autowired
+    private INewsNoticeService service;
+
+    @GetMapping("/one")
+    public int one(){
+        return service.one();
+    }
 
 }

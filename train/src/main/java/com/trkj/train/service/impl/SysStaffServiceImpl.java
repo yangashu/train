@@ -9,6 +9,7 @@ import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.SysPosition;
 import com.trkj.train.entity.SysStaff;
 import com.trkj.train.entity.SysStaffPosition;
+import com.trkj.train.entity.vo.staffAndPersonal;
 import com.trkj.train.mapper.SysPersonalMapper;
 import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.mapper.SysStaffPositionMapper;
@@ -135,4 +136,134 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         }
         return Result.error("-1","操作失败,该数据可能已被移除！！！");
     }
+
+    @Override
+    public IPage<staffAndPersonal> two(int page, int size) {
+        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),null);
+        List<staffAndPersonal> list=new ArrayList<>();
+        IPage<staffAndPersonal> iPage1=new Page<>();
+        for (int i=0;i<iPage0.getRecords().size();i++){
+            SysStaff s=iPage0.getRecords().get(i);
+            SysPersonal p=personalMapper.selectOne(new QueryWrapper<SysPersonal>().eq("personal_id",s.getPersonalId()));
+            staffAndPersonal sap=new staffAndPersonal();
+            sap.setStaffId(s.getStaffId());
+            sap.setStaffName(s.getStaffName());
+            sap.setStaffPass(s.getStaffPass());
+            sap.setStaffState(s.getStaffState());
+            sap.setPersonalId(p.getPersonalId());
+            sap.setPersonalName(p.getPersonalName());
+            sap.setPersonalSex(p.getPersonalSex());
+            sap.setPersonalAge(p.getPersonalAge());
+            sap.setPersonalBirthday(p.getPersonalBirthday());
+            sap.setPersonalIdcard(p.getPersonalIdcard());
+            sap.setPersonalPhone(p.getPersonalPhone());
+            sap.setPersonalMail(p.getPersonalMail());
+            sap.setPersonalEducation(p.getPersonalEducation());
+            sap.setPersonalNfamily(p.getPersonalNfamily());
+            sap.setPersonalGraduation(p.getPersonalGraduation());
+            sap.setPersonalExperience(p.getPersonalExperience());
+            sap.setPersonalAddress(p.getPersonalAddress());
+            sap.setPersonalPosition(p.getPersonalPosition());
+            sap.setPersonalInterview(p.getPersonalInterview());
+            sap.setEntryTime(p.getEntryTime());
+            list.add(sap);
+        }
+        iPage1.setRecords(list);
+        iPage1.setPages(iPage0.getPages());
+        iPage1.setTotal(iPage0.getTotal());
+        iPage1.setCurrent(iPage0.getCurrent());
+        iPage1.setSize(iPage0.getSize());
+        return iPage1;
+    }
+
+    //分页模糊查询
+    @Override
+    public IPage<staffAndPersonal> five(Page page, String like) {
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.like("personal_name",like);
+        IPage<SysPersonal> iPage0=personalMapper.selectPage(page,queryWrapper);
+        List<staffAndPersonal> list=new ArrayList<>();
+        IPage<staffAndPersonal> iPage1=new Page<>();
+        for (int i=0;i<iPage0.getRecords().size();i++){
+            SysPersonal p=iPage0.getRecords().get(i);
+            SysStaff s=mapper.selectOne(new QueryWrapper<SysStaff>().eq("personal_id",p.getPersonalId()));
+            staffAndPersonal sap=new staffAndPersonal();
+            sap.setStaffId(s.getStaffId());
+            sap.setStaffName(s.getStaffName());
+            sap.setStaffPass(s.getStaffPass());
+            sap.setStaffState(s.getStaffState());
+            sap.setPersonalId(p.getPersonalId());
+            sap.setPersonalName(p.getPersonalName());
+            sap.setPersonalSex(p.getPersonalSex());
+            sap.setPersonalAge(p.getPersonalAge());
+            sap.setPersonalBirthday(p.getPersonalBirthday());
+            sap.setPersonalIdcard(p.getPersonalIdcard());
+            sap.setPersonalPhone(p.getPersonalPhone());
+            sap.setPersonalMail(p.getPersonalMail());
+            sap.setPersonalEducation(p.getPersonalEducation());
+            sap.setPersonalNfamily(p.getPersonalNfamily());
+            sap.setPersonalGraduation(p.getPersonalGraduation());
+            sap.setPersonalExperience(p.getPersonalExperience());
+            sap.setPersonalAddress(p.getPersonalAddress());
+            sap.setPersonalPosition(p.getPersonalPosition());
+            sap.setPersonalInterview(p.getPersonalInterview());
+            sap.setEntryTime(p.getEntryTime());
+            list.add(sap);
+        }
+        iPage1.setRecords(list);
+        iPage1.setPages(iPage0.getPages());
+        iPage1.setTotal(iPage0.getTotal());
+        iPage1.setCurrent(iPage0.getCurrent());
+        iPage1.setSize(iPage0.getSize());
+        return iPage1;
+    }
+
+    //辞退员工
+    @Override
+    public int three(int staffId) {
+        SysStaff s=mapper.selectById(staffId);
+        s.setStaffState(1);
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.eq("personal_id",s.getPersonalId());
+        SysPersonal p=personalMapper.selectOne(queryWrapper);
+        p.setPersonalType(2);
+        int i=personalMapper.updateById(p);
+        return mapper.updateById(s);
+    }
+
+    //修改员工
+    @Override
+    public int six(staffAndPersonal sap) {
+        SysPersonal p=new SysPersonal();
+        p.setPersonalId(sap.getPersonalId());
+        p.setPersonalName(sap.getPersonalName());
+        p.setPersonalAddress(sap.getPersonalAddress());
+        p.setPersonalPhone(sap.getPersonalPhone());
+        p.setPersonalAge(sap.getPersonalAge());
+        p.setPersonalBirthday(sap.getPersonalBirthday());
+        p.setPersonalAvatar(sap.getPersonalAvatar());
+        p.setPersonalExperience(sap.getPersonalExperience());
+        p.setPersonalIdcard(sap.getPersonalIdcard());
+        p.setPersonalGraduation(sap.getPersonalGraduation());
+        p.setPersonalSex(sap.getPersonalSex());
+        p.setPersonalInterview(sap.getPersonalInterview());
+        p.setPersonalEducation(sap.getPersonalEducation());
+        p.setPersonalNfamily(sap.getPersonalNfamily());
+        int i=personalMapper.updateById(p);
+        return i;
+    }
+
+    //恢复员工
+    @Override
+    public int four(int staffId) {
+        SysStaff s=mapper.selectById(staffId);
+        s.setStaffState(0);
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.eq("personal_id",s.getPersonalId());
+        SysPersonal p=personalMapper.selectOne(queryWrapper);
+        p.setPersonalType(1);
+        int i=personalMapper.updateById(p);
+        return mapper.updateById(s);
+    }
+
 }

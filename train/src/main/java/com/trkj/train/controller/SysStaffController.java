@@ -1,10 +1,12 @@
 package com.trkj.train.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
 import com.trkj.train.entity.SysStaff;
+import com.trkj.train.entity.vo.staffAndPersonal;
 import com.trkj.train.service.ISysPersonalService;
 import com.trkj.train.service.ISysStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,40 @@ public class SysStaffController {
     @PostMapping("/deleteBatchIds")
     public Result<?> deleteBatchIds(@RequestBody List<Integer> ids) {
         return service.deleteBatchIds(ids);
+    }
+
+
+    //林文政分页
+    @GetMapping("/two")
+    public IPage<staffAndPersonal> two(@RequestParam("currentPage") int page, @RequestParam("pagesize") int size){
+        return service.two(page, size);
+    }
+
+    //模糊查询
+    @GetMapping("five")
+    public IPage<staffAndPersonal> five(@RequestParam("currentPage") int page,@RequestParam("pagesize") int size,@RequestParam("like") String like){
+        return service.five(new Page(page,size),like);
+    }
+
+    //员工辞退方法
+    @GetMapping("/three")
+    public Result<?> three(@RequestParam("staffId") int staffId){
+        int i= service.three(staffId);
+        return Result.success(i);
+    }
+
+    //修改员工资料
+    @PostMapping("/six")
+    public Result<?> six(@RequestBody staffAndPersonal sap){
+        System.out.println("关键输出："+sap.getPersonalBirthday().toLocaleString());
+        int i=service.six(sap);
+        return Result.success(i);
+    }
+
+    //员工恢复方法
+    @GetMapping("/four")
+    public Result<?> four(@RequestParam("staffId") int staffId){
+        int i= service.four(staffId);
+        return Result.success(i);
     }
 }

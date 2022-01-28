@@ -1,7 +1,10 @@
 package com.trkj.train.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.trkj.train.entity.EctStudentattend;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IEctStudentattendService extends IService<EctStudentattend> {
 
+    public List<EctStudentattend> one(QueryWrapper<EctStudentattend> queryWrapper);
 }

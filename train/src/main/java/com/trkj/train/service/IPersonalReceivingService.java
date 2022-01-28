@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IPersonalReceivingService extends IService<PersonalReceiving> {
-
+    public int one();
 }

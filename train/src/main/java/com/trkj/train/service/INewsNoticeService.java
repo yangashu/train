@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface INewsNoticeService extends IService<NewsNotice> {
-
+    public int one();
 }

@@ -4,6 +4,7 @@ import com.trkj.train.entity.EctClasses;
 import com.trkj.train.mapper.EctClassesMapper;
 import com.trkj.train.service.IEctClassesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClasses> implements IEctClassesService {
 
+    @Autowired
+    private EctClassesMapper classesMapper;
+
+    @Override
+    public int one() {
+        return classesMapper.selectList(null).size();
+    }
 }
