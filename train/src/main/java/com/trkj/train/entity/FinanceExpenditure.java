@@ -52,5 +52,16 @@ public class FinanceExpenditure implements Serializable {
     @TableField("DELETED")
     private Integer deleted;
 
+    @TableField("REMARKS")
+    private Integer remarks;
+
+    @TableField("EXPENDITURE_MODE")
+    private Integer expenditureMode;
+
+    @TableField("PURPOSE")
+    private Integer purpose;
+
+    @TableField("DRAWING")
+    private Integer drawing;
 
 }

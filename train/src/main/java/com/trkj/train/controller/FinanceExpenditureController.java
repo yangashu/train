@@ -1,9 +1,13 @@
 package com.trkj.train.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.trkj.train.config.Result;
+import com.trkj.train.service.IFinanceExpenditureService;
+import com.trkj.train.service.IFinancePayService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/finance-expenditure")
 public class FinanceExpenditureController {
 
+    @Autowired
+    private IFinanceExpenditureService iFinanceExpenditureService;
+
+    @PostMapping("/paging")
+    public Result list(@RequestBody Map<String,Object> map){
+        return iFinanceExpenditureService.paging(map);
+    }
 }

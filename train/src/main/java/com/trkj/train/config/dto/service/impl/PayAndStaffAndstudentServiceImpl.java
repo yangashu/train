@@ -24,14 +24,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAndstudentVoMapper, PayAndStaffAndstudentVo> implements IPayAndStaffAndstudentService {
@@ -40,16 +40,37 @@ public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAnd
     @Autowired
     private FinancePayMapper payMapper;
     @Override
-    public Result paging(IPage page, String search) {
+    public Result paging(Map<String,Object> map) {
+        Paging paging = JSON.parseObject(JSON.toJSONString(map.get("Paging")), Paging.class);
+        String state = JSON.parseObject(JSON.toJSONString(map.get("state")), String.class);
+        Date data =JSON.parseObject(JSON.toJSONString(map.get("data")), Date.class);
+        Date data1 =JSON.parseObject(JSON.toJSONString(map.get("data1")), Date.class);
         QueryWrapper<PayAndStaffAndstudentVo> wrapper=new QueryWrapper<>();
-        wrapper.like("s.staff_name",search).or()
-                .like("stu.student_name",search).or()
-                .like("p.payMoney_date",search).or()
-                .like("p.payMoney_mode",search).or();
-//                .like()
-        IPage<PayAndStaffAndstudentVo> paging = mapper.paging(page, wrapper);
-        if (!StringUtils.isEmpty(paging.getRecords())){
-            return Result.success("200",null,paging);
+        if(!StringUtils.isEmpty(state)){
+            if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(data1)){
+                wrapper.eq("p.income_state",state).and(i->i.like("stu.student_name",paging.getSearch())
+                .between("p.paymoney_date",data,data1));
+            }else{
+                wrapper.eq("p.income_state",state).and(i->i.like("stu.student_name",paging.getSearch()));
+            }
+        }else if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(data1)){
+            if(!StringUtils.isEmpty(state)){
+                wrapper.between("p.paymoney_date",data,data1).and(i->i.like("stu.student_name",paging.getSearch())
+                        .eq("p.income_state",state));
+            }else{
+                wrapper.between("p.paymoney_date",data,data1).and(i->i.like("stu.student_name",paging.getSearch()));
+            }
+
+        }else{
+            wrapper.like("s.staff_name",paging.getSearch()).or()
+                    .like("stu.student_name",paging.getSearch()).or()
+                    .like("p.payMoney_date",paging.getSearch()).or()
+                    .like("p.payMoney_mode",paging.getSearch()).or();
+        }
+
+        IPage<PayAndStaffAndstudentVo> paging1 = mapper.paging(new Page(paging.getCurrentPage(),paging.getPageSize()), wrapper);
+        if (!StringUtils.isEmpty(paging1.getRecords())){
+            return Result.success("200",null,paging1);
         }
         return Result.error("-1","没有查到你想要的数据");
     }

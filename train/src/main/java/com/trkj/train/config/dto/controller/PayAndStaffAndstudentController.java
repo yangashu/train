@@ -20,12 +20,11 @@ public class PayAndStaffAndstudentController implements Serializable {
     @Autowired
     private IPayAndStaffAndstudentService service;
 
-    @GetMapping("/paging")
-    public Result paging(@RequestParam(defaultValue = "1") int current,
-                         @RequestParam(defaultValue = "1") int pagesize,
-                         @RequestParam(defaultValue = "") String search){
-        return service.paging(new Page(current,pagesize),search);
+    @PostMapping("/paging")
+    public Result paging(@RequestBody Map<String,Object> map){
+        return service.paging(map);
     }
+
     //    导入
     @PostMapping("/import")
     private Result importExcel(@RequestParam("file") MultipartFile excelFile) throws Exception{
