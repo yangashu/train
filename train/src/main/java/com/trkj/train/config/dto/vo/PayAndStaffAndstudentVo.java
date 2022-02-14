@@ -29,6 +29,9 @@ import java.util.Date;
 @ApiModel(value="PayAndStaffAndstudentVo对象", description="")
 @ExcelTarget("学员退费")
 public class PayAndStaffAndstudentVo implements Serializable {
+    @TableId("PAYMONEY_ID")
+    private Integer paymoneyId;
+
     @Excel(name = "缴费金额",suffix = " ￥")
     @TableField("PAYMONEY_MONEY")
     private Integer paymoneyMoney;

@@ -23,11 +23,14 @@ import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -123,4 +126,45 @@ public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAnd
 
             return Result.success("200","导入成功！！！",null);
     }
+
+    //审核通过
+    @Transactional
+    @Override
+    public Result updateBatchbyid(List<Integer> ids) {
+
+        int i=0;
+        for (Integer id : ids) {
+           int x = mapper.updatebyid(id);
+            if(x>0){
+                i++;
+            }
+        }
+        if (ids.size()==i){
+            return Result.success("200","操作成功！！！",null);
+        }else{
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return Result.error("-1","操作有误！！！");
+        }
+    }
+
+    // 根据id导出
+    @Override
+    public Result exportByid(HttpServletResponse response, int id) throws Exception {
+        List<PayAndStaffAndstudentVo> selectbyid = mapper.selectbyid(id);
+        UUID uuid = UUID.randomUUID();
+        Workbook workbook= ExcelExportUtil.exportExcel(new ExportParams("个人报名缴费",selectbyid.get(0).getStudentName()+"报名缴费信息")
+                ,PayAndStaffAndstudentVo.class,selectbyid);
+//        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode("用户列表.xls","UTF-8"));
+//        D:/我的学习软件/Git-2.34.1-64-bit/project/train/src/main/resources/
+       String stuname=workbook.getSheetName(0);
+        FileOutputStream outputStream=new FileOutputStream("D:/我的学习软件/Git-2.34.1-64-bit/project/train/src/main/resources/export/"+stuname+".xls");
+//        System.out.println(outputStream);
+//        ServletOutputStream outputStream= response.getOutputStream();
+        workbook.write(outputStream);
+        outputStream.close();
+        workbook.close();
+        return Result.success("200","导出成功了",null);
+    }
+
+
 }

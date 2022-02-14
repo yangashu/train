@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,5 +36,17 @@ public class PayAndStaffAndstudentController implements Serializable {
     @RequestMapping("/export")
     public Result export(HttpServletResponse response,@RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
+    }
+
+    //    根据id导出
+    @RequestMapping("/exportByid")
+    public Result exportByid(HttpServletResponse response,@RequestBody int id) throws Exception{
+        return service.exportByid(response,id);
+    }
+
+    //审核通过
+    @PutMapping("/update")
+    public Result update(@RequestBody List<Integer> ids){
+        return service.updateBatchbyid(ids);
     }
 }

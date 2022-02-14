@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
 
 public interface IPayAndStaffAndstudentService  extends IService<PayAndStaffAndstudentVo> {
@@ -19,4 +21,8 @@ public interface IPayAndStaffAndstudentService  extends IService<PayAndStaffAnds
     Result export(HttpServletResponse response, Paging paging) throws Exception;
 
     Result saveAll(MultipartFile excelFile) throws Exception;
+
+    Result updateBatchbyid(List<Integer> ids);
+
+    Result exportByid(HttpServletResponse response, int id) throws Exception;
 }
