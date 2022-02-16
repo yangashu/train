@@ -1,10 +1,17 @@
 package com.trkj.train.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
+import com.trkj.train.config.dto.domain.Paging;
+import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import com.trkj.train.entity.CantonSatffsign;
+import com.trkj.train.entity.FinancePay;
 import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.SysStaff;
 import com.trkj.train.entity.vo.staffAndSign;
@@ -13,12 +20,23 @@ import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.service.ICantonSatffsignService;
 import com.trkj.train.service.ISysPersonalService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.awt.datatransfer.DataFlavor;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -84,4 +102,51 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
         return iPage;
     }
 
+    @Override
+    public IPage<SysPersonal> selectPer(int page,int size) {
+        QueryWrapper<SysPersonal> wrapper=new QueryWrapper();
+        wrapper.eq("personal_type",1);
+        return mapper.selectPage(new Page(page,size),wrapper);
+    }
+
+    //导出
+    @Override
+    public Result export(HttpServletResponse response, Paging paging)throws Exception {
+        QueryWrapper<SysPersonal> wrapper=new QueryWrapper<>();
+        wrapper.eq("personal_type",1);
+//        IPage<SysPersonal> iPage1 = mapper.selectPage(new Page(paging.getCurrentPage(),paging.getPageSize()),wrapper);
+        List<SysPersonal> list=mapper.selectList(wrapper);
+//        UUID uuid = UUID.randomUUID();
+        Workbook workbook= ExcelExportUtil.exportExcel(new ExportParams("员工档案","员工档案"),SysPersonal.class,list);
+//        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode("用户列表.xls","UTF-8"));
+//        D:/我的学习软件/Git-2.34.1-64-bit/project/train/src/main/resources/
+        FileOutputStream outputStream=new FileOutputStream("F:/projectIdea/train/src/main/resources/export/员工简历.xls");
+//        System.out.println(outputStream);
+//        ServletOutputStream outputStream= response.getOutputStream();
+        workbook.write(outputStream);
+        outputStream.close();
+        workbook.close();
+        return Result.success("200","导出成功了",null);
+    }
+    //导入
+    @Override
+    public Result saveAll(MultipartFile excelFile) throws Exception {
+        System.out.println(excelFile.getName());
+        ImportParams importParams=new ImportParams();
+        importParams.setTitleRows(1);//标题占几行
+        importParams.setHeadRows(1);//header列占几行
+        List<SysPersonal> revenues = ExcelImportUtil.importExcel(excelFile.getInputStream(), SysPersonal.class, importParams);
+        revenues.forEach(item->{
+            if(StringUtils.isEmpty(item.getPersonalAvatar())){
+               item.setPersonalAvatar("");
+            }
+            if(StringUtils.isEmpty(item.getPersonalExperience())){
+                item.setPersonalExperience("");
+            }
+            item.setDeleted(0);
+            mapper.saveAll(item);
+        });
+
+        return Result.success("200","导入成功！！！",null);
+    }
 }

@@ -31,4 +31,30 @@
         PERSONAL_ID, PERSONAL_AVATAR, PERSONAL_NAME, PERSONAL_SEX, PERSONAL_AGE, PERSONAL_BIRTHDAY, PERSONAL_IDCARD, PERSONAL_PHONE, PERSONAL_MAIL, PERSONAL_EDUCATION, PERSONAL_NFAMILY, PERSONAL_ADDRESS, PERSONAL_GRADUATION, PERSONAL_EXPERIENCE, PERSONAL_MONNEY, PERSONAL_POSITION, PERSONAL_INTERVIEW, ENTRY_TIME, PERSONAL_TYPE, DELETED
     </sql>
 
+    <insert id="saveAll">
+        insert into sys_personal  values (
+                                         personal_seq.nextval,
+                                         #{personalAvatar},
+                                         #{personalName},
+                                         #{personalSex},
+                                         #{personalAge},
+                                         #{personalBirthday},
+                                         #{personalIdcard},
+                                         #{personalPhone},
+                                         #{personalMail},
+                                         #{personalEducation},
+                                         #{personalNfamily},
+                                         #{personalAddress},
+                                         #{personalGraduation},
+                                         #{personalExperience},
+                                         #{personalMonney},
+                                         #{personalPosition},
+                                         #{personalInterview},
+                                         #{entryTime},
+                                         #{personalType},
+                                         #{deleted}
+                                        )
+    </insert>
+
+
 </mapper>

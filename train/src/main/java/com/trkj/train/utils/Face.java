@@ -59,6 +59,7 @@ public class Face {
          * 参数三：hashMap中的基本参数配置
          */
         JSONObject res = face.detect(image, "BASE64", null);
+
 //        输出是否上传成功
 //        System.out.println(res.toString());
         int jg = Integer.parseInt(res.get("error_code").toString());
@@ -103,7 +104,7 @@ public class Face {
     }
 
     //人脸更新：对百度人脸库中已有的照片进行更新
-    public Result four(String image) throws Exception {
+    public Result four(int userid,String image){
 //        2、参数设置
         HashMap<String,String> map=new HashMap<>();
         map.put("quality_control","NORMAL");//图片质量，四个等级 常规使用普通（NORMAL） NONE LOW NORMAL HIGH
@@ -121,16 +122,29 @@ public class Face {
          * 参数四：用户ID
          * 参数五：hashMap中的基本参数配置
          */
-        int i=(int) (Math.random()*(9999-1000)+1000);//自动生成人脸库ID，范围可调
-        String id=i+"";//转换字符串
-        JSONObject res=face.updateUser(image,"BASE64","myImg",id,map);
+//        int i=(int) (Math.random()*(9999-1000)+1000);//自动生成人脸库ID，范围可调
+//        String id=i+"";//转换字符串
+        JSONObject resone = face.detect(image, "BASE64", null);
+        JSONObject res=face.updateUser(image,"BASE64","myImg",userid+"",map);
 //        输出是否上传成功
 //        System.out.println(res.toString());
         int jg = Integer.parseInt(res.get("error_code").toString());
         if(jg==0){
-            return Result.success("0","注册成功",null);
+            return Result.success("0","更新成功",null);
         }else {
-            return Result.error("-1","注册失败");
+            return Result.error("-1","更新失败,未检测到人脸");
         }
     }
+
+    //获得用户
+    public String staffFace(int userId){
+        HashMap<String,String> map=new HashMap<>();
+        map.put("quality_control","NORMAL");//图片质量，四个等级 常规使用普通（NORMAL） NONE LOW NORMAL HIGH
+        map.put("liveness_control","LOW");//是否活体检测，四个等级 常规使用普通（NORMAL） NONE LOW NORMAL HIGH
+        JSONObject obj=face.getUser(userId+"","myImg",map);
+        System.out.println(obj.toString());
+        return "";
+    }
+
+
 }

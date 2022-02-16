@@ -1,5 +1,6 @@
 package com.trkj.train.config.dto.domain;
 
+
 import lombok.Data;
 
 @Data

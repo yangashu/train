@@ -4,6 +4,7 @@ import com.trkj.train.entity.SysStaff;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -16,4 +17,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SysStaffMapper extends BaseMapper<SysStaff> {
     SysStaff findByid(@Param("id") int id);
+
+    @Select("select max(staff_name) from sys_staff")
+    public String selectNameMax();
 }

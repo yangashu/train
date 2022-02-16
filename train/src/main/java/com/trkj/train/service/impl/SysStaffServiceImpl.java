@@ -1,30 +1,41 @@
 package com.trkj.train.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.alibaba.fastjson.JSON;
+import com.baidu.aip.util.Base64Util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
-import com.trkj.train.entity.SysPersonal;
-import com.trkj.train.entity.SysPosition;
-import com.trkj.train.entity.SysStaff;
-import com.trkj.train.entity.SysStaffPosition;
+import com.trkj.train.config.dto.domain.Paging;
+import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
+import com.trkj.train.entity.*;
 import com.trkj.train.entity.vo.staffAndPersonal;
 import com.trkj.train.mapper.SysPersonalMapper;
 import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.mapper.SysStaffPositionMapper;
 import com.trkj.train.service.ISysStaffService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.trkj.train.utils.Face;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -48,6 +59,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
     @Autowired
     private SysPersonalMapper personalMapper;
+
+    @Autowired
+    private Face face;
 
 
 
@@ -91,24 +105,35 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
                     staffPosition.setPositionId(id);
                     staffPositions.add(staffPosition);
                 }
-                if (staffPositionMapper.deleteByStaffId(staff.getStaffId())) {
+                if(staff.getPositions().size()>0){
+                    System.out.println(1);
+                    if (staffPositionMapper.deleteByStaffId(staff.getStaffId())) {
+
+                        if (staffPositionMapper.insertBatch(staffPositions)) {
+                            return Result.success("200", "操作成功！！！", null);
+                        }
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return Result.error("-1", "操作有误！！！");
+                    }
+                }else{
                     if (staffPositionMapper.insertBatch(staffPositions)) {
                         return Result.success("200", "操作成功！！！", null);
                     }
                     TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     return Result.error("-1", "操作有误！！！");
                 }
+
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return Result.error("-1", "操作有误！！！");
             }else if (staffPositionMapper.deleteByStaffId(staff.getStaffId())){
+                System.out.println(111);
                 return Result.success("200", "操作成功！！！", null);
             }
-
+            return Result.success("200", "操作成功！！！", null);
         }
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return Result.error("-1", "操作有误！！！");
     }
-
 
     @Override
     public Result findByid(int id) {
@@ -174,6 +199,50 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         iPage1.setCurrent(iPage0.getCurrent());
         iPage1.setSize(iPage0.getSize());
         return iPage1;
+    }
+
+    @Override
+    public IPage<staffAndPersonal> selectFace(int page,int size) {
+        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),null);
+        List<staffAndPersonal> list=new ArrayList<>();
+        IPage<staffAndPersonal> iPage1=new Page<>();
+        for (int i=0;i<iPage0.getRecords().size();i++){
+            SysStaff s=iPage0.getRecords().get(i);
+            SysPersonal p=personalMapper.selectOne(new QueryWrapper<SysPersonal>().eq("personal_id",s.getPersonalId()));
+            staffAndPersonal sap=new staffAndPersonal();
+            sap.setStaffId(s.getStaffId());
+            sap.setStaffName(s.getStaffName());
+            sap.setStaffPass(s.getStaffPass());
+            sap.setStaffState(s.getStaffState());
+            sap.setPersonalId(p.getPersonalId());
+            sap.setPersonalName(p.getPersonalName());
+            sap.setPersonalSex(p.getPersonalSex());
+            sap.setPersonalAge(p.getPersonalAge());
+            sap.setPersonalBirthday(p.getPersonalBirthday());
+            sap.setPersonalIdcard(p.getPersonalIdcard());
+            sap.setPersonalPhone(p.getPersonalPhone());
+            sap.setPersonalMail(p.getPersonalMail());
+            sap.setPersonalEducation(p.getPersonalEducation());
+            sap.setPersonalNfamily(p.getPersonalNfamily());
+            sap.setPersonalGraduation(p.getPersonalGraduation());
+            sap.setPersonalExperience(p.getPersonalExperience());
+            sap.setPersonalAddress(p.getPersonalAddress());
+            sap.setPersonalPosition(p.getPersonalPosition());
+            sap.setPersonalInterview(p.getPersonalInterview());
+            sap.setEntryTime(p.getEntryTime());
+            list.add(sap);
+        }
+        iPage1.setRecords(list);
+        iPage1.setPages(iPage0.getPages());
+        iPage1.setTotal(iPage0.getTotal());
+        iPage1.setCurrent(iPage0.getCurrent());
+        iPage1.setSize(iPage0.getSize());
+        return iPage1;
+    }
+
+    @Override
+    public Result updateFace(int userId,String url) throws Exception {
+        return face.four(userId,url);
     }
 
     //分页模糊查询
@@ -265,5 +334,20 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         int i=personalMapper.updateById(p);
         return mapper.updateById(s);
     }
+
+    @Override
+    public String selectStaffName() {
+        String maxStaffName=mapper.selectNameMax();
+        int a=Integer.parseInt(maxStaffName.substring(5))+1;
+        if(a<10){
+            maxStaffName="train00"+a;
+        }else if(a>10 && a<100){
+            maxStaffName="train0"+a;
+        }else{
+            maxStaffName="train"+a;
+        }
+        return maxStaffName;
+    }
+
 
 }

@@ -3,9 +3,11 @@ package com.trkj.train.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
+import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.SysStaff;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.trkj.train.entity.vo.staffAndPersonal;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,10 @@ public interface ISysStaffService extends IService<SysStaff> {
 
     public IPage<staffAndPersonal> two(int page, int size);
 
+    public IPage<staffAndPersonal> selectFace(int page,int size);
+
+    public Result updateFace(int userId,String url) throws Exception;
+
     public IPage<staffAndPersonal> five(Page page,String like);
 
     public int three(int staffId);
@@ -38,4 +44,7 @@ public interface ISysStaffService extends IService<SysStaff> {
     public int six(staffAndPersonal sap);
 
     public int four(int staffId);
+
+    public String selectStaffName();
+
 }

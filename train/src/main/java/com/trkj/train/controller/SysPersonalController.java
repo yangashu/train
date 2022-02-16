@@ -3,10 +3,15 @@ package com.trkj.train.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.trkj.train.config.Result;
+import com.trkj.train.config.dto.domain.Paging;
+import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.vo.staffAndSign;
 import com.trkj.train.service.ISysPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <p>
@@ -27,4 +32,23 @@ public class SysPersonalController {
     public IPage<staffAndSign> one(@RequestParam("information") String information, @RequestParam("mode") String mode, @RequestParam("mycurrentPage") int page, @RequestParam("mypagesize") int size){
         return  iPersonalService.two(information,mode,page,size);
     }
+
+    //查询未入职用户
+    @GetMapping("/notEmployed")
+    public Result<IPage<SysPersonal>> notEmployed(@RequestParam("currentPage") int page,@RequestParam("pagesize") int size){
+        IPage<SysPersonal> ipage=iPersonalService.selectPer(page,size);
+        return Result.success(ipage);
+    }
+
+    //导出
+    @RequestMapping("/export")
+    public Result export(HttpServletResponse response,@RequestBody Paging paging) throws Exception {
+        return iPersonalService.export(response,paging);
+    }
+    //导入
+    @PostMapping("/import")
+    public Result saveAll(@RequestParam("file") MultipartFile excelFile) throws Exception {
+        return iPersonalService.saveAll(excelFile);
+    }
+
 }

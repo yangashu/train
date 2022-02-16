@@ -1,7 +1,9 @@
 package com.trkj.train.mapper;
 
+import com.trkj.train.entity.FinancePay;
 import com.trkj.train.entity.SysPersonal;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -14,5 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysPersonalMapper extends BaseMapper<SysPersonal> {
+
+    public int saveAll(SysPersonal item);
 
 }

@@ -38,7 +38,7 @@ public class CantonSatffsignController {
         int rs= list.size();
         for(CantonSatffsign s: list){
             String newDate=format.format(new Date());
-            String oldDate=s.getSignDate().toString().substring(0,10);
+            String oldDate=format.format(s.getSignDate());
             if(newDate.equals(oldDate)){
                 continue;
             }else{
