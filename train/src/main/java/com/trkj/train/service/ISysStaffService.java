@@ -6,6 +6,7 @@ import com.trkj.train.config.Result;
 import com.trkj.train.entity.SysStaff;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.trkj.train.entity.vo.staffAndPersonal;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,10 @@ public interface ISysStaffService extends IService<SysStaff> {
     Result<?> deleteById(int id);
 
     public IPage<staffAndPersonal> two(int page, int size);
+
+    public IPage<staffAndPersonal> selectFace(int page,int size);
+
+    public Result updateFace(int userId,String url);
 
     public IPage<staffAndPersonal> five(Page page,String like);
 

@@ -1,6 +1,7 @@
 package com.trkj.train.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.aip.util.Base64Util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,12 +16,14 @@ import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.mapper.SysStaffPositionMapper;
 import com.trkj.train.service.ISysStaffService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.trkj.train.utils.Face;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
     @Autowired
     private SysPersonalMapper personalMapper;
+
+    @Autowired
+    private Face face;
 
 
 
@@ -174,6 +180,50 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         iPage1.setCurrent(iPage0.getCurrent());
         iPage1.setSize(iPage0.getSize());
         return iPage1;
+    }
+
+    @Override
+    public IPage<staffAndPersonal> selectFace(int page,int size) {
+        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),null);
+        List<staffAndPersonal> list=new ArrayList<>();
+        IPage<staffAndPersonal> iPage1=new Page<>();
+        for (int i=0;i<iPage0.getRecords().size();i++){
+            SysStaff s=iPage0.getRecords().get(i);
+            SysPersonal p=personalMapper.selectOne(new QueryWrapper<SysPersonal>().eq("personal_id",s.getPersonalId()));
+            staffAndPersonal sap=new staffAndPersonal();
+            sap.setStaffId(s.getStaffId());
+            sap.setStaffName(s.getStaffName());
+            sap.setStaffPass(s.getStaffPass());
+            sap.setStaffState(s.getStaffState());
+            sap.setPersonalId(p.getPersonalId());
+            sap.setPersonalName(p.getPersonalName());
+            sap.setPersonalSex(p.getPersonalSex());
+            sap.setPersonalAge(p.getPersonalAge());
+            sap.setPersonalBirthday(p.getPersonalBirthday());
+            sap.setPersonalIdcard(p.getPersonalIdcard());
+            sap.setPersonalPhone(p.getPersonalPhone());
+            sap.setPersonalMail(p.getPersonalMail());
+            sap.setPersonalEducation(p.getPersonalEducation());
+            sap.setPersonalNfamily(p.getPersonalNfamily());
+            sap.setPersonalGraduation(p.getPersonalGraduation());
+            sap.setPersonalExperience(p.getPersonalExperience());
+            sap.setPersonalAddress(p.getPersonalAddress());
+            sap.setPersonalPosition(p.getPersonalPosition());
+            sap.setPersonalInterview(p.getPersonalInterview());
+            sap.setEntryTime(p.getEntryTime());
+            list.add(sap);
+        }
+        iPage1.setRecords(list);
+        iPage1.setPages(iPage0.getPages());
+        iPage1.setTotal(iPage0.getTotal());
+        iPage1.setCurrent(iPage0.getCurrent());
+        iPage1.setSize(iPage0.getSize());
+        return iPage1;
+    }
+
+    @Override
+    public Result updateFace(int userId,String url){
+        return face.four(userId,url);
     }
 
     //分页模糊查询
