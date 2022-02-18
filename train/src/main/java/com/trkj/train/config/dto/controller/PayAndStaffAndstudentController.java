@@ -7,6 +7,7 @@ import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.service.IPayAndStaffAndstudentService;
 import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ public class PayAndStaffAndstudentController implements Serializable {
     @Autowired
     private IPayAndStaffAndstudentService service;
 
+    @PreAuthorize("hasAuthority('finance:menu:list')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);

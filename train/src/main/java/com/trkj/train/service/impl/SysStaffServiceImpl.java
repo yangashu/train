@@ -90,19 +90,31 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
                     staffPosition.setPositionId(id);
                     staffPositions.add(staffPosition);
                 }
-                if (staffPositionMapper.deleteByStaffId(staff.getStaffId())) {
+                if(staff.getPositions().size()>0){
+                    System.out.println(1);
+                    if (staffPositionMapper.deleteByStaffId(staff.getStaffId())) {
+
+                        if (staffPositionMapper.insertBatch(staffPositions)) {
+                            return Result.success("200", "操作成功！！！", null);
+                        }
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return Result.error("-1", "操作有误！！！");
+                    }
+                }else{
                     if (staffPositionMapper.insertBatch(staffPositions)) {
                         return Result.success("200", "操作成功！！！", null);
                     }
                     TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     return Result.error("-1", "操作有误！！！");
                 }
+
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return Result.error("-1", "操作有误！！！");
             }else if (staffPositionMapper.deleteByStaffId(staff.getStaffId())){
+                System.out.println(111);
                 return Result.success("200", "操作成功！！！", null);
             }
-
+            return Result.success("200", "操作成功！！！", null);
         }
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return Result.error("-1", "操作有误！！！");

@@ -4,6 +4,7 @@ import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.service.IExpenditureAndRefundAndPurchaseAndStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
 
     //    导出
     @RequestMapping("/export")
+//    @PreAuthorize("hasAnyAuthority('administration:manage')")
     public Result export(HttpServletResponse response, @RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
     }
