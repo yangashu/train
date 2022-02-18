@@ -19,10 +19,65 @@
         <result column="COURSE_ID" property="courseId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="ConsultationResultMap" type="com.trkj.train.TyVo.ConsultationDo">
+        <result column="studentFiles_id" property="studentFiles_id"/>
+        <result column="studentFiles_name" property="studentFiles_name" />
+        <result column="studentFiles_sex" property="studentFiles_sex" />
+        <result column="studentFiles_age" property="studentFiles_age" />
+        <result column="studentFiles_phone" property="studentFiles_phone" />
+        <result column="studentFiles_birthday" property="studentFiles_birthday"/>
+        <result column="parent_phone" property="parent_phone"/>
+        <result column="studentFiles_school" property="studentFiles_school" />
+        <result column="studentFiles_loc" property="studentFiles_loc" />
+        <result column="studentFiles_remarks" property="studentFiles_remarks" />
+        <result column="studentFiles_state" property="studentFiles_state" />
+        <result column="course_name" property="course_name" />
+        <result column="studentFiles_id" property="studentFiles_id"/>
+        <result column="course_id" property="course_id"/>
+        <result column="staff_id" property="staff_id"/>
+        <result column="studentFiles_time" property="studentFiles_time"/>
+        <result column="staff_name" property="staff_name"/>
+    </resultMap>
+    <resultMap id="studentfilesqudfao" type="com.trkj.train.TyVo.StudentfilesQudaoDo">
+        <result column="STUDENTFILES_ID" property="studentfilesId"/>
+        <result column="studentFiles_name" property="studentfilesName" />
+        <result column="studentFiles_sex" property="studentfilesSex" />
+        <result column="studentFiles_age" property="studentfilesAge" />
+        <result column="studentFiles_phone" property="studentfilesPhone" />
+        <result column="PARENT_PHONE" property="parentPhone" />
+        <result column="studentFiles_school" property="studentfilesSchool" />
+        <result column="studentFiles_loc" property="studentfilesLoc" />
+        <result column="studentFiles_remarks" property="studentfilesRemarks" />
+        <result column="studentFiles_state" property="studentfilesState" />
+        <result column="STAFF_NAME" property="staffName" />
+        <result column="staff_id" property="staffId"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         STUDENTFILES_ID, STUDENTFILES_NAME, STUDENTFILES_SEX, STUDENTFILES_AGE, STUDENTFILES_BIRTHDAY, STUDENTFILES_PHONE, PARENT_PHONE, STUDENTFILES_SCHOOL, STUDENTFILES_LOC, STUDENTFILES_REMARKS, CHANNEL_ID, STUDENTFILES_STATE, COURSE_ID, DELETED
     </sql>
-
+    <select id="paging" resultMap="ConsultationResultMap">
+        SELECT * FROM recruit_studentFiles s
+                          LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID
+                          LEFT JOIN recruit_course c ON s.course_id = c.course_id
+    </select>
+    <select id="paging1" resultMap="ConsultationResultMap">
+        SELECT * FROM recruit_studentFiles s
+                            LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID
+                            LEFT JOIN recruit_course c ON s.course_id = c.course_id
+            ${ew.customSqlsegment}
+    </select>
+    <select id="selectipotion" resultMap="ConsultationResultMap">
+        SELECT * FROM recruit_studentFiles s
+                          LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID
+                          LEFT JOIN recruit_course c ON s.course_id = c.course_id
+            ${ew.customSqlsegment}
+    </select>
+<select id="pagfyetwo" resultMap="studentfilesqudfao">
+    SELECT * FROM recruit_studentFiles s
+        LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID WHERE channel_id=#{id} and STUDENTFILES_NAME like #{name}
+</select>
+    <select id="pagfye" resultMap="studentfilesqudfao">
+        SELECT * FROM recruit_studentFiles s LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID WHERE channel_id=#{id}
+    </select>
 </mapper>

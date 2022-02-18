@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -55,6 +57,7 @@ public class RecruitStudent implements Serializable {
     @TableField("STUDENT_LOC")
     private String studentLoc;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("STUDENT_ENTRANCE")
     private Date studentEntrance;
 
@@ -64,6 +67,10 @@ public class RecruitStudent implements Serializable {
     @TableField("COURSE_ID")
     private Integer courseId;
 
+    @TableField("STAFF_ID")
+    private Integer staffId;
+
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

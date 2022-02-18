@@ -1,9 +1,7 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.KeySequence;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,7 +27,7 @@ public class EctClassroom implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("CLASSROOM_ID")
+    @TableId(value = "CLASSROOM_ID",type = IdType.INPUT)
     private Integer classroomId;
 
     @TableField("CLASSROOM_NAME")
@@ -38,6 +36,7 @@ public class EctClassroom implements Serializable {
     @TableField("CALSSROOM_STATE")
     private Integer calssroomState;
 
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

@@ -135,4 +135,20 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         }
         return Result.error("-1","操作失败,该数据可能已被移除！！！");
     }
+
+    //查询是班主任职位的员工
+    @Override
+    public List<SysStaff> insertstaff() {
+        return mapper.selectstaff();
+    }
+
+    @Override
+    public List<SysStaff> selectgjr() {
+        return mapper.selectgjr();
+    }
+
+    @Override
+    public List<SysStaff> selectclassteacher() {
+        return mapper.selectclassteacher();
+    }
 }

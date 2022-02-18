@@ -36,6 +36,7 @@ public class RecruitChannel implements Serializable {
     @TableField("CHANNEL_LOC")
     private String channelLoc;
 
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

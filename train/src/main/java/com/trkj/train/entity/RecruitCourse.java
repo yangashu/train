@@ -45,6 +45,7 @@ public class RecruitCourse implements Serializable {
     @TableField("BOOK_FEE")
     private Integer bookFee;
 
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

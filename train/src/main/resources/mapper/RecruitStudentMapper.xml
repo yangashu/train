@@ -18,10 +18,40 @@
         <result column="COURSE_ID" property="courseId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="studentMap" type="com.trkj.train.TyVo.StudentDo">
+        <result column="student_id" property="student_id" />
+        <result column="student_name" property="student_name" />
+        <result column="student_sex" property="student_sex" />
+        <result column="student_age" property="student_age" />
+        <result column="STUDENT_BIRTHDAY" property="student_birthday" />
+        <result column="student_phone" property="student_phone" />
+        <result column="parent_phone" property="parent_phone" />
+        <result column="student_school" property="student_school" />
+        <result column="student_loc" property="student_loc" />
+        <result column="classes_id" property="classes_id" />
+        <result column="classes_name" property="classes_name" />
+        <result column="course_id" property="course_id" />
+        <result column="course_name" property="course_name" />
+        <result column="student_entrance" property="student_entrance" />
+        <result column="staff_id" property="staff_id"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         STUDENT_ID, STUDENT_NAME, STUDENT_SEX, STUDENT_AGE, STUDENT_BIRTHDAY, STUDENT_PHONE, PARENT_PHONE, STUDENT_SCHOOL, STUDENT_LOC, STUDENT_ENTRANCE, CLASSES_ID, COURSE_ID, DELETED
     </sql>
 
+    <select id="selectpage" resultMap="studentMap">
+        SELECT * FROM recruit_student s
+                          LEFT JOIN ect_classes c on s.classes_id=c.classes_id
+                          LEFT JOIN recruit_course co on s.course_id=co.course_id
+                          LEFT JOIN sys_staff staff on s.staff_id=staff.staff_id
+                          where s.deleted=0
+    </select>
+    <select id="selectipton" resultMap="studentMap">
+        SELECT * FROM recruit_student s
+                          LEFT JOIN ect_classes c on s.classes_id=c.classes_id
+                          LEFT JOIN recruit_course co on s.course_id=co.course_id
+                          LEFT JOIN sys_staff staff on s.staff_id=staff.staff_id
+            ${ew.customSqlsegment}
+    </select>
 </mapper>

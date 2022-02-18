@@ -1,11 +1,11 @@
 package com.trkj.train.entity;
 
-import com.baomidou.mybatisplus.annotation.KeySequence;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class EctClasses implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("CLASSES_ID")
+    @TableId(value = "CLASSES_ID",type = IdType.INPUT)
     private Integer classesId;
 
     @TableField("CLASSES_NAME")
@@ -39,6 +39,7 @@ public class EctClasses implements Serializable {
     @TableField("CLASSES_NUMBER")
     private Integer classesNumber;
 
+    @JsonFormat(pattern = "YYYY-MM-DD")
     @TableField("CLASSES_DATE")
     private Date classesDate;
 
@@ -54,6 +55,10 @@ public class EctClasses implements Serializable {
     @TableField("STAFF_ID")
     private Integer staffId;
 
+    @TableField(exist = false)
+    private String oldClassName="false";
+
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

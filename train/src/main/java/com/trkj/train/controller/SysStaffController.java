@@ -64,4 +64,20 @@ public class SysStaffController {
     public Result<?> deleteBatchIds(@RequestBody List<Integer> ids) {
         return service.deleteBatchIds(ids);
     }
+
+    // 班级管理   添加班级弹框  班主任下拉框   查询为班主任的员工名字
+    @GetMapping("/selectteacher")
+    public List<SysStaff> selectteacher(){
+        return service.insertstaff();
+    }
+    //  咨询登记  跟进人下拉框  查询为咨询师的员工名字
+    @GetMapping("selectgjr")
+    public List<SysStaff> selectgjr(){
+        return service.selectgjr();
+    }
+    //    学员中心   在读学员   上课老师下拉框查询
+    @GetMapping("selectclassteacher")
+    public List<SysStaff> selectclassteacher(){
+        return service.selectclassteacher();
+    }
 }
