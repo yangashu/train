@@ -41,7 +41,7 @@ public class NewsSuggestions implements Serializable {
     private Integer staffId;
 
     @TableField("DELETED")
-    private Integer deleted;
+    private int deleted;
 
 
 }
