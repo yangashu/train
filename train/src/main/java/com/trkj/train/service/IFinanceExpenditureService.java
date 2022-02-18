@@ -1,7 +1,10 @@
 package com.trkj.train.service;
 
+import com.trkj.train.config.Result;
 import com.trkj.train.entity.FinanceExpenditure;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IFinanceExpenditureService extends IService<FinanceExpenditure> {
 
+    Result paging(Map<String, Object> map);
 }

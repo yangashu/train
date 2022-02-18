@@ -1,9 +1,13 @@
 package com.trkj.train.config.dto.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.service.IPayAndStaffAndstudentService;
+import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,9 +19,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/PayAndStaffAndstudent")
 public class PayAndStaffAndstudentController implements Serializable {
-   @Autowired
+    @Autowired
     private IPayAndStaffAndstudentService service;
 
+    @PreAuthorize("hasAuthority('finance:menu:list')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);

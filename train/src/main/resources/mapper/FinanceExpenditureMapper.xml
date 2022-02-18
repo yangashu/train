@@ -12,6 +12,10 @@
         <result column="PAYAPPROVAL_STATE" property="payapprovalState" />
         <result column="STAFF_ID" property="staffId" />
         <result column="DELETED" property="deleted" />
+        <result column="REMARKS" property="remarks" />
+        <result column="EXPENDITURE_MODE" property="expenditureMode" />
+        <result column="PURPOSE" property="purpose" />
+        <result column="DRAWING" property="drawing" />
     </resultMap>
 
     <!-- 通用查询结果列 -->

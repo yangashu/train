@@ -1,15 +1,14 @@
 package com.trkj.train.config.dto.mapper;
 
-
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.trkj.train.config.dto.vo.ExpenditureAndRefundAndPurchaseAndStaffVo;
+import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
 
 public interface ExpenditureAndRefundAndPurchaseAndStaffMapper extends BaseMapper<ExpenditureAndRefundAndPurchaseAndStaffVo> {
     @Select("SELECT * FROM finance_expenditure e"+
