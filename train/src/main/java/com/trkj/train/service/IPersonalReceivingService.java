@@ -1,5 +1,7 @@
 package com.trkj.train.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.trkj.train.config.dto.ReceivingView;
 import com.trkj.train.entity.PersonalReceiving;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPersonalReceivingService extends IService<PersonalReceiving> {
     public int one();
+
+    //分页查询
+    IPage<ReceivingView> receiving(int page, int size, int id);
+    //模糊查询
+    public IPage<ReceivingView> lickselect(int page, int size, String like, int id);
+    //逻辑删除
+    int dele(int id);
+    //修改状态
+    int xiugai(PersonalReceiving id);
 }

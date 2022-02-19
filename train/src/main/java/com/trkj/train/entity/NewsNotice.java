@@ -49,5 +49,8 @@ public class NewsNotice implements Serializable {
     @TableField("DELETED")
     private Integer deleted;
 
+    @TableField("STATE")
+    private Integer state;
+
 
 }

@@ -1,5 +1,7 @@
 package com.trkj.train.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.trkj.train.config.dto.NoticeView;
 import com.trkj.train.entity.NewsNotice;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface INewsNoticeService extends IService<NewsNotice> {
     public int one();
+
+    //查询
+    IPage<NoticeView> pageselect (int page, int size);
+    //修改状态
+    int xiugai(NewsNotice newsNotice);
 }
