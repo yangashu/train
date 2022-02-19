@@ -126,7 +126,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return Result.error("-1", "操作有误！！！");
             }else if (staffPositionMapper.deleteByStaffId(staff.getStaffId())){
-                System.out.println(111);
+
                 return Result.success("200", "操作成功！！！", null);
             }
             return Result.success("200", "操作成功！！！", null);
@@ -350,4 +350,20 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
     }
 
 
+
+    //查询是班主任职位的员工
+    @Override
+    public List<SysStaff> insertstaff() {
+        return mapper.selectstaff();
+    }
+
+    @Override
+    public List<SysStaff> selectgjr() {
+        return mapper.selectgjr();
+    }
+
+    @Override
+    public List<SysStaff> selectclassteacher() {
+        return mapper.selectclassteacher();
+    }
 }

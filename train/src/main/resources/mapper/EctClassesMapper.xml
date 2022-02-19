@@ -14,10 +14,33 @@
         <result column="STAFF_ID" property="staffId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="classResult" type="com.trkj.train.TyVo.ClassesManageDO">
+        <result column="CLASSES_NAME" property="classesName" />
+        <result column="CLASSES_NUMBER" property="classesNumber" />
+        <result column="CLASSES_DATE" property="classesDate" />
+        <result column="STAFF_NAME" property="staffName" />
+        <result column="CLASSROOM_NAME" property="classRoomName" />
+        <result column="course_hour" property="courseHour"/>
+        <result column="classes_hour" property="classesHour"/>
+        <result column="CLASSES_ID" property="classesId"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         CLASSES_ID, CLASSES_NAME, CLASSES_NUMBER, CLASSES_DATE, CLASSES_HOUR, COURSE_ID, CLASSROOM_ID, STAFF_ID, DELETED
     </sql>
+
+    <select id="selectClasses" resultMap="classResult">
+        select * from ect_classes a
+                          left join ect_classroom b on a.CLASSROOM_ID = b.CLASSROOM_ID
+                          left join sys_staff c on a.STAFF_ID = c.STAFF_ID
+                          LEFT JOIN recruit_course r on a.course_id=r.course_id
+    </select>
+    <select id="selectiptionclass" resultType="com.trkj.train.TyVo.ClassesManageDO">
+        select * from ECT_CLASSES s
+                          LEFT JOIN SYS_STAFF t on s.staff_id=t.staff_id
+                          LEFT JOIN RECRUIT_COURSE r on s.course_id=r.course_id
+                          LEFT JOIN ECT_CLASSROOM m on s.classroom_id=m.classroom_id
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>

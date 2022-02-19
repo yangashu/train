@@ -61,6 +61,7 @@ public class RecruitStudent implements Serializable {
     @TableField("STUDENT_LOC")
     private String studentLoc;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("STUDENT_ENTRANCE")
     private Date studentEntrance;
 
@@ -70,6 +71,10 @@ public class RecruitStudent implements Serializable {
     @TableField("COURSE_ID")
     private Integer courseId;
 
+    @TableField("STAFF_ID")
+    private Integer staffId;
+
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

@@ -58,6 +58,9 @@ public class RecruitStudentfiles implements Serializable {
     @TableField("STUDENTFILES_REMARKS")
     private String studentfilesRemarks;
 
+    @TableField("STUDENTFILES_TIME")
+    private Date studentfilesTime;
+
     @TableField("CHANNEL_ID")
     private Integer channelId;
 
@@ -67,6 +70,10 @@ public class RecruitStudentfiles implements Serializable {
     @TableField("COURSE_ID")
     private Integer courseId;
 
+    @TableField("STAFF_ID")
+    private Integer staffId;
+
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

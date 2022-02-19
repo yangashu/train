@@ -47,4 +47,11 @@ public interface ISysStaffService extends IService<SysStaff> {
 
     public String selectStaffName();
 
+
+    //  班级管理  添加班级弹框  班主任下拉框  查询是班主任职位的员工
+    List<SysStaff> insertstaff();
+    //咨询登记   跟进人下拉框搜索   查询是咨询师职位的员工
+    List<SysStaff> selectgjr();
+    //    学员中心   在读学员   上课老师下拉框查询
+    List<SysStaff> selectclassteacher();
 }

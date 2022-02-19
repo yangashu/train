@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,15 +39,19 @@ public class EctTimetable implements Serializable {
     @TableField("TIMETABLE_AFTERNOON")
     private String timetableAfternoon;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     @TableField("TIMETABLE_TIME")
     private Date timetableTime;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     @TableField("TIMETABLE_MORNINGEND")
     private Date timetableMorningend;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     @TableField("TIMETABLE_AFTERNOONSTART")
     private Date timetableAfternoonstart;
 
+    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     @TableField("TIMETABLE_AFTERNOONEND")
     private Date timetableAfternoonend;
 
@@ -67,6 +73,7 @@ public class EctTimetable implements Serializable {
     @TableField("STAFF_ID2")
     private Integer staffId2;
 
+    @TableLogic
     @TableField("DELETED")
     private Integer deleted;
 

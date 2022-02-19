@@ -19,10 +19,47 @@
         <result column="STAFF_ID2" property="staffId2" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMapTwo" type="com.trkj.train.TyVo.EctTimetableClassDo">
+        <id column="TIMETABLE_ID" property="timetableId" />
+        <result column="TIMETABLE_MORNING" property="timetable_morning" />
+        <result column="TIMETABLE_TIME" property="timetable_time" />
+        <result column="TIMETABLE_DATE" property="timetable_date" />
+        <result column="TIMETABLE_STATE" property="timetable_state" />
+        <result column="CLASSES_ID" property="classes_id" />
+        <result column="STAFF_ID1" property="staff_id1" />
+        <result column="staff_name" property="staffname"/>
+    </resultMap>
+    <resultMap id="BaseResultMapThree" type="com.trkj.train.TyVo.EctTimetablepkDo">
+        <id column="timetable_id" property="timetableId"/>
+        <result column="timetable_time" property="timetableTime"/>
+        <result column="timetable_morning" property="timetableMorning"/>
+        <result column="staff_id1" property="staffId1"/>
+        <result column="staff_name" property="staffName"/>
+        <result column="classes_id" property="classesId"/>
+        <result column="classes_name" property="className"/>
+        <result column="timetable_state" property="timetableState"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         TIMETABLE_ID, TIMETABLE_MORNING, TIMETABLE_AFTERNOON, TIMETABLE_TIME, TIMETABLE_MORNINGEND, TIMETABLE_AFTERNOONSTART, TIMETABLE_AFTERNOONEND, TIMETABLE_DATE, TIMETABLE_STATE, CLASSES_ID, TEACHING_ID, STAFF_ID1, STAFF_ID2, DELETED
     </sql>
+    <select id="selectiptionkb" resultMap="BaseResultMapTwo">
+        SELECT * FROM ect_timetable e
+                          LEFT JOIN sys_staff s on e.staff_id1=s.staff_id
+        WHERE classes_id =#{classid}
+    </select>
+    <select id="selectkcxkb" resultMap="BaseResultMapThree">
+        SELECT * from ect_timetable e
+                          LEFT JOIN ect_classes c on e.classes_id=c.classes_id
+                          LEFT JOIN sys_staff s on e.staff_id1=s.staff_id
+                          where e.deleted=0
+    </select>
+    <select id="selectiptionkbcx" resultMap="BaseResultMapThree">
+        SELECT * from ect_timetable e
+                          LEFT JOIN ect_classes c on e.classes_id=c.classes_id
+                          LEFT JOIN sys_staff s on e.staff_id1=s.staff_id
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>
