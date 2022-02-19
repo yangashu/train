@@ -88,7 +88,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffSeRrviceImpl extends Service
         Workbook workbook= ExcelExportUtil.exportExcel(new ExportParams("校务支出列表","校务支出信息"),ExpenditureAndRefundAndPurchaseAndStaffVo.class,iPage1.getRecords());
 //        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode("用户列表.xls","UTF-8"));
 //        D:/我的学习软件/Git-2.34.1-64-bit/project/train/src/main/resources/
-        FileOutputStream outputStream=new FileOutputStream("D:/我的学习软件/Git-2.34.1-64-bit/project/train/src/main/resources/export/校务支出列表.xls");
+        FileOutputStream outputStream=new FileOutputStream("F:/projectIdea/train/src/main/resources/export/校务支出列表.xls");
 //        System.out.println(outputStream);
 //        ServletOutputStream outputStream= response.getOutputStream();
         workbook.write(outputStream);
