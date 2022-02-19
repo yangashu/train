@@ -30,7 +30,6 @@ public interface IRecruitStudentService extends IService<RecruitStudent> {
 //     学员中心  在读学员 删除
      int delectstudent(RecruitStudent student);
 
-    public List<RecruitStudent> one();
 //     班级管理   本班学员弹框内容查询
     IPage<RecruitStudent> selectcx(int page,int size,int classid);
 

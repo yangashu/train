@@ -8,6 +8,7 @@ import com.trkj.train.service.IRecruitStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,9 +36,10 @@ public class RecruitStudentController {
     public List<RecruitStudent> two(){
         List<RecruitStudent> list=service.one();
         List<RecruitStudent> list1=new ArrayList<>();
+        SimpleDateFormat format=new SimpleDateFormat("YYYY-MM-DD");
         for (RecruitStudent s : list){
-            String newDate=new Date().toLocaleString();
-            String oldDate=s.getStudentEntrance().toString();
+            String newDate=format.format(new Date());
+            String oldDate=format.format(s.getStudentEntrance());
             if(newDate.substring(0,7).equals(oldDate.substring(0,7))){
                 list1.add(s);
             }

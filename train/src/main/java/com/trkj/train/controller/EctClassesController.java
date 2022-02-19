@@ -34,8 +34,7 @@ public class EctClassesController {
     public int one(){
         return classesService.one();
     }
-    @Autowired
-    private IEctClassesService classesService;
+
     //分页查询
     @PostMapping("/query")
     public Result<Page<ClassesManageDO>> query(@RequestBody ClassesManageDO classesManageDO,

@@ -34,9 +34,6 @@ public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClas
         return classesMapper.selectClasses(pageSelect,null);
     }
 
-    @Autowired
-    private EctClassesMapper classesMapper;
-
     @Override
     public int one() {
         return classesMapper.selectList(null).size();

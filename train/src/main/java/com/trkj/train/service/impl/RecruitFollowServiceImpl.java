@@ -32,7 +32,7 @@ public class RecruitFollowServiceImpl extends ServiceImpl<RecruitFollowMapper, R
         List<RecruitFollow> list1=new ArrayList<>();
         for(RecruitFollow f : list){
             String newDate=format.format(new Date());
-            String oldDate=f.getFollowDate().toString().substring(0,7);
+            String oldDate=format.format(f.getFollowDate());
             if(newDate.equals(oldDate)){
                 list1.add(f);
             }
