@@ -41,7 +41,7 @@ public class PersonalReceivingServiceImpl extends ServiceImpl<PersonalReceivingM
     public IPage<ReceivingView> receiving(int page, int size, int id) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("deleted",0);
-        queryWrapper.eq("staff_id1",id);
+        queryWrapper.eq("staff_id2",id);
         Page<PersonalReceiving> page1=new Page<>(page,size);
         IPage<PersonalReceiving> iPage=receivingMapper.selectPage(page1,queryWrapper);
         IPage<ReceivingView> viewIPage = new Page<>();
@@ -76,7 +76,7 @@ public class PersonalReceivingServiceImpl extends ServiceImpl<PersonalReceivingM
         QueryWrapper queryWrapper=new QueryWrapper();
         queryWrapper.like("RECEIVING_TITLE",like);
         queryWrapper.eq("deleted",0);
-        queryWrapper.eq("staff_id1",id);
+        queryWrapper.eq("staff_id2",id);
         IPage<PersonalReceiving> iPage=receivingMapper.selectPage(new Page(page,size),queryWrapper);
         IPage<ReceivingView> viewIPage = new Page<>();
         List<ReceivingView> list = new ArrayList();

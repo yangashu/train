@@ -45,7 +45,6 @@ public class NewsNoticeController {
 
     @PostMapping("/up")
     public int up(@RequestBody NewsNotice newsNotice){
-        System.out.println(newsNotice);
         int a = newsNoticeService.xiugai(newsNotice);
         return a;
     }

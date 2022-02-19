@@ -40,7 +40,7 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
     @Override
     public IPage<SendView> SelectPage(int page, int size, int id) {
         QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("staff_id1",id);
+        queryWrapper.eq("staff_id2",id);
         queryWrapper.eq("deleted",0);
         Page<PersonalSend> page1=new Page<>(page,size);
         IPage<PersonalSend> iPage = sendMapper.selectPage(page1,queryWrapper);
@@ -72,7 +72,7 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
     @Override
     public IPage<SendView> lickselect(int page, int size, String like, int id) {
         QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("staff_id1",id);
+        queryWrapper.eq("staff_id2",id);
         queryWrapper.eq("deleted",0);
         queryWrapper.like("send_title",like);
         Page<PersonalSend> page1=new Page<>(page,size);
@@ -121,6 +121,7 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
     }
 
     public int ad(PersonalSend send){
+        int b=sendMapper.insert(send);
         PersonalReceiving r = new PersonalReceiving();
         r.setReceivingContent(send.getSendContent());
         r.setReceivingDate(new Date());
