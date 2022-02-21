@@ -1,6 +1,7 @@
 package com.trkj.train.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.aip.util.Base64Util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -120,9 +121,22 @@ public class SysStaffController {
     }
 
     //员工入职
-    @PostMapping("/")
-    public Result addUser(){
-        return null;
+    @PostMapping("/addStaff")
+    public Result addStaff(@RequestBody SysStaff staff) throws IOException {
+        return service.addStaff(staff);
+    }
+
+    //注测人脸
+    @PostMapping("addUser")
+    public Result addUser(MultipartFile url) throws Exception {
+        return service.addUser(Base64Util.encode(url.getBytes()));
+    }
+
+    //修改员工密码
+    @GetMapping("/updatePass")
+    public Result updatePass(@RequestParam("staffId") int staffId,@RequestParam("oldPass") String oldPass,@RequestParam("newPass") String newPass){
+
+        return service.updatePass(staffId,oldPass,newPass);
     }
 
     //查询员工系统账号

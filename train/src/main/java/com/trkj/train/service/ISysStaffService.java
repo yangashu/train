@@ -47,6 +47,12 @@ public interface ISysStaffService extends IService<SysStaff> {
 
     public String selectStaffName();
 
+    public Result updatePass(int staffId,String oldPass,String newPass);
+
+    public Result addStaff(SysStaff staff);
+
+    public Result addUser(String url) throws Exception;
+
 
     //  班级管理  添加班级弹框  班主任下拉框  查询是班主任职位的员工
     List<SysStaff> insertstaff();

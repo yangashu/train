@@ -22,7 +22,7 @@ public class PayAndStaffAndstudentController implements Serializable {
     @Autowired
     private IPayAndStaffAndstudentService service;
 
-    @PreAuthorize("hasAuthority('finance:menu:list')")
+//    @PreAuthorize("hasAuthority('finance:menu:list')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);

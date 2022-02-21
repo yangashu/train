@@ -40,11 +40,13 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
     @Override
     public int one() {
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+//        QueryWrapper<NewsNotice> wrapper=new QueryWrapper<>();
+//        wrapper.eq("staff_id1",staffId);
         List<NewsNotice> list=mapper.selectList(null);
         List<NewsNotice> list1=new ArrayList<>();
         for(NewsNotice n : list){
             String newDate=format.format(new Date());
-            String oldDate=n.getNoticeDate().toString().substring(0,10);
+            String oldDate=format.format(n.getNoticeDate());
             if (newDate.equals(oldDate)){
                 list1.add(n);
             }else {
@@ -91,12 +93,13 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
     }
 
     @Override
-    public int xiugai(NewsNotice newsNotice) {
-        if (newsNotice.getState()==0){
-            newsNotice.setState(1);
-        }else if(newsNotice.getState()==1){
-            newsNotice.setState(0);
+    public int xiugai(int id) {
+        NewsNotice newsNotice1 = newsNoticeMapper.selectById(id);
+        if (newsNotice1.getState()==0){
+            newsNotice1.setState(1);
+        }else if(newsNotice1.getState()==1){
+            newsNotice1.setState(0);
         }
-        return newsNoticeMapper.updateById(newsNotice);
+        return newsNoticeMapper.updateById(newsNotice1);
     }
 }

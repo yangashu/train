@@ -30,7 +30,7 @@ public class NewsNoticeController {
     private INewsNoticeService service;
 
     @GetMapping("/one")
-    public int one(){
+    public int one() {
         return service.one();
     }
 
@@ -45,7 +45,7 @@ public class NewsNoticeController {
 
     @PostMapping("/up")
     public int up(@RequestBody NewsNotice newsNotice){
-        int a = newsNoticeService.xiugai(newsNotice);
+        int a = newsNoticeService.xiugai(newsNotice.getNoticeId());
         return a;
     }
 }

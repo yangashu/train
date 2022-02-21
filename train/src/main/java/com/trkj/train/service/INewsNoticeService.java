@@ -19,5 +19,5 @@ public interface INewsNoticeService extends IService<NewsNotice> {
     //查询
     IPage<NoticeView> pageselect (int page, int size);
     //修改状态
-    int xiugai(NewsNotice newsNotice);
+    int xiugai(int id);
 }

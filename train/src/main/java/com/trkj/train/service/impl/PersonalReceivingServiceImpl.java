@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -120,12 +121,15 @@ public class PersonalReceivingServiceImpl extends ServiceImpl<PersonalReceivingM
     }
 
     @Override
-    public int one() {
-        List<PersonalReceiving> list=receivingMapper.selectList(null);
+    public int one(int staffId) {
+        QueryWrapper<PersonalReceiving> wrapper=new QueryWrapper<>();
+        wrapper.eq("staff_id1",staffId);
+        List<PersonalReceiving> list=receivingMapper.selectList(wrapper);
         List<PersonalReceiving> list1=new ArrayList<>();
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         for(PersonalReceiving r : list){
-            String newDate=new Date().toLocaleString().substring(0,10);
-            String oldDate=r.getReceivingDate().toString().substring(0,10);
+            String newDate= format.format(new Date());
+            String oldDate= format.format(r.getReceivingDate());
             if (newDate.equals(oldDate)){
                 list1.add(r);
             }else {

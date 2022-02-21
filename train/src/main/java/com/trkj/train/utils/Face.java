@@ -14,7 +14,7 @@ public class Face {
 //    1、创建java代码和百度云交互的client对象
     private AipFace face=new AipFace("25105403","Id5yogqBTAaqttMZG9NkGd67","y4Q5RhU3XHu9KFer6PC32PTaOWsRxgSf");
     //人脸注册：向百度人脸库中添加一张图片
-    public Result one(String image) throws Exception {
+    public Result one(int staffId,String image) throws Exception {
 //        2、参数设置
         HashMap<String,String> map=new HashMap<>();
         map.put("quality_control","NORMAL");//图片质量，四个等级 常规使用普通（NORMAL） NONE LOW NORMAL HIGH
@@ -32,9 +32,7 @@ public class Face {
          * 参数四：用户ID
          * 参数五：hashMap中的基本参数配置
          */
-        int i=(int) (Math.random()*(9999-1000)+1000);//自动生成人脸库ID，范围可调
-        String id=i+"";//转换字符串
-        JSONObject res=face.addUser(image,"BASE64","myImg",id,map);
+        JSONObject res=face.addUser(image,"BASE64","myImg",staffId+"",map);
 //        输出是否上传成功
 //        System.out.println(res.toString());
         int jg = Integer.parseInt(res.get("error_code").toString());
@@ -124,7 +122,6 @@ public class Face {
          */
 //        int i=(int) (Math.random()*(9999-1000)+1000);//自动生成人脸库ID，范围可调
 //        String id=i+"";//转换字符串
-        JSONObject resone = face.detect(image, "BASE64", null);
         JSONObject res=face.updateUser(image,"BASE64","myImg",userid+"",map);
 //        输出是否上传成功
 //        System.out.println(res.toString());

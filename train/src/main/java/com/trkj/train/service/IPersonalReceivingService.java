@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IPersonalReceivingService extends IService<PersonalReceiving> {
-    public int one();
+    public int one(int staffId);
 
     //分页查询
     IPage<ReceivingView> receiving(int page, int size, int id);

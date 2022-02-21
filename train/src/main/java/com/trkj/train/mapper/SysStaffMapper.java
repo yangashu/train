@@ -23,6 +23,9 @@ public interface SysStaffMapper extends BaseMapper<SysStaff> {
 
     @Select("select max(staff_name) from sys_staff")
     public String selectNameMax();
+
+    @Select("select max(staff_id) from sys_staff")
+    public int selectIdMax();
     //    班级管理的添加班级弹框中的   班主任下拉框查询
     @Select("SELECT *\n" +
             "            FROM sys_staff_position sp\n" +

@@ -37,20 +37,20 @@ public class FaceController {
         return result;
     }
 
-    //检测是否有人脸存在
-    @PostMapping("/two")
-    public Result two(MultipartFile url) throws Exception {
-        Result result=face.two(Base64Util.encode(url.getBytes()));
-        if(result.getCode().equals("0")){
-            result = face.one(Base64Util.encode(url.getBytes()));
-        }
-        return result;
-
-    }
-
-    //人脸注册的方法
-
-    //人脸更新的方法
-
-    //人脸删除的方法
+//    //检测是否有人脸存在
+//    @PostMapping("/two")
+//    public Result two(MultipartFile url) throws Exception {
+//        Result result=face.two(Base64Util.encode(url.getBytes()));
+//        if(result.getCode().equals("0")){
+//            result = face.one(Base64Util.encode(url.getBytes()));
+//        }
+//        return result;
+//
+//    }
+//
+//    //人脸注册的方法
+//
+//    //人脸更新的方法
+//
+//    //人脸删除的方法
 }

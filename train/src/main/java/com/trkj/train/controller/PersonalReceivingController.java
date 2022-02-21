@@ -29,8 +29,8 @@ public class PersonalReceivingController {
     private IPersonalReceivingService service;
 
     @GetMapping("/one")
-    public int one(){
-        return service.one();
+    public int one(@RequestParam("staffId") int staffId){
+        return service.one(staffId);
     }
     @Autowired
     private  IPersonalReceivingService receivingService;

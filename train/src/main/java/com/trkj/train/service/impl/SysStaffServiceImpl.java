@@ -14,6 +14,7 @@ import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import com.trkj.train.entity.*;
 import com.trkj.train.entity.vo.staffAndPersonal;
+import com.trkj.train.mapper.CantonSatffsignMapper;
 import com.trkj.train.mapper.SysPersonalMapper;
 import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.mapper.SysStaffPositionMapper;
@@ -32,10 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -45,6 +43,7 @@ import java.util.UUID;
  * @author 沈杨卓
  * @since 2022-01-18
  */
+@Transactional
 @Service
 public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> implements ISysStaffService {
 
@@ -53,6 +52,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
     @Autowired
     private SysStaffMapper mapper;
+
+    @Autowired
+    private CantonSatffsignMapper signMapper;
 
     @Autowired
     private SysStaffPositionMapper staffPositionMapper;
@@ -84,7 +86,6 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         return iPage;
     }
 
-    @Transactional
     @Override
     public Result insert(Map<String,Object> map) {
 
@@ -240,8 +241,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         return iPage1;
     }
 
+    //人脸更新
     @Override
-    public Result updateFace(int userId,String url) throws Exception {
+    public Result updateFace(int userId,String url){
         return face.four(userId,url);
     }
 
@@ -335,6 +337,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         return mapper.updateById(s);
     }
 
+    //获取员工账号
     @Override
     public String selectStaffName() {
         String maxStaffName=mapper.selectNameMax();
@@ -348,6 +351,72 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         }
         return maxStaffName;
     }
+
+    //修改密码
+    @Override
+    public Result updatePass(int staffId, String oldPass, String newPass) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("staff_id",staffId);
+        SysStaff staff=mapper.selectOne(wrapper);
+        System.out.println(passwordEncoder.matches(oldPass,staff.getStaffPass()));
+        if(passwordEncoder.matches(oldPass,staff.getStaffPass())){
+            newPass=passwordEncoder.encode(newPass);
+            staff.setStaffPass(newPass);
+            try {
+                int i=mapper.updateById(staff);
+                return Result.success("1","修改密码成功",i);
+            }catch (Exception e){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return Result.error("0","操作失败");
+            }
+        }else{
+            return Result.error("0","原密码错误");
+        }
+    }
+
+    //员工入职
+    @Override
+    public Result addStaff(SysStaff staff) {
+        try {
+            staff.setStaffState(0);
+            staff.setDeleted(0);
+            staff.setStaffPass(passwordEncoder.encode(staff.getStaffPass()));
+            int i=mapper.insert(staff);
+            QueryWrapper wrapper=new QueryWrapper();
+            wrapper.eq("personal_id",staff.getPersonalId());
+            SysPersonal personal=personalMapper.selectOne(wrapper);
+            personal.setPersonalType(0);
+            int j=personalMapper.updateById(personal);
+            return Result.success("0","入职成功",i);
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return Result.error("1","出错误了，请等待维修");
+        }
+    }
+
+    //注册人脸
+    @Override
+    public Result addUser(String url) throws Exception {
+        int staffId=mapper.selectIdMax();
+        CantonSatffsign sign=new CantonSatffsign();
+        sign.setSignState(0);
+        sign.setSignDate(new Date());
+        sign.setStaffId(staffId);
+        sign.setDeleted(0);
+        try{
+            int i=signMapper.insert(sign);
+            if(i>0){
+                return face.one(staffId,url);
+            }else{
+                return Result.error("1","出错了！！！");
+            }
+        }catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return Result.error("1","出错误了，请等待维修");
+        }
+
+    }
+
 
 
 
