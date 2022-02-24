@@ -1,5 +1,7 @@
 package com.trkj.train.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
@@ -24,6 +26,7 @@ import lombok.experimental.Accessors;
 @TableName("RECRUIT_STUDENT")
 @ApiModel(value="RecruitStudent对象", description="")
 @KeySequence(value = "student_seq")
+@ExcelTarget("RecruitStudent")
 public class RecruitStudent implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +34,7 @@ public class RecruitStudent implements Serializable {
     @TableId(value = "STUDENT_ID",type = IdType.INPUT)
     private Integer studentId;
 
+    @Excel(name = "缴费学员")
     @TableField("STUDENT_NAME")
     private String studentName;
 

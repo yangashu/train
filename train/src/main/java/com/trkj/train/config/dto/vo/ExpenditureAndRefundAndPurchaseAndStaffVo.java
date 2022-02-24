@@ -1,5 +1,7 @@
-package com.trkj.train.entity;
+package com.trkj.train.config.dto.vo;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
@@ -12,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 沈杨卓
@@ -21,19 +23,20 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("FINANCE_EXPENDITURE")
-@ApiModel(value="FinanceExpenditure对象", description="")
-@KeySequence(value = "expenditure_seq")
-public class FinanceExpenditure implements Serializable {
+@TableName("finance_expenditure")
+@ApiModel(value="ExpenditureAndRefundAndPurchaseAndStaff对象", description="")
+@ExcelTarget("校务支出")
+public class ExpenditureAndRefundAndPurchaseAndStaffVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
-    @TableId(value = "EXPENDITURE_ID",type = IdType.INPUT)
+    @TableId("EXPENDITURE_ID")
     private Integer expenditureId;
 
+    @Excel(name = "支出金额",suffix = "￥")
     @TableField("EXPENDITURE_MONEY")
     private Integer expenditureMoney;
 
+    @Excel(name = "支出日期",format = "yyyy年MM月dd日 HH时mm分ss秒")
     @TableField("EXPENDITURE_DATE")
     private Date expenditureDate;
 
@@ -47,21 +50,32 @@ public class FinanceExpenditure implements Serializable {
     private Integer payapprovalState;
 
     @TableField("STAFF_ID")
-    private Integer staffId;
+    public Integer staffId;
+
+    @Excel(name = "经办人")
+    @TableField("STAFF_Name")
+    private String staffName;
 
     @TableField("DELETED")
     private Integer deleted;
 
+    @Excel(name = "备注")
     @TableField("REMARKS")
     private Integer remarks;
 
+    @Excel(name = "支出方式",replace = {"现金_0","微信_1","支付宝_2","银行卡_3"})
     @TableField("EXPENDITURE_MODE")
     private Integer expenditureMode;
 
+    @Excel(name = "支出用途")
     @TableField("PURPOSE")
     private Integer purpose;
 
+    @Excel(name = "提款单位/个人")
+    private String drawingName;
     @TableField("DRAWING")
     private Integer drawing;
+
+
 
 }

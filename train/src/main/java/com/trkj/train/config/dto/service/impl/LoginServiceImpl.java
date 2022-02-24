@@ -34,6 +34,7 @@ public class LoginServiceImpl implements LoginService {
         //AuthenticationManager authenticationManager进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(staff.getStaffName(),staff.getStaffPass());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+
         //如果认真没通过，给出对应的提示
         if(Objects.isNull(authenticate)){
             return Result.error("-1","用户名或密码错误！！！");

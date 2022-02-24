@@ -4,6 +4,7 @@ import com.trkj.train.config.dto.domain.LoginUser;
 import com.trkj.train.utils.JwtUtil;
 import com.trkj.train.utils.RedisCache;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.lang.Strings;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.Objects;
 
 @Component
@@ -26,6 +28,15 @@ public class JwtAuthentionTokenFilter extends OncePerRequestFilter {
     @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        while (true){
+//            String s= headerNames.nextElement();
+//            if(StringUtils.isEmpty(s)){
+//                break;
+//            }
+//            System.out.println(s+"       "+request.getHeader(s));
+//        }
         // 获取token
         String token = request.getHeader("token");
         if (!StringUtils.hasText(token)) {
@@ -57,5 +68,5 @@ public class JwtAuthentionTokenFilter extends OncePerRequestFilter {
         //放行
         filterChain.doFilter(request, response);
     }
-    }
+}
 

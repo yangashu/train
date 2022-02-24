@@ -1,5 +1,7 @@
 package com.trkj.train.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import lombok.experimental.Accessors;
 @TableName("SYS_STAFF")
 @ApiModel(value="SysStaff对象", description="")
 @KeySequence(value = "staff_seq")
+@ExcelTarget("SysStaff")
 public class SysStaff implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +37,7 @@ public class SysStaff implements Serializable {
     @TableId(value = "STAFF_ID",type = IdType.INPUT)
     private Integer staffId;
 
+    @Excel(name = "录入人")
     @TableField("STAFF_NAME")
     private String staffName;
 
