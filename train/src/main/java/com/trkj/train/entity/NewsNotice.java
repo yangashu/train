@@ -52,5 +52,7 @@ public class NewsNotice implements Serializable {
     @TableField("STATE")
     private Integer state;
 
+    @TableField("DEPT_ID")
+    private Integer deptId;
 
 }

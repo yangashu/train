@@ -49,7 +49,7 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
 
         for(int i=0;i<iPage.getRecords().size();i++){
             QueryWrapper<SysStaff> queryWrapper1 = new QueryWrapper();
-            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId2());
+            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId1());
             queryWrapper.eq("deleted",0);
             SysStaff personal = staffMapper.selectOne(queryWrapper1);
             SendView sendView = new SendView();
@@ -82,7 +82,7 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
 
         for(int i=0;i<iPage.getRecords().size();i++){
             QueryWrapper<SysStaff> queryWrapper1 = new QueryWrapper();
-            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId2());
+            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId1());
             queryWrapper.eq("deleted",0);
             SysStaff personal = staffMapper.selectOne(queryWrapper1);
             SendView sendView = new SendView();
@@ -113,21 +113,21 @@ public class PersonalSendServiceImpl extends ServiceImpl<PersonalSendMapper, Per
         r.setReceivingContent(send.getSendContent());
         r.setReceivingDate(new Date());
         r.setReceivingTitle(send.getSendTitle());
-        r.setStaffId1(send.getStaffId2());
-        r.setStaffId2(send.getStaffId1());
+        r.setStaffId1(send.getStaffId1());
+        r.setStaffId2(send.getStaffId2());
         r.setReceivingState(0);
         int b=receivingMapper.insert(r);
         return b;
     }
-
+    //草稿箱发件
     public int ad(PersonalSend send){
         int b=sendMapper.insert(send);
         PersonalReceiving r = new PersonalReceiving();
         r.setReceivingContent(send.getSendContent());
         r.setReceivingDate(new Date());
         r.setReceivingTitle(send.getSendTitle());
-        r.setStaffId1(send.getStaffId2());
-        r.setStaffId2(send.getStaffId1());
+        r.setStaffId1(send.getStaffId1());
+        r.setStaffId2(send.getStaffId2());
         r.setReceivingState(0);
         int a = receivingMapper.insert(r);
         return a;

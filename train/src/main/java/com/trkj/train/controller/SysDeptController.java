@@ -24,6 +24,6 @@ public class SysDeptController {
     private ISysDeptService service;
     @GetMapping("/list")
     public Result list(){
-        return Result.success(service.list());
+        return Result.success(service.selectDeptList());
     }
 }

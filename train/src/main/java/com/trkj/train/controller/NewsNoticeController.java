@@ -7,6 +7,7 @@ import com.trkj.train.config.dto.SendView;
 import com.trkj.train.entity.NewsNotice;
 import com.trkj.train.service.impl.NewsNoticeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -32,7 +33,31 @@ public class NewsNoticeController {
 
     @PostMapping("/up")
     public int up(@RequestBody NewsNotice newsNotice){
-        int a = newsNoticeService.xiugai(newsNotice);
+        int a = newsNoticeService.xiugai(newsNotice.getNoticeId());
         return a;
+    }
+
+    @PostMapping("/zt")
+    public int zt(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.zanting(newsNotice.getNoticeId());
+        return a;
+    }
+
+    @PostMapping("/del")
+    public int del(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.del(newsNotice.getNoticeId());
+        return a;
+    }
+
+    @PostMapping("/add")
+    public int add(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.add(newsNotice);
+        return a;
+    }
+
+    @GetMapping("/selectlike")
+    public IPage<NoticeView> pagelike(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam String like,@RequestParam String mode){
+        IPage<NoticeView> noticeViewIPage = newsNoticeService.pageselectLike(page, size,like,mode);
+        return noticeViewIPage;
     }
 }
