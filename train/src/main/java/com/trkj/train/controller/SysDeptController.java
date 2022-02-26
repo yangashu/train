@@ -27,9 +27,10 @@ public class SysDeptController {
     @Autowired
     private ISysDeptService service;
 
+    //查询全部部门
     @GetMapping("/list")
     public Result list(){
-        return Result.success(service.list());
+        return Result.success(service.selectDeptList());
     }
 
     //分页查询方法
@@ -39,13 +40,13 @@ public class SysDeptController {
     }
     //添加方法
     @GetMapping("/two")
-    public Result two(@RequestParam("deptName") String deptName){
-        return service.two(deptName);
+    public Result two(@RequestParam("deptName") String deptName,@RequestParam("deptParentid")int deptPanentid){
+        return service.two(deptName,deptPanentid);
     }
     //修改方法
     @GetMapping("/three")
-    public Result three(@RequestParam("id")int id,@RequestParam("deptName")String deptName){
-        return service.four(id,deptName);
+    public Result three(@RequestParam("id")int id,@RequestParam("deptName")String deptName,@RequestParam("deptParentid")int deptPanentid){
+        return service.four(id,deptName,deptPanentid);
     }
     //删除方法
     @GetMapping("/four")

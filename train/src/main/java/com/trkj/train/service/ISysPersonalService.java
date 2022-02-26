@@ -1,6 +1,7 @@
 package com.trkj.train.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.entity.SysPersonal;
@@ -29,4 +30,6 @@ public interface ISysPersonalService extends IService<SysPersonal> {
     public Result export(HttpServletResponse response, Paging paging) throws Exception;
 
     public Result saveAll(MultipartFile excelFile) throws Exception;
+
+    public IPage<SysPersonal> likePersonal(Page page,String like);
 }

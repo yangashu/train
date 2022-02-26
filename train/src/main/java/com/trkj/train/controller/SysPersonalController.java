@@ -2,6 +2,7 @@ package com.trkj.train.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.entity.SysPersonal;
@@ -28,9 +29,10 @@ public class SysPersonalController {
     @Autowired
     private ISysPersonalService iPersonalService;
 
+    //员工考勤分页模糊查询
     @GetMapping("/one")
     public IPage<staffAndSign> one(@RequestParam("information") String information, @RequestParam("mode") String mode, @RequestParam("mycurrentPage") int page, @RequestParam("mypagesize") int size){
-        return  iPersonalService.two(information,mode,page,size);
+        return  iPersonalService.   two(information,mode,page,size);
     }
 
     //查询未入职用户
@@ -38,6 +40,12 @@ public class SysPersonalController {
     public Result<IPage<SysPersonal>> notEmployed(@RequestParam("currentPage") int page,@RequestParam("pagesize") int size){
         IPage<SysPersonal> ipage=iPersonalService.selectPer(page,size);
         return Result.success(ipage);
+    }
+
+    //未入职用户模糊查询
+    @GetMapping("/likePersonal")
+    public Result<IPage<SysPersonal>> ontEmployedLike(@RequestParam("currentPage") int page,@RequestParam("pagesize") int size,@RequestParam("like") String like){
+        return Result.success(iPersonalService.likePersonal(new Page(page,size),like));
     }
 
     //导出

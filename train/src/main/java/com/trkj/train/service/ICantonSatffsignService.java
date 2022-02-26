@@ -19,5 +19,7 @@ public interface ICantonSatffsignService extends IService<CantonSatffsign> {
 
     public int two(int userId);
 
+    public int selectSignOne(int staffId);
+
     public CantonSatffsign three(int staffID);
 }

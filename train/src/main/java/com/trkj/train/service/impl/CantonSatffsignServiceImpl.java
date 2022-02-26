@@ -54,6 +54,7 @@ public class CantonSatffsignServiceImpl extends ServiceImpl<CantonSatffsignMappe
     public IPage<staffAndSign> one(int page, int size) {
         QueryWrapper<SysStaff> q=new QueryWrapper();
         q.eq("STAFF_STATE",0);
+        q.orderByAsc("staff_id");
         IPage<SysStaff> iPage=staffMapper.selectPage(new Page<>(page,size),q);
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         List<staffAndSign> list1=new ArrayList<>();
@@ -112,9 +113,26 @@ public class CantonSatffsignServiceImpl extends ServiceImpl<CantonSatffsignMappe
 
     }
 
+    @Override
+    public int selectSignOne(int staffId) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("staff_id",staffId);
+        CantonSatffsign sign=mapper.selectOne(wrapper);
+        SimpleDateFormat format=new SimpleDateFormat("yyy-MM-dd");
+        String newDate=format.format(new Date());
+        String oldDate= format.format(sign.getSignDate());
+        if(newDate.equals(oldDate)){
+            return 1;
+        }else {
+            return 0;
+        }
+
+    }
+
     //员工打卡中模糊查询用到的方法
     @Override
     public CantonSatffsign three(int staffID) {
+        System.out.println("查询"+staffID);
         QueryWrapper queryWrapper=new QueryWrapper();
         queryWrapper.eq("STAFF_ID",staffID);
         return mapper.selectOne(queryWrapper);

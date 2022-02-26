@@ -37,6 +37,9 @@ public class SysDept implements Serializable {
     @TableField("DEPT_TIME")
     private Date deptTime;
 
+    @TableField("DEPT_PARENTID")
+    private Integer deptParentid;
+
     @TableField("DELETED")
     private Integer deleted;
 

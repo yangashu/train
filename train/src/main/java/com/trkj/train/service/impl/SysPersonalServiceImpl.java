@@ -77,13 +77,18 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
         }else if(mode.equals("联系电话")){
             queryWrapper.like("PERSONAL_PHONE",information);
         }
+        queryWrapper.eq("personal_type",0);
+        queryWrapper.orderByAsc("personal_id");
         IPage<SysPersonal> iPage0=mapper.selectPage(new Page(page,size),queryWrapper);
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         IPage<staffAndSign> iPage=new Page<>();
         List<staffAndSign> list=new ArrayList<>();
         for(int i=0;i<iPage0.getRecords().size();i++){
             QueryWrapper q=new QueryWrapper();
             q.eq("personal_id",iPage0.getRecords().get(i).getPersonalId());
             SysStaff staff=staffMapper.selectOne(q);
+            System.out.println("id："+iPage0.getRecords().get(i).getPersonalId());
+            System.out.println("实体类"+staff.toString());
             CantonSatffsign s=service.three(staff.getStaffId());
             staffAndSign ss=new staffAndSign();
             ss.setSignId(s.getSignId());
@@ -91,7 +96,13 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
             ss.setPersonalName(iPage0.getRecords().get(i).getPersonalName());
             ss.setPersonalPhone(iPage0.getRecords().get(i).getPersonalPhone());
             ss.setSignDate(s.getSignDate());
-            ss.setSignState(s.getSignState());
+            String newDate=format.format(new Date());
+            String oldDate= format.format(s.getSignDate());;
+            if(newDate.equals(oldDate)){
+                ss.setSignState(1);
+            }else{
+                ss.setSignState(0);
+            }
             list.add(ss);
         }
         iPage.setCurrent(iPage0.getCurrent());
@@ -148,5 +159,14 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
         });
 
         return Result.success("200","导入成功！！！",null);
+    }
+
+    //分页模糊查询方法
+    @Override
+    public IPage<SysPersonal> likePersonal(Page page, String like) {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("personal_type",1);
+        wrapper.like("personal_name",like);
+        return mapper.selectPage(page,wrapper);
     }
 }

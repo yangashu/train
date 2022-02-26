@@ -39,6 +39,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public SysStaffPositionMapper spMapper;
 
     @Override
+    public List<SysDept> selectDeptList() {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.orderByAsc("dept_id");
+        return mapper.selectList(wrapper);
+    }
+
+    @Override
     //查询全部部门分页方法
     public IPage<staffAndDept> one(int page, int size) {
         QueryWrapper queryWrapper=new QueryWrapper();
@@ -61,6 +68,21 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             staffAndDept sd=new staffAndDept();
             sd.setDeptId(id);
             sd.setDeptName(iPage.getRecords().get(i).getDeptName());
+            sd.setDeptTime(iPage.getRecords().get(i).getDeptTime());
+            sd.setDeptParentid(iPage.getRecords().get(i).getDeptParentid());
+            int parentId=iPage.getRecords().get(i).getDeptParentid();
+            if(parentId==0){
+                sd.setParentName("教育培训机构");
+            }else{
+                SysDept dept=mapper.selectOne(new QueryWrapper<SysDept>().eq("dept_id",parentId));
+                sd.setParentName(dept.getDeptName());
+            }
+
+            for (SysDept dept:iPage.getRecords()){
+                if(dept.getDeptParentid()==iPage.getRecords().get(i).getDeptParentid()){
+                    sd.getList().add(dept);
+                }
+            }
             sd.setCount(rs);
             list.add(sd);
         }
@@ -74,14 +96,17 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     public List<SysDept> three() {
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.orderByAsc("dept_id");
         return mapper.selectList(null);
     }
 
     @Override
     //添加部门方法
-    public Result two(String deptName) {
+    public Result two(String deptName,int deptParentid) {
         SysDept dept=new SysDept();
         dept.setDeptName(deptName);
+        dept.setDeptParentid(deptParentid);
         List<SysDept> list=this.three();
         boolean jg=false;
         for(SysDept d : list){
@@ -102,15 +127,21 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     //修改部门方法
     @Override
-    public Result four(int id,String deptName) {
+    public Result four(int id,String deptName,int deptParentid) {
         SysDept dept=new SysDept();
         dept.setDeptName(deptName);
+        dept.setDeptParentid(deptParentid);
         List<SysDept> list=this.three();
         boolean jg=false;
         for(SysDept d : list){
             if(d.getDeptName().equals(dept.getDeptName())){
-                jg=false;
-                break;
+                if(d.getDeptId()==id){
+
+                }else{
+                    jg=false;
+                    break;
+                }
+
             }else{
                 jg=true;
             }
@@ -157,6 +188,21 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             staffAndDept sd=new staffAndDept();
             sd.setDeptId(id);
             sd.setDeptName(iPage.getRecords().get(i).getDeptName());
+            sd.setDeptTime(iPage.getRecords().get(i).getDeptTime());
+            sd.setDeptParentid(iPage.getRecords().get(i).getDeptParentid());
+            int parentId=iPage.getRecords().get(i).getDeptParentid();
+            if(parentId==0){
+                sd.setParentName("教育培训机构");
+            }else{
+                SysDept dept=mapper.selectOne(new QueryWrapper<SysDept>().eq("dept_id",parentId));
+                sd.setParentName(dept.getDeptName());
+            }
+
+            for (SysDept dept:iPage.getRecords()){
+                if(dept.getDeptParentid()==iPage.getRecords().get(i).getDeptParentid()){
+                    sd.getList().add(dept);
+                }
+            }
             sd.setCount(rs);
             list.add(sd);
         }

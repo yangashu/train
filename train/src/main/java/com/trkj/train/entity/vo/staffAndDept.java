@@ -1,8 +1,13 @@
 package com.trkj.train.entity.vo;
 
+import com.trkj.train.entity.SysDept;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,9 +17,13 @@ public class staffAndDept {
 
     private String deptName;
 
-    private String staffName;
+    private Date deptTime;
 
-    private String staffPhone;
+    private int deptParentid;
+
+    private String parentName;
+
+    private List<SysDept> list=new ArrayList<>();
 
     private int count;
 }

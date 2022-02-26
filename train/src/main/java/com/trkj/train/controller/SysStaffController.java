@@ -96,7 +96,6 @@ public class SysStaffController {
     //修改员工资料
     @PostMapping("/six")
     public Result<?> six(@RequestBody staffAndPersonal sap){
-        System.out.println("关键输出："+sap.getPersonalBirthday().toLocaleString());
         int i=service.six(sap);
         return Result.success(i);
     }

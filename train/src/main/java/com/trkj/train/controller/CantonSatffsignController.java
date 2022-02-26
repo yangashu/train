@@ -2,6 +2,7 @@ package com.trkj.train.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.trkj.train.config.Result;
 import com.trkj.train.entity.CantonSatffsign;
 import com.trkj.train.entity.vo.staffAndSign;
 import com.trkj.train.service.ICantonSatffsignService;
@@ -55,4 +56,15 @@ public class CantonSatffsignController {
         return service.one(page, size);
     }
 
+    //查询已经登录的账号是否打卡了
+    @GetMapping("/selectSignOne")
+    public Result selectSignOne(@RequestParam("staffId") int staffId){
+        int i = service.selectSignOne(staffId);
+        return Result.success(i);
+    }
+
+    @GetMapping("/three")
+    public Result three(){
+        return null;
+    }
 }

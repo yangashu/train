@@ -19,13 +19,15 @@ import java.util.List;
  */
 public interface ISysDeptService extends IService<SysDept> {
 
+    public List<SysDept> selectDeptList();
+
     public IPage<staffAndDept> one(int page, int size);
 
     public List<SysDept> three();
 
-    public Result two(String deptName);
+    public Result two(String deptName,int deptParentid);
 
-    public Result four(int id,String deptName);
+    public Result four(int id,String deptName,int deptParentid);
 
     public Result five(int id);
 

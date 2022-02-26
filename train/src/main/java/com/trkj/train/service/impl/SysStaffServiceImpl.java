@@ -14,10 +14,7 @@ import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
 import com.trkj.train.entity.*;
 import com.trkj.train.entity.vo.staffAndPersonal;
-import com.trkj.train.mapper.CantonSatffsignMapper;
-import com.trkj.train.mapper.SysPersonalMapper;
-import com.trkj.train.mapper.SysStaffMapper;
-import com.trkj.train.mapper.SysStaffPositionMapper;
+import com.trkj.train.mapper.*;
 import com.trkj.train.service.ISysStaffService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.trkj.train.utils.Face;
@@ -55,6 +52,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
     @Autowired
     private CantonSatffsignMapper signMapper;
+
+    @Autowired
+    private CantonAttendanceMapper attendanceMapper;
 
     @Autowired
     private SysStaffPositionMapper staffPositionMapper;
@@ -165,7 +165,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
     @Override
     public IPage<staffAndPersonal> two(int page, int size) {
-        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),null);
+        QueryWrapper<SysStaff> wrapper=new QueryWrapper();
+        wrapper.orderByAsc("staff_id");
+        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),wrapper);
         List<staffAndPersonal> list=new ArrayList<>();
         IPage<staffAndPersonal> iPage1=new Page<>();
         for (int i=0;i<iPage0.getRecords().size();i++){
@@ -202,9 +204,12 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         return iPage1;
     }
 
+
     @Override
     public IPage<staffAndPersonal> selectFace(int page,int size) {
-        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),null);
+        QueryWrapper<SysStaff> wrapper=new QueryWrapper();
+        wrapper.orderByAsc("staff_id");
+        IPage<SysStaff> iPage0=mapper.selectPage(new Page(page,size),wrapper);
         List<staffAndPersonal> list=new ArrayList<>();
         IPage<staffAndPersonal> iPage1=new Page<>();
         for (int i=0;i<iPage0.getRecords().size();i++){
@@ -250,8 +255,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
     //分页模糊查询
     @Override
     public IPage<staffAndPersonal> five(Page page, String like) {
-        QueryWrapper queryWrapper=new QueryWrapper();
+        QueryWrapper<SysPersonal> queryWrapper=new QueryWrapper();
         queryWrapper.like("personal_name",like);
+        queryWrapper.eq("personal_type",0);
         IPage<SysPersonal> iPage0=personalMapper.selectPage(page,queryWrapper);
         List<staffAndPersonal> list=new ArrayList<>();
         IPage<staffAndPersonal> iPage1=new Page<>();
@@ -316,6 +322,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         p.setPersonalExperience(sap.getPersonalExperience());
         p.setPersonalIdcard(sap.getPersonalIdcard());
         p.setPersonalGraduation(sap.getPersonalGraduation());
+        p.setPersonalMail(sap.getPersonalMail());
         p.setPersonalSex(sap.getPersonalSex());
         p.setPersonalInterview(sap.getPersonalInterview());
         p.setPersonalEducation(sap.getPersonalEducation());
@@ -397,14 +404,23 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
     //注册人脸
     @Override
     public Result addUser(String url) throws Exception {
+        Result result=face.two(url);
+        if(result.getCode().equals("-1")){
+            return result;
+        }else{
         int staffId=mapper.selectIdMax();
         CantonSatffsign sign=new CantonSatffsign();
         sign.setSignState(0);
         sign.setSignDate(new Date());
         sign.setStaffId(staffId);
         sign.setDeleted(0);
+        CantonAttendance attendance=new CantonAttendance();
+        attendance.setAttendanceDate(new Date());
+        attendance.setStaffId(staffId);
+        attendance.setDeleted(0);
         try{
             int i=signMapper.insert(sign);
+            int j=attendanceMapper.insert(attendance);
             if(i>0){
                 return face.one(staffId,url);
             }else{
@@ -414,7 +430,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return Result.error("1","出错误了，请等待维修");
         }
-
+        }
     }
 
 
