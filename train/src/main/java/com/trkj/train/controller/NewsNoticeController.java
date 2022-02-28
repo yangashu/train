@@ -26,8 +26,8 @@ public class NewsNoticeController {
     private NewsNoticeServiceImpl newsNoticeService;
 
     @GetMapping("/select")
-    public IPage<NoticeView> page(@RequestParam("page") int page, @RequestParam("size") int size){
-        IPage<NoticeView> sendIPage = newsNoticeService.pageselect(page, size);
+    public IPage<NoticeView> page(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam("id") int id){
+        IPage<NoticeView> sendIPage = newsNoticeService.pageselect(page, size,id);
         return sendIPage;
     }
 

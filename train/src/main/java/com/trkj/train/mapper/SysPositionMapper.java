@@ -2,6 +2,7 @@ package com.trkj.train.mapper;
 
 import com.trkj.train.entity.SysPosition;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Repository
 public interface SysPositionMapper extends BaseMapper<SysPosition> {
 
 }

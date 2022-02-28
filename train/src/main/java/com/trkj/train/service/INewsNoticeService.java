@@ -18,7 +18,7 @@ public interface INewsNoticeService extends IService<NewsNotice> {
     //模糊查询
     IPage<NoticeView> pageselectLike (int page, int size,String like,String mode);
     //查询
-    IPage<NoticeView> pageselect (int page, int size);
+    IPage<NoticeView> pageselect (int page, int size,int id);
     //修改为发布
     int xiugai(int id);
     //修改为暂停
@@ -27,4 +27,6 @@ public interface INewsNoticeService extends IService<NewsNotice> {
     int del(int id);
     //新增
     int add(NewsNotice newsNotice);
+    //工作台查询
+
 }

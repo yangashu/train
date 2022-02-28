@@ -14,5 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysPersonalService extends IService<SysPersonal> {
 
+    //修改头像
+    int xiugai(SysPersonal sysPersonal);
 
 }

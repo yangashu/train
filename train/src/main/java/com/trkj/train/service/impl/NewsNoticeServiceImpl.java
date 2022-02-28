@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.dto.NoticeView;
 import com.trkj.train.config.dto.SendView;
-import com.trkj.train.entity.NewsNotice;
-import com.trkj.train.entity.PersonalSend;
-import com.trkj.train.entity.SysStaff;
+import com.trkj.train.entity.*;
 import com.trkj.train.mapper.NewsNoticeMapper;
+import com.trkj.train.mapper.SysPositionMapper;
 import com.trkj.train.mapper.SysStaffMapper;
+import com.trkj.train.mapper.SysStaffPositionMapper;
 import com.trkj.train.service.INewsNoticeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +34,12 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
 
     @Autowired
     private SysStaffMapper staffMapper;
+
+    @Autowired
+    private SysStaffPositionMapper sysStaffPositionMapper;
+
+    @Autowired
+    private SysPositionMapper sysPositionMapper;
 
     @Override
     public IPage<NoticeView> pageselectLike(int page, int size, String like, String mode) {
@@ -71,9 +77,18 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
     }
 
     @Override
-    public IPage<NoticeView> pageselect(int page, int size) {
+    public IPage<NoticeView> pageselect(int page, int size,int id) {
+        QueryWrapper<SysStaffPosition> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("STAFF_ID",id);
+        List<SysStaffPosition> list1 = sysStaffPositionMapper.selectList(queryWrapper);
+
+        QueryWrapper<SysPosition> sysPositionQueryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("POSITION_ID",list1.get(0).getPositionId());
+        SysPosition sysPosition = sysPositionMapper.selectOne(sysPositionQueryWrapper);
+
+
         Page<NewsNotice> page1=new Page<>(page,size);
-        IPage<NewsNotice> iPage = newsNoticeMapper.selectPage(page1,null);
+        IPage<NewsNotice> iPage = newsNoticeMapper.selectPage(page1,new QueryWrapper<NewsNotice>().eq("dept_id",sysPosition.getDeptId()));
         IPage<NoticeView> viewIPage = new Page<>();
         List<NoticeView> list = new ArrayList();
 

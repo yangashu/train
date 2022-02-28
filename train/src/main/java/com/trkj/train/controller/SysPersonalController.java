@@ -2,7 +2,9 @@ package com.trkj.train.controller;
 
 
 import com.trkj.train.config.Result;
+import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.service.ISysPersonalService;
+import com.trkj.train.service.impl.SysPersonalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,5 +19,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/sys-personal")
 public class SysPersonalController {
+
+
+    @Autowired
+    private SysPersonalServiceImpl service;
+
+    @PostMapping("/up")
+    public int xiugai(@RequestBody SysPersonal sysPersonal){
+        int xiugai = service.xiugai(sysPersonal);
+        return xiugai;
+    }
 
 }
