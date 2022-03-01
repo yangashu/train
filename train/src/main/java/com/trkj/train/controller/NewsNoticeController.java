@@ -7,7 +7,6 @@ import com.trkj.train.config.dto.SendView;
 import com.trkj.train.entity.NewsNotice;
 import com.trkj.train.service.impl.NewsNoticeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -56,8 +55,8 @@ public class NewsNoticeController {
     }
 
     @GetMapping("/selectlike")
-    public IPage<NoticeView> pagelike(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam String like,@RequestParam String mode){
-        IPage<NoticeView> noticeViewIPage = newsNoticeService.pageselectLike(page, size,like,mode);
+    public IPage<NoticeView> pagelike(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam String like,@RequestParam String mode,@RequestParam("id") int id){
+        IPage<NoticeView> noticeViewIPage = newsNoticeService.pageselectLike(page, size,like,mode,id);
         return noticeViewIPage;
     }
 }

@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface INewsNoticeService extends IService<NewsNotice> {
 
     //模糊查询
-    IPage<NoticeView> pageselectLike (int page, int size,String like,String mode);
+    IPage<NoticeView> pageselectLike (int page, int size,String like,String mode,int id);
     //查询
     IPage<NoticeView> pageselect (int page, int size,int id);
     //修改为发布

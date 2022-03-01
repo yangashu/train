@@ -42,21 +42,29 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
     private SysPositionMapper sysPositionMapper;
 
     @Override
-    public IPage<NoticeView> pageselectLike(int page, int size, String like, String mode) {
-        QueryWrapper<NewsNotice> queryWrapper = new QueryWrapper<>();
+    public IPage<NoticeView> pageselectLike(int page, int size, String like, String mode,int id) {
+        QueryWrapper<SysStaffPosition> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("STAFF_ID",id);
+        List<SysStaffPosition> list1 = sysStaffPositionMapper.selectList(queryWrapper);
+
+        QueryWrapper<SysPosition> sysPositionQueryWrapper = new QueryWrapper<>();
+        sysPositionQueryWrapper.eq("POSITION_ID",list1.get(0).getPositionId());
+        SysPosition sysPosition = sysPositionMapper.selectOne(sysPositionQueryWrapper);
+
+        QueryWrapper<NewsNotice> queryWrapper1 = new QueryWrapper<>();
         if (mode.equals("公告主题")){
-            queryWrapper.like("notice_theme",like);
+            queryWrapper1.like("notice_theme",like);
         }else if(mode.equals("公告内容")){
-            queryWrapper.like("notice_content",like);
+            queryWrapper1.like("notice_content",like);
         }
-        Page<NewsNotice> page1=new Page<>(page,size);
-        IPage<NewsNotice> iPage = newsNoticeMapper.selectPage(page1,queryWrapper);
+        Page<NewsNotice> page1=new Page<>(page,size,id);
+        IPage<NewsNotice> iPage = newsNoticeMapper.selectPage(page1,queryWrapper1);
         IPage<NoticeView> viewIPage = new Page<>();
         List<NoticeView> list = new ArrayList();
         for(int i=0;i<iPage.getRecords().size();i++){
-            QueryWrapper<SysStaff> queryWrapper1 = new QueryWrapper();
-            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId());
-            SysStaff personal = staffMapper.selectOne(queryWrapper1);
+            QueryWrapper<SysStaff> queryWrapper2 = new QueryWrapper();
+            queryWrapper2.eq("staff_id",iPage.getRecords().get(i).getStaffId());
+            SysStaff personal = staffMapper.selectOne(queryWrapper2);
             NoticeView noticeView = new NoticeView();
             noticeView.setNoticeId(iPage.getRecords().get(i).getNoticeId());
             noticeView.setNoticeDate(iPage.getRecords().get(i).getNoticeDate());
@@ -83,12 +91,21 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
         List<SysStaffPosition> list1 = sysStaffPositionMapper.selectList(queryWrapper);
 
         QueryWrapper<SysPosition> sysPositionQueryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("POSITION_ID",list1.get(0).getPositionId());
+        sysPositionQueryWrapper.eq("POSITION_ID",list1.get(0).getPositionId());
         SysPosition sysPosition = sysPositionMapper.selectOne(sysPositionQueryWrapper);
 
 
-        Page<NewsNotice> page1=new Page<>(page,size);
-        IPage<NewsNotice> iPage = newsNoticeMapper.selectPage(page1,new QueryWrapper<NewsNotice>().eq("dept_id",sysPosition.getDeptId()));
+        Page<NewsNotice> page1=new Page<>(page,size,id);
+        IPage<NewsNotice> iPage =null;
+        System.out.println("啊啊啊"+sysPosition.getDeptId());
+        QueryWrapper<NewsNotice> newNotQueryWrapper=new QueryWrapper();
+        newNotQueryWrapper.eq("dept_id",sysPosition.getDeptId());
+        newNotQueryWrapper.or().eq("dept_id",0);
+        if(sysPosition.getDeptId()!=null){
+            iPage= newsNoticeMapper.selectPage(page1,newNotQueryWrapper);
+        }else{
+            iPage = newsNoticeMapper.selectPage(page1,null);
+        }
         IPage<NoticeView> viewIPage = new Page<>();
         List<NoticeView> list = new ArrayList();
 
