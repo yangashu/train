@@ -3,6 +3,7 @@ package com.trkj.train.mapper;
 import com.trkj.train.entity.SysDept;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>

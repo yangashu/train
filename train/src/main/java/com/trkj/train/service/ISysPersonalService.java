@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ISysPersonalService extends IService<SysPersonal> {
 
+    //修改头像
+    int xiugai(SysPersonal sysPersonal);
     public SysPersonal one(int staffId);
 
     public IPage<staffAndSign> two(String information, String mode, int page, int size);

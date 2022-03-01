@@ -7,7 +7,9 @@ import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.vo.staffAndSign;
+import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.service.ISysPersonalService;
+import com.trkj.train.service.impl.SysPersonalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,6 +59,16 @@ public class SysPersonalController {
     @PostMapping("/import")
     public Result saveAll(@RequestParam("file") MultipartFile excelFile) throws Exception {
         return iPersonalService.saveAll(excelFile);
+    }
+
+
+    @Autowired
+    private SysPersonalServiceImpl service;
+
+    @PostMapping("/up")
+    public int xiugai(@RequestBody SysPersonal sysPersonal){
+        int xiugai = service.xiugai(sysPersonal);
+        return xiugai;
     }
 
 }

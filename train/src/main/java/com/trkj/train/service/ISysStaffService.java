@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public interface ISysStaffService extends IService<SysStaff> {
     public IPage<SysStaff> paging(Page<SysStaff> page, String search);
-
+    //
     Result insert(Map<String, Object> map);
 
     Result findByid(int id);

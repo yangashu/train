@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.trkj.train.entity.SysDept;
 import com.trkj.train.entity.SysPosition;
 import com.trkj.train.entity.vo.staffAndDept;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -30,6 +33,9 @@ import java.util.List;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
     @Autowired
+    private SysDeptMapper mapper;
+
+    @Autowired
     public SysDeptMapper mapper;
 
     @Autowired
@@ -37,6 +43,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Autowired
     public SysStaffPositionMapper spMapper;
+
+    @Override
+    public List<SysDept> selectDeptList() {
+        return mapper.selectList(new QueryWrapper<SysDept>().orderByAsc("dept_id"));
+    }
 
     @Override
     public List<SysDept> selectDeptList() {

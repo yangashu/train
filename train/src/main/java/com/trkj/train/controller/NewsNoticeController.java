@@ -38,8 +38,8 @@ public class NewsNoticeController {
     private NewsNoticeServiceImpl newsNoticeService;
 
     @GetMapping("/select")
-    public IPage<NoticeView> page(@RequestParam("page") int page, @RequestParam("size") int size){
-        IPage<NoticeView> sendIPage = newsNoticeService.pageselect(page, size);
+    public IPage<NoticeView> page(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam("id") int id){
+        IPage<NoticeView> sendIPage = newsNoticeService.pageselect(page, size,id);
         return sendIPage;
     }
 
@@ -47,5 +47,29 @@ public class NewsNoticeController {
     public int up(@RequestBody NewsNotice newsNotice){
         int a = newsNoticeService.xiugai(newsNotice.getNoticeId());
         return a;
+    }
+
+    @PostMapping("/zt")
+    public int zt(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.zanting(newsNotice.getNoticeId());
+        return a;
+    }
+
+    @PostMapping("/del")
+    public int del(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.del(newsNotice.getNoticeId());
+        return a;
+    }
+
+    @PostMapping("/add")
+    public int add(@RequestBody NewsNotice newsNotice){
+        int a = newsNoticeService.add(newsNotice);
+        return a;
+    }
+
+    @GetMapping("/selectlike")
+    public IPage<NoticeView> pagelike(@RequestParam("page") int page, @RequestParam("size") int size,@RequestParam String like,@RequestParam String mode,@RequestParam("id") int id){
+        IPage<NoticeView> noticeViewIPage = newsNoticeService.pageselectLike(page, size,like,mode,id);
+        return noticeViewIPage;
     }
 }

@@ -9,6 +9,8 @@ import com.trkj.train.entity.vo.staffAndDept;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -18,6 +20,7 @@ import java.util.List;
  * @since 2022-01-17
  */
 public interface ISysDeptService extends IService<SysDept> {
+    public List<SysDept> selectDeptList();
 
     public List<SysDept> selectDeptList();
 

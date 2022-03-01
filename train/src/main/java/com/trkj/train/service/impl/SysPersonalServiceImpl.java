@@ -7,6 +7,7 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.vo.PayAndStaffAndstudentVo;
@@ -18,6 +19,7 @@ import com.trkj.train.entity.vo.staffAndSign;
 import com.trkj.train.mapper.SysPersonalMapper;
 import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.service.ICantonSatffsignService;
+import com.trkj.train.mapper.SysStaffMapper;
 import com.trkj.train.service.ISysPersonalService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,9 @@ import java.util.UUID;
  */
 @Service
 public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPersonal> implements ISysPersonalService {
+
+    @Autowired
+    private SysPersonalMapper sysPersonalMapper;
 
     @Autowired
     private SysPersonalMapper mapper;
@@ -116,12 +121,16 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
     }
 
     @Override
+    public int xiugai(SysPersonal sysPersonal) {
+    @Override
     public IPage<SysPersonal> selectPer(int page,int size) {
         QueryWrapper<SysPersonal> wrapper=new QueryWrapper();
         wrapper.eq("personal_type",1);
         return mapper.selectPage(new Page(page,size),wrapper);
     }
 
+        return sysPersonalMapper.updateById(sysPersonal);
+    }
     //导出
     @Override
     public Result export(HttpServletResponse response, Paging paging)throws Exception {

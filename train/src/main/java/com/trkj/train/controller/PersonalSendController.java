@@ -54,6 +54,7 @@ public class PersonalSendController {
         int a = sendService.delete(send.getSendId());
         return a;
     }
+    //草稿箱发件
     @PostMapping("/ad")
     public int ad(@RequestBody PersonalSend send){
         int a=sendService.ad(send);
