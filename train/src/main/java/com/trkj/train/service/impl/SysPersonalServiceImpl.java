@@ -98,7 +98,9 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
             ss.setSignDate(s.getSignDate());
             String newDate=format.format(new Date());
             String oldDate= format.format(s.getSignDate());;
-            if(newDate.equals(oldDate)){
+            if(newDate.equals(oldDate) && s.getSignState()==0){
+                ss.setSignState(2);
+            }else if(newDate.equals(oldDate) && s.getSignState()==1){
                 ss.setSignState(1);
             }else{
                 ss.setSignState(0);

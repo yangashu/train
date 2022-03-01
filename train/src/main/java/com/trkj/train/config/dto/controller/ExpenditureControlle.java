@@ -4,6 +4,7 @@ import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.mapper.ExpenditureAndRefundAndPurchaseAndStaffMapper;
 import com.trkj.train.config.dto.service.IExpenditureAndRefundAndPurchaseAndStaffService;
+import com.trkj.train.config.dto.service.IExpenditureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/ExpenditureAndRefundAndPurchaseAndStaff")
-public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Serializable {
+@RequestMapping("/Expenditure")
+public class ExpenditureControlle implements Serializable {
     @Autowired
-    private IExpenditureAndRefundAndPurchaseAndStaffService service;
+    private IExpenditureService service;
     @Autowired
     private ExpenditureAndRefundAndPurchaseAndStaffMapper mapper;
 
@@ -27,6 +28,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
 
     //    导出
     @RequestMapping("/export")
+//    @PreAuthorize("hasAnyAuthority('administration:manage')")
     public Result export(HttpServletResponse response, @RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
     }
@@ -36,8 +38,8 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
         return service.updateBatchbyid(ids);
     }
 
-    @GetMapping("/buy")
-    public Result<?> buy(@RequestParam("id") int id,@RequestParam("staffId") int staffId,@RequestParam("remarks") String remarks) {
+    @GetMapping("/buy/{id}")
+    public Result<?> buy(@PathVariable int id,@RequestParam("staffId") int staffId,@RequestParam("remarks") String remarks) {
         String payUrl = "http://localhost:9090/alipay/pay?traceNo=" + id + "&staffId=" +staffId + "&remarks=" + remarks;
 
         // 新建订单，扣减库存

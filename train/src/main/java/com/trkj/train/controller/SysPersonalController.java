@@ -32,7 +32,7 @@ public class SysPersonalController {
     //员工考勤分页模糊查询
     @GetMapping("/one")
     public IPage<staffAndSign> one(@RequestParam("information") String information, @RequestParam("mode") String mode, @RequestParam("mycurrentPage") int page, @RequestParam("mypagesize") int size){
-        return  iPersonalService.   two(information,mode,page,size);
+        return  iPersonalService.two(information,mode,page,size);
     }
 
     //查询未入职用户

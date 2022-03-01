@@ -53,7 +53,7 @@ public class FinanceExpenditure implements Serializable {
     private Integer deleted;
 
     @TableField("REMARKS")
-    private Integer remarks;
+    private String remarks;
 
     @TableField("EXPENDITURE_MODE")
     private Integer expenditureMode;

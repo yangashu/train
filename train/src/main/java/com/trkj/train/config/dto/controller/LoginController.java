@@ -24,11 +24,10 @@ public class LoginController {
     //    登录
     @PostMapping("/login")
     public Result login(@RequestBody SysStaff staff){
-        log.debug("debug:  ------------------------------------");
         return service.login(staff);
     }
     //    退出登录
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public Result logout(){
         return service.logout();
     }

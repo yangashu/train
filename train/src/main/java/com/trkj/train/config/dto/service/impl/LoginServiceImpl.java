@@ -7,13 +7,14 @@ import com.trkj.train.entity.SysStaff;
 import com.trkj.train.service.ISysPersonalService;
 import com.trkj.train.utils.JwtUtil;
 import com.trkj.train.utils.RedisCache;
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,32 +32,48 @@ public class LoginServiceImpl implements LoginService {
     private ISysPersonalService ipersonalService;
 
     @Override
-    public Result login(SysStaff staff){
+    public Result login(SysStaff staff) {
+
+        String menu = "";
         //AuthenticationManager authenticationManager进行用户认证
-        UsernamePasswordAuthenticationToken authenticationToken= new UsernamePasswordAuthenticationToken(staff.getStaffName(),staff.getStaffPass());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(staff.getStaffName(), staff.getStaffPass());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+        LoginUser permissions = (LoginUser) authenticate.getPrincipal();
+
+        for (String permission : permissions.getPermissions()) {
+            if (permission.equals("sing")) {
+                menu = permission;
+            }
+        }
 
         //如果认真没通过，给出对应的提示
-        if(Objects.isNull(authenticate)){
-            return Result.error("-1","用户名或密码错误！！！");
+        if (Objects.isNull(authenticate)) {
+            return Result.error("-1", "用户名或密码错误！！！");
 //            throw new RuntimeException("用户名或密码错误！！！");
         }
+
+//        if (StringUtils.isEmpty(menu)) {
+//            return Result.error("403", "权限不足！！！");
+//        }
         //如果认真通过了，使用staffid生成一个jwt，jtw存入Result返回
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         int staffId = loginUser.getStaff().getStaffId();
-        String jwt = JwtUtil.createJWT(staffId+"");
+        String jwt = JwtUtil.createJWT(staffId + "");
         loginUser.getStaff().setToken(jwt);
-        Map<String,String> map = new HashMap<>();
-        map.put("token",jwt);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", jwt);
+
 
         loginUser.getStaff().setPersonal(ipersonalService.getById(staffId));
-
         //把完整的用户信息存入redis，staffid作为key
-        redisCache.setCacheobject("login:"+staffId,loginUser);
-        return Result.success("200","登录成功",loginUser);
+
+        redisCache.setCacheobject("login:" + staffId, loginUser);
+
+        System.out.println("loginUser："+loginUser);
+        return Result.success("200", "登录成功", loginUser);
     }
 
-//    退出登录
+    //    退出登录
     @Override
     public Result logout() {
         //获取SecurityContextHolder中的用户id
@@ -64,7 +81,7 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         int staffId = loginUser.getStaff().getStaffId();
         //删除redis中的值
-        redisCache.deleteobject("login:"+staffId);
-        return new Result("200","注销成功",null);
+        redisCache.deleteobject("login:" + staffId);
+        return new Result("200", "注销成功", null);
     }
 }

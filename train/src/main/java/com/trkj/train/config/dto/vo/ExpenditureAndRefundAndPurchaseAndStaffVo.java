@@ -61,7 +61,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffVo implements Serializable {
 
     @Excel(name = "备注")
     @TableField("REMARKS")
-    private Integer remarks;
+    private String remarks;
 
     @Excel(name = "支出方式",replace = {"现金_0","微信_1","支付宝_2","银行卡_3"})
     @TableField("EXPENDITURE_MODE")

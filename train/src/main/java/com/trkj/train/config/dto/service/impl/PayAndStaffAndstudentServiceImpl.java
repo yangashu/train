@@ -36,6 +36,7 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Transactional
 @Service
 public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAndstudentVoMapper, PayAndStaffAndstudentVo> implements IPayAndStaffAndstudentService {
     @Autowired
@@ -78,7 +79,6 @@ public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAnd
         return Result.error("-1","没有查到你想要的数据");
     }
 
-    //导出
     @Override
     public Result export(HttpServletResponse response, Paging paging) throws Exception {
         QueryWrapper<PayAndStaffAndstudentVo> wrapper=new QueryWrapper<>();
@@ -99,7 +99,7 @@ public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAnd
             workbook.close();
             return Result.success("200","导出成功了",null);
         }
-        //导入
+
     @Override
     public Result saveAll(MultipartFile excelFile) throws Exception {
             ImportParams importParams=new ImportParams();
@@ -120,33 +120,29 @@ public class PayAndStaffAndstudentServiceImpl extends ServiceImpl<PayAndStaffAnd
 
                     item.setStudentId(e.getStudentId());
                     item.setDeleted((e.getDeleted()));
-
+                    payMapper.saveAll(item);
                 }
             });
-            payMapper.saveAll(item);
             });
 
             return Result.success("200","导入成功！！！",null);
     }
 
     //审核通过
-    @Transactional
+
     @Override
     public Result updateBatchbyid(List<Integer> ids) {
-
-        int i=0;
-        for (Integer id : ids) {
-           int x = mapper.updatebyid(id);
-            if(x>0){
-                i++;
+        for (int i=0;i<ids.size();i++){
+            try {
+                mapper.updatebyid(ids.get(i));
+                return Result.success("200", "操作成功！！！", null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return Result.error("-1", "操作有误！！！");
             }
         }
-        if (ids.size()==i){
-            return Result.success("200","操作成功！！！",null);
-        }else{
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return Result.error("-1","操作有误！！！");
-        }
+          return null;
     }
 
     // 根据id导出

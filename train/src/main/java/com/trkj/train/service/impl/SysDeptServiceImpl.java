@@ -41,6 +41,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDept> selectDeptList() {
         QueryWrapper wrapper=new QueryWrapper();
+        wrapper.ne("dept_id",0);
         wrapper.orderByAsc("dept_id");
         return mapper.selectList(wrapper);
     }
@@ -49,6 +50,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     //查询全部部门分页方法
     public IPage<staffAndDept> one(int page, int size) {
         QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.ne("dept_id",0);
         queryWrapper.orderByAsc("dept_id");
         IPage<SysDept> iPage=mapper.selectPage(new Page(page,size),queryWrapper);
         IPage<staffAndDept> iPage1=new Page<>();
@@ -97,6 +99,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDept> three() {
         QueryWrapper wrapper=new QueryWrapper();
+        wrapper.ne("dept_id",0);
         wrapper.orderByAsc("dept_id");
         return mapper.selectList(null);
     }
@@ -159,16 +162,22 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     //删除方法
     @Override
     public Result five(int id) {
-        QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("dept_id",id);
-        mapper.delete(queryWrapper);
-        return Result.success("0","删除成功！",null);
+        List<SysDept> list=mapper.selectList(new QueryWrapper<SysDept>().eq("dept_parentid",id));
+        if(list.size()==0){
+            QueryWrapper queryWrapper=new QueryWrapper();
+            queryWrapper.eq("dept_id",id);
+            mapper.delete(queryWrapper);
+            return Result.success("0","删除成功！",null);
+        }else{
+            return Result.success("1","该部门有子部门存在，无法删除！",null);
+        }
     }
 
 
     //模糊查询方法
     public IPage<staffAndDept> six(Page page, String deptName){
         QueryWrapper<SysDept> queryWrapper=new QueryWrapper();
+        queryWrapper.ne("dept_id",0);
         queryWrapper.like("dept_name",deptName);
         IPage<SysDept> iPage=mapper.selectPage(page,queryWrapper);
         IPage<staffAndDept> iPage1=new Page<>();

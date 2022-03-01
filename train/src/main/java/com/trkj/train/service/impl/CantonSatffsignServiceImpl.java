@@ -71,12 +71,13 @@ public class CantonSatffsignServiceImpl extends ServiceImpl<CantonSatffsignMappe
             ss.setSignId(sta.getSignId());
             String newDate=format.format(new Date());
             String oldDate= format.format(sta.getSignDate());;
-            if(newDate.equals(oldDate)){
-                sta.setSignState(1);
+            if(newDate.equals(oldDate) && sta.getSignState()==0){
+                ss.setSignState(2);
+            }else if(newDate.equals(oldDate) && sta.getSignState()==1){
+                ss.setSignState(1);
             }else{
-                sta.setSignState(0);
+                ss.setSignState(0);
             }
-            ss.setSignState(sta.getSignState());
             ss.setStaffId(iPage.getRecords().get(i).getStaffId());
             list1.add(ss);
         }
@@ -106,27 +107,34 @@ public class CantonSatffsignServiceImpl extends ServiceImpl<CantonSatffsignMappe
         }
         if(jg){
             aservice.one(userId);
-            return mapper.one(userId);
+            CantonSatffsign sign=new CantonSatffsign();
+            sign.setSignState(1);
+            sign.setSignDate(new Date());
+            return mapper.update(sign,new QueryWrapper<CantonSatffsign>().eq("staff_id",userId));
         }else{
-            return 0;
+            aservice.one(userId);
+            CantonSatffsign sign=new CantonSatffsign();
+            sign.setSignState(0);
+            sign.setSignDate(new Date());
+            return mapper.update(sign,new QueryWrapper<CantonSatffsign>().eq("staff_id",userId));
         }
 
     }
 
+    //查询当前登录账号是否打卡的方法
     @Override
     public int selectSignOne(int staffId) {
         QueryWrapper wrapper=new QueryWrapper();
         wrapper.eq("staff_id",staffId);
         CantonSatffsign sign=mapper.selectOne(wrapper);
-        SimpleDateFormat format=new SimpleDateFormat("yyy-MM-dd");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         String newDate=format.format(new Date());
         String oldDate= format.format(sign.getSignDate());
-        if(newDate.equals(oldDate)){
-            return 1;
-        }else {
+        if(newDate.equals(oldDate) && sign.getSignState()==0){
             return 0;
+        }else {
+            return 1;
         }
-
     }
 
     //员工打卡中模糊查询用到的方法

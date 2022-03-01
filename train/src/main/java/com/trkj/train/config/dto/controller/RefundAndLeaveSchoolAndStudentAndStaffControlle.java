@@ -1,24 +1,27 @@
 package com.trkj.train.config.dto.controller;
 
+import cn.hutool.core.util.IdUtil;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
-import com.trkj.train.config.dto.mapper.ExpenditureAndRefundAndPurchaseAndStaffMapper;
-import com.trkj.train.config.dto.service.IExpenditureAndRefundAndPurchaseAndStaffService;
+import com.trkj.train.config.dto.mapper.RefundAndLeaveSchoolAndStudentAndStaffMapper;
+import com.trkj.train.config.dto.service.IRefundAndLeaveSchoolAndStudentAndStaffService;
+import com.trkj.train.entity.EctRefund;
+import com.trkj.train.mapper.EctRefundMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.Book;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/ExpenditureAndRefundAndPurchaseAndStaff")
-public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Serializable {
+@RequestMapping("/RefundAndLeaveSchoolAndStudentAndStaff")
+public class RefundAndLeaveSchoolAndStudentAndStaffControlle implements Serializable {
     @Autowired
-    private IExpenditureAndRefundAndPurchaseAndStaffService service;
-    @Autowired
-    private ExpenditureAndRefundAndPurchaseAndStaffMapper mapper;
+    private IRefundAndLeaveSchoolAndStudentAndStaffService service;
 
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
@@ -27,6 +30,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
 
     //    导出
     @RequestMapping("/export")
+//    @PreAuthorize("hasAnyAuthority('administration:manage')")
     public Result export(HttpServletResponse response, @RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
     }
@@ -36,11 +40,5 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
         return service.updateBatchbyid(ids);
     }
 
-    @GetMapping("/buy")
-    public Result<?> buy(@RequestParam("id") int id,@RequestParam("staffId") int staffId,@RequestParam("remarks") String remarks) {
-        String payUrl = "http://localhost:9090/alipay/pay?traceNo=" + id + "&staffId=" +staffId + "&remarks=" + remarks;
 
-        // 新建订单，扣减库存
-        return Result.success(payUrl);
-    }
 }

@@ -9,9 +9,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.Paging;
-import com.trkj.train.config.dto.mapper.ExpenditureAndRefundAndPurchaseAndStaffMapper;
-import com.trkj.train.config.dto.service.IExpenditureAndRefundAndPurchaseAndStaffService;
+import com.trkj.train.config.dto.mapper.RefundAndLeaveSchoolAndStudentAndStaffMapper;
+import com.trkj.train.config.dto.service.IRefundAndLeaveSchoolAndStudentAndStaffService;
 import com.trkj.train.config.dto.vo.ExpenditureAndRefundAndPurchaseAndStaffVo;
+import com.trkj.train.config.dto.vo.RefundAndLeaveSchoolAndStudentAndStaffVo;
 import com.trkj.train.entity.SysStaff;
 import com.trkj.train.mapper.SysStaffMapper;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -29,50 +30,42 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class ExpenditureAndRefundAndPurchaseAndStaffSeRrviceImpl extends ServiceImpl<ExpenditureAndRefundAndPurchaseAndStaffMapper, ExpenditureAndRefundAndPurchaseAndStaffVo> implements IExpenditureAndRefundAndPurchaseAndStaffService {
+public class RefundAndLeaveSchoolAndStudentAndStaffSeRrviceImpl extends ServiceImpl<RefundAndLeaveSchoolAndStudentAndStaffMapper, RefundAndLeaveSchoolAndStudentAndStaffVo> implements IRefundAndLeaveSchoolAndStudentAndStaffService {
     @Autowired
-    private ExpenditureAndRefundAndPurchaseAndStaffMapper mapper;
+    private RefundAndLeaveSchoolAndStudentAndStaffMapper mapper;
     @Autowired
     private SysStaffMapper staffMapper;
 
     @Override
     public Result paging(Map<String, Object> map) {
-
         Paging paging = JSON.parseObject(JSON.toJSONString(map.get("Paging")), Paging.class);
         String state = JSON.parseObject(JSON.toJSONString(map.get("state")), String.class);
         Date data =JSON.parseObject(JSON.toJSONString(map.get("data")), Date.class);
         Date data1 =JSON.parseObject(JSON.toJSONString(map.get("data1")), Date.class);
 
         List<SysStaff> sysStaffs = staffMapper.selectList(null);
-        QueryWrapper<ExpenditureAndRefundAndPurchaseAndStaffVo> wrapper=new QueryWrapper<>();
+        QueryWrapper<RefundAndLeaveSchoolAndStudentAndStaffVo> wrapper=new QueryWrapper<>();
         if(!StringUtils.isEmpty(state)){
             if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(data1)){
-                wrapper.eq("e.payApproval_state",state).and(i->i.like("s.staff_name",paging.getSearch())
-                        .between("e.expenditure_date",data,data1));
+                wrapper.eq("r.refund_state",state).and(i->i.like("sta.staff_name",paging.getSearch())
+                        .between("l.leaveSchool_date",data,data1));
             }else{
-                wrapper.eq("e.payApproval_state",state).and(i->i.like("s.staff_name",paging.getSearch()));
+                wrapper.eq("r.refund_state",state).and(i->i.like("sta.staff_name",paging.getSearch()));
             }
         }else if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(data1)){
             if(!StringUtils.isEmpty(state)){
-                wrapper.between("e.expenditure_date",data,data1).and(i->i.like("s.staff_name",paging.getSearch())
-                        .eq("e.payApproval_state",state));
+                wrapper.between("l.leaveSchool_date",data,data1).and(i->i.like("sta.staff_name",paging.getSearch())
+                        .eq("r.refund_state",state));
             }else{
-                wrapper.between("e.expenditure_date",data,data1).and(i->i.like("s.staff_name",paging.getSearch()));
+                wrapper.between("l.leaveSchool_date",data,data1).and(i->i.like("sta.staff_name",paging.getSearch()));
             }
 
         }else{
-            wrapper.like("s.staff_name",paging.getSearch());
+            wrapper.like("sta.staff_name",paging.getSearch());
         }
 
-        IPage<ExpenditureAndRefundAndPurchaseAndStaffVo> paging1 = mapper.paging(new Page(paging.getCurrentPage(),paging.getPageSize()), wrapper);
-//        for (ExpenditureAndRefundAndPurchaseAndStaffVo record : paging1.getRecords()) {
-//            for (SysStaff sysStaff : sysStaffs) {
-//                if (sysStaff.getStaffId()==record.getFinanceExpenditure().getDrawing()){
-//                    record.setDrawingName(sysStaff.getStaffName());
-//                }
-//            }
-//
-//        }
+        IPage<RefundAndLeaveSchoolAndStudentAndStaffVo> paging1 = mapper.paging(new Page(paging.getCurrentPage(),paging.getPageSize()), wrapper);
+
         if (!StringUtils.isEmpty(paging1.getRecords())){
             return Result.success("200",null,paging1);
         }
@@ -81,9 +74,9 @@ public class ExpenditureAndRefundAndPurchaseAndStaffSeRrviceImpl extends Service
 
     @Override
     public Result export(HttpServletResponse response, Paging paging) throws Exception{
-        QueryWrapper<ExpenditureAndRefundAndPurchaseAndStaffVo> wrapper=new QueryWrapper<>();
+        QueryWrapper<RefundAndLeaveSchoolAndStudentAndStaffVo> wrapper=new QueryWrapper<>();
         wrapper.like("s.staff_name",paging.getSearch());
-        IPage<ExpenditureAndRefundAndPurchaseAndStaffVo> iPage1 = mapper.paging(new Page(paging.getCurrentPage(),paging.getPageSize()),wrapper);
+        IPage<RefundAndLeaveSchoolAndStudentAndStaffVo> iPage1 = mapper.paging(new Page(paging.getCurrentPage(),paging.getPageSize()),wrapper);
         UUID uuid = UUID.randomUUID();
         Workbook workbook= ExcelExportUtil.exportExcel(new ExportParams("校务支出列表","校务支出信息"), ExpenditureAndRefundAndPurchaseAndStaffVo.class,iPage1.getRecords());
 //        response.setHeader("content-disposition","attachment;fileName="+ URLEncoder.encode("用户列表.xls","UTF-8"));

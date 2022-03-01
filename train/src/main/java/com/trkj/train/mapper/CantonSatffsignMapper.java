@@ -4,6 +4,7 @@ import com.trkj.train.entity.CantonSatffsign;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.data.repository.query.Param;
 
 /**
  * <p>
@@ -16,6 +17,6 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface CantonSatffsignMapper extends BaseMapper<CantonSatffsign> {
 
-    @Update("UPDATE canton_satffsign s SET s.SIGN_DATE=SYSDATE,s.SIGN_STATE=1 WHERE s.STAFF_ID=#{StaffID}")
-    public int one(int StaffID);
+    @Update("UPDATE canton_satffsign s SET s.SIGN_DATE=SYSDATE,s.SIGN_STATE=#{state} WHERE s.STAFF_ID=#{staffId}")
+    public int one(@Param("staffId") int StaffID,@Param("state") int state);
 }

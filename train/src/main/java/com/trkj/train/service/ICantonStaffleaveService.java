@@ -2,6 +2,7 @@ package com.trkj.train.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.trkj.train.config.Result;
 import com.trkj.train.entity.CantonStaffleave;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.trkj.train.entity.vo.staffAndPersonalAndLeave;
@@ -19,5 +20,9 @@ import java.util.List;
 public interface ICantonStaffleaveService extends IService<CantonStaffleave> {
 
     public IPage<staffAndPersonalAndLeave> selectLeaveAll(Page page,String like);
+
+    public Result addLeave(CantonStaffleave leave);
+
+    public Result approveLeave(int leaveId,int staffId);
 
 }

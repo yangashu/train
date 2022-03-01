@@ -1,10 +1,12 @@
 package com.trkj.train.config.dto.vo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
+import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
 import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.trkj.train.entity.RecruitStudent;
+import com.trkj.train.entity.SysStaff;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +14,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * <p>
  *
@@ -26,7 +27,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("FINANCE_PAY")
 @ApiModel(value="PayAndStaffAndstudentVo对象", description="")
-@ExcelTarget("学员退费")
+@ExcelTarget("报名缴费")
 public class PayAndStaffAndstudentVo implements Serializable {
     @TableId("PAYMONEY_ID")
     private Integer paymoneyId;
