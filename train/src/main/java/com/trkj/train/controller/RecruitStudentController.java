@@ -84,4 +84,22 @@ public class RecruitStudentController {
     public IPage<RecruitStudent> selectiptionbb(@RequestParam("pageNum")int page,@RequestParam("pageSize")int size,@RequestParam("classid")int classid,@RequestParam("input") String studentname){
         return service.selectbb(page, size, classid, studentname);
     }
+
+//    班级管理 结课
+    @PostMapping("deletedstudent")
+    public int deletedstudent(@RequestBody RecruitStudent recruitStudent){
+        return service.deletedstudent(recruitStudent);
+    }
+
+//    班级管理 结课
+    @GetMapping("selectstuclas")
+    public List<RecruitStudent> selectclasstu(@RequestParam("classid") int classid){
+        return service.selectclassstuu(classid);
+    }
+
+//    添加
+    @PostMapping("insertstudent")
+    public int insertstudent(@RequestBody RecruitStudent recruitStudent){
+        return service.insertstudent(recruitStudent);
+    }
 }

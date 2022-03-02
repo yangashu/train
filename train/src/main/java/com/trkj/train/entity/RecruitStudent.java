@@ -46,6 +46,7 @@ public class RecruitStudent implements Serializable {
     @TableField("STUDENT_AGE")
     private Integer studentAge;
 
+    @JsonFormat(pattern = "YYYY-MM-DD",timezone = "GMT+8")
     @TableField("STUDENT_BIRTHDAY")
     private Date studentBirthday;
 

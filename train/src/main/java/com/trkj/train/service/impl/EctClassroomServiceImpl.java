@@ -7,6 +7,8 @@ import com.trkj.train.service.IEctClassroomService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * @since 2022-01-17
  */
 @Service
+@Transactional
 public class EctClassroomServiceImpl extends ServiceImpl<EctClassroomMapper, EctClassroom> implements IEctClassroomService {
     @Autowired
     private EctClassroomMapper classroomMapper;
@@ -32,7 +35,15 @@ public class EctClassroomServiceImpl extends ServiceImpl<EctClassroomMapper, Ect
     @Override
     public int updateclassrom(EctClassroom classroom) {
         System.out.println("ghfghfhg"+classroom.toString());
-        return classroomMapper.updateById(classroom);
+
+        try {
+            return classroomMapper.updateById(classroom);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+
+            e.printStackTrace();
+            return 1;
+        }
     }
 
     @Override

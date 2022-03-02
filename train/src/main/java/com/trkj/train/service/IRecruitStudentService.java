@@ -35,4 +35,13 @@ public interface IRecruitStudentService extends IService<RecruitStudent> {
 
 //    班级管理  本班学员弹框  搜索
     IPage<RecruitStudent> selectbb(int page, int size,int classid,String studentname);
+
+//    班级管理 结课
+    int deletedstudent(RecruitStudent recruitStudent);
+
+//    班级管理  结课
+    List<RecruitStudent> selectclassstuu(int classid);
+
+// 报名 添加
+    int insertstudent(RecruitStudent recruitStudent);
 }

@@ -22,10 +22,12 @@ public class ClassesManageDO {
     /**
      * 教室名称
      */
+    private int classRoomId;
     private String classRoomName;
     /**
      * 班主任
      */
+    private int staffId;
     private String staffName;
     /**
      * 班级人数
@@ -48,4 +50,6 @@ public class ClassesManageDO {
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date classesDate;
+
+    private int deleted;
 }

@@ -1,5 +1,6 @@
 package com.trkj.train.TyVo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class ConsultationDo {
     //    学员年龄
     private String studentFiles_age;
     // 学员出生年月
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date studentFiles_birthday;
     //    学员联系电话
     private String studentFiles_phone;
@@ -46,5 +48,6 @@ public class ConsultationDo {
     //    员工id
     private int staff_id;
     //  时间
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date studentFiles_time;
 }

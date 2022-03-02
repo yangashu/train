@@ -11,6 +11,8 @@ import com.trkj.train.service.IRecruitStudentfilesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.List;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class RecruitStudentfilesServiceImpl extends ServiceImpl<RecruitStudentfilesMapper, RecruitStudentfiles> implements IRecruitStudentfilesService {
     @Autowired
@@ -64,10 +67,13 @@ public class RecruitStudentfilesServiceImpl extends ServiceImpl<RecruitStudentfi
 
     //    咨询登记  下拉框快捷查询
     @Override
-    public IPage<ConsultationDo> selectipton(int page, int size, String downone, String dowtwo, String dowthree,String input,String value) {
+    public IPage<ConsultationDo> selectipton(int page, int size, String downone, String dowtwo, String dowthree,String input,String value,int deleted) {
         Page<ConsultationDo> consultationDOPage=new Page<>(page,size);
         QueryWrapper queryWrapper=new QueryWrapper();
         List<ConsultationDo> consultationDOS=new ArrayList<>();
+        if(deleted==0){
+            queryWrapper.like("s.deleted",deleted);
+
         if(downone!=null&&downone.length()!=0){
             queryWrapper.like("s.studentFiles_state",downone);
         }else {
@@ -96,16 +102,20 @@ public class RecruitStudentfilesServiceImpl extends ServiceImpl<RecruitStudentfi
         }else {
             System.out.println("dowthree为空");
         }
+        }
         IPage<ConsultationDo> page1=studentfilesMapper.selectipotion(consultationDOPage,queryWrapper);
         System.out.println(page1.getRecords().toString());
         return page1;
     }
     //    咨询登记  搜索框查询
     @Override
-    public IPage<ConsultationDo> selectinput(int page, int size, String value, String input) {
+    public IPage<ConsultationDo> selectinput(int page, int size, String value, String input,int deleted) {
         Page<ConsultationDo> consultationDOPage=new Page<>(page,size);
         QueryWrapper queryWrapper=new QueryWrapper();
         List<ConsultationDo> consultationDOS=new ArrayList<>();
+        if(deleted==0){
+            queryWrapper.like("s.deleted",deleted);
+
         if (value=="姓名"){
             if (input!=null&&input.length()!=0){
                 queryWrapper.like("s.STUDENTFILES_NAME",input);
@@ -118,7 +128,44 @@ public class RecruitStudentfilesServiceImpl extends ServiceImpl<RecruitStudentfi
         else {
             System.out.println("input为空");
         }
+        }
         IPage<ConsultationDo> pageqq=studentfilesMapper.selectipotion(consultationDOPage,queryWrapper);
         return pageqq;
+    }
+
+    @Override
+    public int insertzxdj(RecruitStudentfiles recruitStudentfiles) {
+        try {
+            return studentfilesMapper.insert(recruitStudentfiles);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public int updatestudentfiles(RecruitStudentfiles recruitStudentfiles) {
+        try {
+            return studentfilesMapper.updateById(recruitStudentfiles);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public int deletedstudentfiles(RecruitStudentfiles recruitStudentfiles) {
+        try {
+            return studentfilesMapper.deleteById(recruitStudentfiles);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 }

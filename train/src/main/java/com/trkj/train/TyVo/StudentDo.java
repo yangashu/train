@@ -1,8 +1,11 @@
 package com.trkj.train.TyVo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +15,9 @@ public class StudentDo {
     private String student_name;//学员姓名
     private String student_sex;//学员性别
     private String student_age;//学员年龄
-    private String student_birthday;//出生年月
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date student_birthday;//出生年月
     private String student_phone;//联系电话
     private String parent_phone;//家长电话
     private String student_school;//学员毕业学校
@@ -21,6 +26,9 @@ public class StudentDo {
     private String classes_name;//班级名称
     private int course_id;//课程外键
     private String course_name;//课程名字
-    private String student_entrance;//入学时间
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date student_entrance;//入学时间
     private int staff_id;//咨询师
+    private String staff_name;
 }

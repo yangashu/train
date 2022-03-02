@@ -12,6 +12,12 @@ import com.trkj.train.service.IEctTimetableService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>
@@ -21,6 +27,7 @@ import org.springframework.stereotype.Service;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class EctTimetableServiceImpl extends ServiceImpl<EctTimetableMapper, EctTimetable> implements IEctTimetableService {
     @Autowired
@@ -35,11 +42,16 @@ public class EctTimetableServiceImpl extends ServiceImpl<EctTimetableMapper, Ect
     @Override
     public IPage<EctTimetablepkDo> selectpk(int page, int size) {
         IPage<EctTimetablepkDo> pagse=ectTimetableMapper.selectkcxkb(new Page<>(page,size));
+
         return pagse;
     }
 
     @Override
-    public IPage<EctTimetablepkDo> selectiptioncxpk(int page, int size, String classname, int deleted) {
+    public IPage<EctTimetablepkDo> selectiptioncxpk(int page, int size, String classname, int deleted) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(new Date());
+        Date date1 = sdf.parse(format);
+
         Page<EctTimetablepkDo> pasee=new Page<>(page,size);
         QueryWrapper queryWrapper=new QueryWrapper();
         if (deleted==0){
@@ -49,16 +61,54 @@ public class EctTimetableServiceImpl extends ServiceImpl<EctTimetableMapper, Ect
             }
         }
         IPage<EctTimetablepkDo> page1=ectTimetableMapper.selectiptionkbcx(pasee,queryWrapper);
+        for(EctTimetablepkDo dd: page1.getRecords()){
+            String format1 = sdf.format(dd.getTimetableTime());
+            Date date2 = sdf.parse(format1);
+            if(date1.compareTo(date2)>=0){
+                EctTimetable table=new EctTimetable();
+                table.setTimetableId(dd.getTimetableId());
+                table.setTimetableState(1);
+                this.updatestate(table);
+                dd.setTimetableState(1);
+            }
+        }
         return page1;
     }
 
     @Override
     public int deletedpk(EctTimetable ectTimetable) {
-        return ectTimetableMapper.deleteById(ectTimetable);
+        try {
+            return ectTimetableMapper.deleteById(ectTimetable);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 
     @Override
     public int insertpk(EctTimetable ectTimetable) {
-        return ectTimetableMapper.insert(ectTimetable);
+        try {
+            return ectTimetableMapper.insert(ectTimetable);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public int updatestate(EctTimetable ectTimetable) {
+        try {
+            int a=ectTimetableMapper.updateById(ectTimetable);
+            return a;
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 }

@@ -11,9 +11,25 @@
         <result column="DELETED" property="deleted" />
     </resultMap>
 
+    <resultMap id="maptwo" type="com.trkj.train.TyVo.recruitStudentHonorDo">
+        <result column="STUDENTHONOR_ID" property="studenthonorId"/>
+        <result column="STUDENTHONOR_DATE" property="studenthonorDate"/>
+        <result column="STUDENTHONOR_CONTENT" property="studenthonorContent"/>
+        <result column="STUDENT_ID" property="studentId"/>
+        <result column="student_name" property="studentName"/>
+        <result column="classes_id" property="classesId"/>
+        <result column="classes_name" property="classesName"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         STUDENTHONOR_ID, STUDENTHONOR_DATE, STUDENTHONOR_CONTENT, STUDENT_ID, DELETED
     </sql>
+    <select id="studentry" resultMap="maptwo">
+        SELECT * from recruit_studentHonor r
+                          LEFT JOIN RECRUIT_STUDENT s on r.STUDENT_ID=s.STUDENT_ID
+                          LEFT JOIN ECT_CLASSES e on s.classes_id=e.classes_id
+        WHERE s.STUDENT_ID=#{studentId}
+          and r.DELETED=0
+    </select>
 
 </mapper>

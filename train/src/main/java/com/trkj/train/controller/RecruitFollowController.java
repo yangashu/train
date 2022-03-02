@@ -6,8 +6,12 @@ import com.trkj.train.service.IRecruitFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.trkj.train.entity.RecruitFollow;
+import com.trkj.train.service.IRecruitFollowService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 import java.util.List;
 
@@ -30,4 +34,15 @@ public class RecruitFollowController {
         return service.one();
     }
 
+    //    添加跟进
+    @PostMapping("/insertgengjin")
+    public int insertgengjin(@RequestBody RecruitFollow recruitFollow){
+        return service.insertgengjin(recruitFollow);
+    }
+
+//    查询
+    @GetMapping("/selectfollow")
+    public List<RecruitFollow> selectfollow(@RequestParam("id") int id){
+        return service.selectfollow(id);
+    }
 }

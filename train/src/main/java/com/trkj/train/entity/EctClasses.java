@@ -39,7 +39,7 @@ public class EctClasses implements Serializable {
     @TableField("CLASSES_NUMBER")
     private Integer classesNumber;
 
-    @JsonFormat(pattern = "YYYY-MM-DD")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("CLASSES_DATE")
     private Date classesDate;
 

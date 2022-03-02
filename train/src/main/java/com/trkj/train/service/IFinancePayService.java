@@ -19,6 +19,8 @@ import java.util.List;
  * @since 2022-01-17
  */
 public interface IFinancePayService extends IService<FinancePay> {
+//    添加
+    int insertpay(FinancePay financePay);
 
     Result paging(Page<FinancePay> financePayPage, String search);
 

@@ -10,6 +10,8 @@ import com.trkj.train.service.IEctTimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 /**
  * <p>
  *  前端控制器
@@ -37,7 +39,7 @@ public class EctTimetableController {
 
     //    排课管理 搜索
     @GetMapping("selectss")
-    public IPage<EctTimetablepkDo> selectss(@RequestParam("currentPage") int page,@RequestParam("size") int size,@RequestParam("classname") String classname,@RequestParam("deleted") int deleted){
+    public IPage<EctTimetablepkDo> selectss(@RequestParam("currentPage") int page,@RequestParam("size") int size,@RequestParam("classname") String classname,@RequestParam("deleted") int deleted) throws ParseException {
         return iEctTimetableService.selectiptioncxpk(page, size, classname, deleted);
     }
 

@@ -14,6 +14,11 @@ import java.util.List;
  * @since 2022-01-17
  */
 public interface IRecruitFollowService extends IService<RecruitFollow> {
+//    添加跟进
+    int insertgengjin(RecruitFollow recruitFollow);
+
+//    查询
+    List<RecruitFollow> selectfollow(int id);
 
     public List<RecruitFollow> one();
 }

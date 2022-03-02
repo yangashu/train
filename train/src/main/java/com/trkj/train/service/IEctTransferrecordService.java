@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IEctTransferrecordService extends IService<EctTransferrecord> {
+    // 添加
+    int insertZhuanban(EctTransferrecord ectTransferrecord);
 
 }

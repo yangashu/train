@@ -9,13 +9,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EctTimetableClassDo {
+public class EctTimetableStudentDo {
     private int timetableId;
     private String timetable_morning;
     private Date timetable_time;
     private Date timetable_date;
     private int classes_id;
-    private String className;
     private int staff_id1;
     private String staffname;
     private int timetable_state;

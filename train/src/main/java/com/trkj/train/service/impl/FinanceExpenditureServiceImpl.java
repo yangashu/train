@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import springfox.documentation.spring.web.json.Json;
 
 import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * <p>
@@ -22,11 +24,24 @@ import java.util.Map;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class FinanceExpenditureServiceImpl extends ServiceImpl<FinanceExpenditureMapper, FinanceExpenditure> implements IFinanceExpenditureService {
 
     @Autowired
     private FinanceExpenditureMapper mapper;
+
+    @Override
+    public int insertzckc(FinanceExpenditure financeExpenditure) {
+        try {
+            return mapper.insert(financeExpenditure);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
 
     @Override
     public Result paging(Map<String, Object> map) {

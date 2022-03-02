@@ -29,6 +29,7 @@
         <result column="CLASSES_ID" property="classes_id" />
         <result column="STAFF_ID1" property="staff_id1" />
         <result column="staff_name" property="staffname"/>
+        <result column="classes_name" property="className"/>
     </resultMap>
     <resultMap id="BaseResultMapThree" type="com.trkj.train.TyVo.EctTimetablepkDo">
         <id column="timetable_id" property="timetableId"/>
@@ -38,7 +39,7 @@
         <result column="staff_name" property="staffName"/>
         <result column="classes_id" property="classesId"/>
         <result column="classes_name" property="className"/>
-        <result column="timetable_state" property="timetableState"/>
+        <result column="TIMETABLE_STATE" property="timetableState"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -47,7 +48,8 @@
     <select id="selectiptionkb" resultMap="BaseResultMapTwo">
         SELECT * FROM ect_timetable e
                           LEFT JOIN sys_staff s on e.staff_id1=s.staff_id
-        WHERE classes_id =#{classid}
+                          LEFT JOIN ect_classes c on e.classes_id=c.classes_id
+        WHERE e.classes_id =#{classid} and e.deleted=0
     </select>
     <select id="selectkcxkb" resultMap="BaseResultMapThree">
         SELECT * from ect_timetable e

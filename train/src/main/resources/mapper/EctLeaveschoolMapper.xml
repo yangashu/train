@@ -11,9 +11,25 @@
         <result column="DELETED" property="deleted" />
     </resultMap>
 
+    <resultMap id="mapOne" type="com.trkj.train.TyVo.tuixuesqDo">
+        <result column="LEAVESCHOOL_ID" property="leaveschoolId" />
+        <result column="STUDENT_ID" property="studentId" />
+        <result column="student_name" property="studentName"/>
+        <result column="student_sex" property="studentSex"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="student_phone" property="studentPhone"/>
+        <result column="parent_phone" property="parentPhone"/>
+        <result column="LEAVESCHOOL_DATE" property="leaveschoolDate" />
+        <result column="LEAVESCHOOL_REASON" property="leaveschoolReason" />
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         LEAVESCHOOL_ID, STUDENT_ID, LEAVESCHOOL_DATE, LEAVESCHOOL_REASON, DELETED
     </sql>
+    <select id="selecttuixue" resultMap="mapOne">
+        SELECT * FROM ect_leaveSchool e
+                          LEFT JOIN recruit_student r on e.STUDENT_ID=r.STUDENT_ID
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>

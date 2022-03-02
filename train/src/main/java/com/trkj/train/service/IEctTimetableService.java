@@ -7,6 +7,8 @@ import com.trkj.train.TyVo.EctTimetablepkDo;
 import com.trkj.train.entity.EctTimetable;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.text.ParseException;
+
 /**
  * <p>
  *  服务类
@@ -23,10 +25,13 @@ public interface IEctTimetableService extends IService<EctTimetable> {
     IPage<EctTimetablepkDo> selectpk(int page,int size);
 
     //    排课管理 搜索
-    IPage<EctTimetablepkDo> selectiptioncxpk(int page,int size,String classname,int deleted);
+    IPage<EctTimetablepkDo> selectiptioncxpk(int page,int size,String classname,int deleted) throws ParseException;
 
 //    排课管理 删除
     int deletedpk(EctTimetable ectTimetable);
 //    排课管理 添加
     int insertpk(EctTimetable ectTimetable);
+
+//    排课管理 修改状态
+    int updatestate(EctTimetable ectTimetable);
 }

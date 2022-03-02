@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IEctLeaverecordService extends IService<EctLeaverecord> {
-
+// 添加退学记录表
+    int inserttuixuejil(EctLeaverecord ectLeaverecord);
 }

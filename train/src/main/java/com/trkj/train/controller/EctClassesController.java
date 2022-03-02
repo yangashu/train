@@ -49,18 +49,17 @@ public class EctClassesController {
         return classesService.paging(new Page<ClassesManageDO>(pageNum,pageSize));
     }
 
-    //    @GetMapping("/selectsy")
-//    public List<ClassesManageDO> selectsy(){
-//        List<ClassesManageDO> list=classesService.selectCl();
-//        return list;
-//    }
+        @GetMapping("/findByid/{id}")
+    public Result finByid(@PathVariable int id){
+            return classesService.findByid(id);
+        }
 //    添加方法
     @PostMapping("/insertclass")
     public int insertsy(@RequestBody EctClasses classes){
         return classesService.inserclass(classes);
     }
     //    修改方法
-    @PostMapping("updateclass")
+    @PostMapping("/updateclass")
     public int updateclass(@RequestBody EctClasses classes){
         return classesService.updateclass(classes);
     }
@@ -71,15 +70,20 @@ public class EctClassesController {
     }
 //    班级管理    搜索
     @GetMapping("/selectiptionclass")
-    public IPage<ClassesManageDO> selectiption(@RequestParam("pageNum") int page,@RequestParam("pageSize") int size,@RequestParam("input") String input,@RequestParam("downThree") String downThree,@RequestParam("downOne") String downOne){
+    public IPage<ClassesManageDO> selectiption(@RequestParam("pageNum") int page,@RequestParam("pageSize") int size,@RequestParam("input") String input,@RequestParam("downThree") String downThree,@RequestParam("downOne") String downOne,@RequestParam("deleted") int deleted){
         System.out.println("page"+page);
         System.out.println("size"+size);
-        IPage<ClassesManageDO> pagessa=classesService.selectiptionclas(page, size, input, downThree, downOne);
+        IPage<ClassesManageDO> pagessa=classesService.selectiptionclas(page, size, input, downThree, downOne,deleted);
         return pagessa;
     }
     //    排课管理  添加弹框  班级下拉框查询
     @GetMapping("/selectpkclass")
     public List<EctClasses> selectiptionclass(){
         return classesService.selectipionbj();
+    }
+//   班级管理 结课
+    @PostMapping("deleteclassaaa")
+    public int deletedclass(@RequestBody EctClasses ectClasses){
+        return  classesService.deleteclass(ectClasses);
     }
 }

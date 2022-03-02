@@ -10,10 +10,34 @@
         <result column="COURSE_ID" property="courseId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
+    <resultMap id="BaseResultMapTwo" type="com.trkj.train.TyVo.ectGraduationDo">
+        <result column="GRADUATION_ID" property="graduationId"/>
+        <result column="GRADUATION_DATE" property="graduationDate"/>
+        <result column="STUDENT_ID" property="studentId"/>
+        <result column="student_name" property="studentName"/>
+        <result column="student_sex" property="studentSex"/>
+        <result column="student_age" property="studentAge"/>
+        <result column="student_phone" property="studentPhone"/>
+        <result column="student_loc" property="studentLoc"/>
+        <result column="classes_id" property="classesId"/>
+        <result column="classes_name" property="classesName"/>
+    </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         GRADUATION_ID, GRADUATION_DATE, STUDENT_ID, COURSE_ID, DELETED
     </sql>
+    <select id="selectHistory" resultMap="BaseResultMapTwo">
+        SELECT * FROM ect_graduation e
+                          LEFT JOIN recruit_student r on e.student_id=r.student_id
+                          LEFT JOIN ect_classes c on r.classes_id=c.classes_id
+        WHERE e.deleted=0
+    </select>
+    <select id="selectiptionhistory" resultMap="BaseResultMapTwo">
+        SELECT * FROM ect_graduation e
+                          LEFT JOIN recruit_student r on e.student_id=r.student_id
+                          LEFT JOIN ect_classes c on r.classes_id=c.classes_id
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>

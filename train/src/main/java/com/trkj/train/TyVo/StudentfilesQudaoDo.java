@@ -1,5 +1,6 @@
 package com.trkj.train.TyVo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,7 @@ public class StudentfilesQudaoDo {
     private int staffId;
     private String studentfilesRemarks;
     private int studentfilesState;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date studentfilesBirthday;
 
 }

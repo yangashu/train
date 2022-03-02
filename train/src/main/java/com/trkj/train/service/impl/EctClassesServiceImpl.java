@@ -12,6 +12,8 @@ import com.trkj.train.service.IEctClassesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ import java.util.List;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClasses> implements IEctClassesService {
     @Autowired
@@ -54,18 +57,26 @@ public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClas
     //添加班级
     @Override
     public int inserclass(EctClasses classes) {
-        return classesMapper.insert(classes);
+        try {
+            return classesMapper.insert(classes);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
     //修改
     @Override
     public int updateclass(EctClasses classes) {
-        int i=0;
-        if(!classes.getOldClassName().equals("")){
-            EctClasses classes1=classesMapper.selectOne(new QueryWrapper<EctClasses>().eq("classes_name",classes.getOldClassName()));
-            classes.setClassesId(classes1.getClassesId());
-            i=classesMapper.updateById(classes);
+        try {
+            return classesMapper.updateById(classes);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
         }
-        return i;
+
     }
     //查询所有
     @Override
@@ -74,18 +85,21 @@ public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClas
     }
 
     @Override
-    public IPage<ClassesManageDO> selectiptionclas(int page, int size, String input, String downOne, String downThree) {
+    public IPage<ClassesManageDO> selectiptionclas(int page, int size, String input, String downOne, String downThree,int deleted) {
         Page<ClassesManageDO> pages=new Page<>(page,size);
         QueryWrapper queryWrapper=new QueryWrapper();
-        if(input!=null&&input.length()!=0){
-            queryWrapper.eq("s.classes_name",input);
-        }
-        if(downOne!=null&&downOne.length()!=0){
-            queryWrapper.eq("s.staff_id",downOne);
-        }
+        if(deleted==0) {
+            queryWrapper.eq("s.deleted", deleted);
+            if (input != null && input.length() != 0) {
+                queryWrapper.eq("s.classes_name", input);
+            }
+            if (downOne != null && downOne.length() != 0) {
+                queryWrapper.eq("s.staff_id", downOne);
+            }
 
-        if (downThree!=null&&downThree.length()!=0){
-            queryWrapper.eq("s.classroom_id",downThree);
+            if (downThree != null && downThree.length() != 0) {
+                queryWrapper.eq("s.classroom_id", downThree);
+            }
         }
         IPage<ClassesManageDO> pageaa=classesMapper.selectiptionclass(pages,queryWrapper);
 
@@ -95,5 +109,23 @@ public class EctClassesServiceImpl extends ServiceImpl<EctClassesMapper, EctClas
     @Override
     public List<EctClasses> selectipionbj() {
         return classesMapper.selectiptionclassss();
+    }
+
+    @Override
+    public int deleteclass(EctClasses ectClasses) {
+        try {
+            return classesMapper.deleteById(ectClasses);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public Result findByid(int id) {
+
+        return Result.success(classesMapper.findByid(id));
     }
 }

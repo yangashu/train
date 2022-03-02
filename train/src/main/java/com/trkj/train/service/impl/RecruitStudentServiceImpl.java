@@ -10,6 +10,8 @@ import com.trkj.train.service.IRecruitStudentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class RecruitStudentServiceImpl extends ServiceImpl<RecruitStudentMapper, RecruitStudent> implements IRecruitStudentService {
     @Autowired
@@ -74,12 +77,28 @@ public class RecruitStudentServiceImpl extends ServiceImpl<RecruitStudentMapper,
 
     @Override
     public int updatestudent(RecruitStudent student) {
-        return mapper.updateById(student);
+
+        try {
+            return mapper.updateById(student);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 
     @Override
     public int delectstudent(RecruitStudent student) {
-        return mapper.deleteById(student);
+
+        try {
+            return mapper.deleteById(student);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 
     @Override
@@ -94,5 +113,35 @@ public class RecruitStudentServiceImpl extends ServiceImpl<RecruitStudentMapper,
         studentname="%"+studentname+"%";
         IPage<RecruitStudent> studentIPage=mapper.selectiptionbenban(pagess,classid,studentname);
         return studentIPage;
+    }
+
+    @Override
+    public int deletedstudent(RecruitStudent recruitStudent) {
+        try {
+            return mapper.updatestudent(recruitStudent);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public List<RecruitStudent> selectclassstuu(int classid) {
+        return mapper.selectclassstu(classid);
+    }
+
+    @Override
+    public int insertstudent(RecruitStudent recruitStudent) {
+        try {
+            int a=mapper.insert(recruitStudent);
+            return (recruitStudent.getStudentId());
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 }

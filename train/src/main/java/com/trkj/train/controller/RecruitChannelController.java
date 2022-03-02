@@ -7,6 +7,8 @@ import com.trkj.train.service.IRecruitChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -48,5 +50,11 @@ public class RecruitChannelController {
     @PostMapping("/delectchannel")
     public int delectchannel(@RequestBody RecruitChannel channel){
         return iChannelService.delectchannel(channel);
+    }
+
+//    查询所有渠道
+    @GetMapping("selectqd")
+    public List<RecruitChannel> selectqudao(){
+        return iChannelService.selectqd();
     }
 }

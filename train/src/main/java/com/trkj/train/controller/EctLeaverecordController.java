@@ -1,6 +1,11 @@
 package com.trkj.train.controller;
 
 
+import com.trkj.train.entity.EctLeaverecord;
+import com.trkj.train.service.IEctLeaverecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ect-leaverecord")
 public class EctLeaverecordController {
+    @Autowired
+    private IEctLeaverecordService iEctLeaverecordService;
+
+    @PostMapping("/inserttuixuejil")
+    public int inserttuixuesq(@RequestBody EctLeaverecord ectLeaverecord){
+        return iEctLeaverecordService.inserttuixuejil(ectLeaverecord);
+    }
 
 }

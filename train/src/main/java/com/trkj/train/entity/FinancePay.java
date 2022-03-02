@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,6 +44,7 @@ public class FinancePay implements Serializable {
     private Integer paymoneyMoney;
 
     @Excel(name = "缴费时间",format = "yyyy年MM月dd日 HH时mm分ss秒")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("PAYMONEY_DATE")
     private Date paymoneyDate;
 

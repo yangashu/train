@@ -3,6 +3,7 @@ package com.trkj.train;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication
 @MapperScan("com.trkj.train.mapper")
@@ -14,5 +15,4 @@ public class TrainApplication {
         System.setProperty("druid.wall.multiStatementAllow","true");
         SpringApplication.run(TrainApplication.class, args);
     }
-
 }

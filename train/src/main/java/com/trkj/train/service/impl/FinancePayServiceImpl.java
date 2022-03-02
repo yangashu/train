@@ -17,6 +17,7 @@ import com.trkj.train.service.IFinancePayService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * <p>
@@ -34,8 +37,12 @@ import java.util.List;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class FinancePayServiceImpl extends ServiceImpl<FinancePayMapper, FinancePay> implements IFinancePayService {
+    @Autowired
+    private FinancePayMapper financePayMapper;
+
     @Autowired
     private FinancePayMapper mapper;
     @Autowired
@@ -61,6 +68,17 @@ public class FinancePayServiceImpl extends ServiceImpl<FinancePayMapper, Finance
             }
         }
 
+    @Override
+    public int insertpay(FinancePay financePay) {
+        try {
+            return financePayMapper.insert(financePay);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
         if (!StringUtils.isEmpty(financePays.getRecords())){
             return Result.success("200",null,financePays);
         }

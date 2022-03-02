@@ -13,6 +13,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.trkj.train.entity.FinancePay;
+import com.trkj.train.service.IFinancePayService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
@@ -36,6 +42,12 @@ public class FinancePayController {
                          @RequestParam(defaultValue = "1") int pagesize,
                          @RequestParam(defaultValue = "") String search){
         return service.paging(new Page<FinancePay>(current,pagesize),search);
+    }
+
+//    添加
+    @PostMapping("/insertpay")
+    public int insertpay(@RequestBody FinancePay financePay){
+        return service.insertpay(financePay);
     }
 
     //    导入

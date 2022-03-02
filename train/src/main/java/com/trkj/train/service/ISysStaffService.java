@@ -60,4 +60,7 @@ public interface ISysStaffService extends IService<SysStaff> {
     List<SysStaff> selectgjr();
     //    学员中心   在读学员   上课老师下拉框查询
     List<SysStaff> selectclassteacher();
+
+    //教程入库  添加弹框 采购员下拉框查询
+    List<SysStaff> selectcgy();
 }

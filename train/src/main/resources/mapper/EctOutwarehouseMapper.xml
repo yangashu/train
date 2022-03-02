@@ -13,10 +13,27 @@
         <result column="WAREHOUSE_ID" property="warehouseId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="mapeOne" type="com.trkj.train.TyVo.warehouseDo">
+        <result column="WAREHOUSE_ID" property="warehouseId"/>
+        <result column="OUTWAREHOUSE_ID" property="outwarehouseId"/>
+        <result column="OUTWAREHOUSE_NUMBER" property="outwarehouseNumber"/>
+        <result column="OUTWAREHOUSE_TIME" property="outwarehouseTime"/>
+        <result column="CLASSES_ID" property="classes_id"/>
+        <result column="classes_name" property="classesName"/>
+        <result column="STAFF_ID" property="staffId"/>
+        <result column="staff_name" property="staffName"/>
+        <result column="warehouse_name" property="warehouseName"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         OUTWAREHOUSE_ID, OUTWAREHOUSE_NUMBER, OUTWAREHOUSE_TIME, CLASSES_ID, STAFF_ID, STAFF_ID2, WAREHOUSE_ID, DELETED
     </sql>
+    <select id="selectwarehouse" resultMap="mapeOne">
+        SELECT * FROM ect_outWarehouse e
+                          LEFT JOIN ect_warehouse w on e.warehouse_id=w.warehouse_id
+                          LEFT JOIN ect_classes c on e.CLASSES_ID=c.CLASSES_ID
+                          LEFT JOIN sys_staff s on e.STAFF_ID=s.STAFF_ID
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>
