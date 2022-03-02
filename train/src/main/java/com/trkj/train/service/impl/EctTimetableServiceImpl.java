@@ -48,7 +48,7 @@ public class EctTimetableServiceImpl extends ServiceImpl<EctTimetableMapper, Ect
 
     @Override
     public IPage<EctTimetablepkDo> selectiptioncxpk(int page, int size, String classname, int deleted) throws ParseException {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String format = sdf.format(new Date());
         Date date1 = sdf.parse(format);
 

@@ -51,6 +51,18 @@ public class FinancePayServiceImpl extends ServiceImpl<FinancePayMapper, Finance
     private RecruitStudentMapper studentMapper;
 
     @Override
+    public int insertpay(FinancePay financePay) {
+        try {
+            return financePayMapper.insert(financePay);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
     public Result paging(Page<FinancePay> financePayPage, String search) {
         Page<FinancePay> financePays = mapper.selectPage(financePayPage, null);
         List<SysStaff> sysStaffs = sysStaffMapper.selectList(null);
@@ -68,17 +80,6 @@ public class FinancePayServiceImpl extends ServiceImpl<FinancePayMapper, Finance
             }
         }
 
-    @Override
-    public int insertpay(FinancePay financePay) {
-        try {
-            return financePayMapper.insert(financePay);
-        } catch (Exception e) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            e.printStackTrace();
-            return 1;
-        }
-
-    }
         if (!StringUtils.isEmpty(financePays.getRecords())){
             return Result.success("200",null,financePays);
         }
