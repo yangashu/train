@@ -1,9 +1,10 @@
 package com.trkj.train.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.trkj.train.entity.EctRefund;
+import com.trkj.train.service.IEctRefundService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,5 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ect-refund")
 public class EctRefundController {
+    @Autowired
+    private IEctRefundService iEctRefundService;
+    //添加退费表
+    @PostMapping("/inserttuifei")
+    public int inserttuifei(@RequestBody EctRefund ectRefund){
+        return iEctRefundService.inserttuifei(ectRefund);
+    }
 
 }

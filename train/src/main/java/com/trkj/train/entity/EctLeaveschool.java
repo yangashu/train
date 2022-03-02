@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,6 +36,7 @@ public class EctLeaveschool implements Serializable {
     @TableField("STUDENT_ID")
     private Integer studentId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("LEAVESCHOOL_DATE")
     private Date leaveschoolDate;
 

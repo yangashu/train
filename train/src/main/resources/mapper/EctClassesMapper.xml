@@ -23,6 +23,8 @@
         <result column="course_hour" property="courseHour"/>
         <result column="classes_hour" property="classesHour"/>
         <result column="CLASSES_ID" property="classesId"/>
+        <result column="staff_id" property="staffId"/>
+        <result column="CLASSROOM_ID" property="classRoomId"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -34,13 +36,21 @@
                           left join ect_classroom b on a.CLASSROOM_ID = b.CLASSROOM_ID
                           left join sys_staff c on a.STAFF_ID = c.STAFF_ID
                           LEFT JOIN recruit_course r on a.course_id=r.course_id
+        where a.DELETED=0
     </select>
-    <select id="selectiptionclass" resultType="com.trkj.train.TyVo.ClassesManageDO">
+    <select id="selectiptionclass" resultMap="classResult">
         select * from ECT_CLASSES s
                           LEFT JOIN SYS_STAFF t on s.staff_id=t.staff_id
                           LEFT JOIN RECRUIT_COURSE r on s.course_id=r.course_id
                           LEFT JOIN ECT_CLASSROOM m on s.classroom_id=m.classroom_id
             ${ew.customSqlsegment}
+    </select>
+    <select id="findByid" resultType="com.trkj.train.TyVo.ClassesManageDO">
+        select * from ECT_CLASSES s
+                          LEFT JOIN SYS_STAFF t on s.staff_id=t.staff_id
+                          LEFT JOIN RECRUIT_COURSE r on s.course_id=r.course_id
+                          LEFT JOIN ECT_CLASSROOM m on s.classroom_id=m.classroom_id
+        where s.classes_id=#{id}
     </select>
 
 </mapper>

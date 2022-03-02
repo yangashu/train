@@ -33,4 +33,37 @@ public class RecruitCourseController {
         System.out.println(recruitCourse);
         return iCourseService.editbjkc(recruitCourse);
     }
+
+//    教程入库  新增教程 课程下拉框查询
+    @GetMapping("selectjckc")
+    public List<RecruitCourse> selectjckc(){
+        return iCourseService.selectjckc();
+    }
+
+//    报名 课程查询搜索
+    @GetMapping("selectkccx")
+    public IPage<RecruitCourse> selectbmkc(@RequestParam("currentPage") int page,@RequestParam("size") int size,@RequestParam("kcmc") String kcmc){
+        return iCourseService.selectbmkb(page, size, kcmc);
+    }
+
+//    报名  课程查询
+    @GetMapping("selectkccxaa")
+    public IPage<RecruitCourse> selectkcaa(@RequestParam("currentPage")int page,@RequestParam("size")int size){
+        return iCourseService.selectkbcx(page, size);
+    }
+
+//    课程管理 添加课程
+    @PostMapping("insertcourese")
+    public int insertcourese(@RequestBody RecruitCourse recruitCourse){
+        return iCourseService.insertkccoure(recruitCourse);
+    }
+
+    //    分页课程查询
+    @GetMapping("/selectfycoure")
+    public IPage<RecruitCourse> selectfycourse(@RequestParam("page") int page,@RequestParam("size") int size){
+        return iCourseService.selectfycoure(page, size);
+    }
+
+//    课程刷新查询
+
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,6 +36,7 @@ public class RecruitStundentpunish implements Serializable {
     @TableField("STUNDENTPUNISH_GRADE")
     private Integer stundentpunishGrade;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("STUNDENTPUNISH_DATE")
     private Date stundentpunishDate;
 

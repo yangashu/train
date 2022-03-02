@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IEctRefundService extends IService<EctRefund> {
-
+//添加退费表
+    int inserttuifei(EctRefund ectRefund);
 }

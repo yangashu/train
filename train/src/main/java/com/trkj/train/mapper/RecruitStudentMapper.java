@@ -9,6 +9,9 @@ import com.trkj.train.entity.RecruitStudent;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +34,12 @@ public interface RecruitStudentMapper extends BaseMapper<RecruitStudent> {
 //    班级管理  本班学员弹框 搜索
     @Select("select * from recruit_student  WHERE classes_id=#{classid} and student_name like #{studentname}")
     IPage<RecruitStudent> selectiptionbenban(Page page,@Param("classid") int classid,@Param("studentname") String studentname);
+
+//    班级管理  结课
+    @Update("UPDATE recruit_student SET DELETEd=1 WHERE classes_id=#{classesId}")
+    int updatestudent(RecruitStudent recruitStudent);
+
+//    班级管理 结课
+    @Select("SELECT * FROM RECRUIT_STUDENT WHERE CLASSES_ID=#{classid}")
+    List<RecruitStudent> selectclassstu(int classid);
 }

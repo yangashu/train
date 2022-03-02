@@ -38,4 +38,13 @@ public interface SysStaffMapper extends BaseMapper<SysStaff> {
         "               LEFT JOIN sys_position p on sp.position_id=p.position_id\n" +
         "                   WHERE p.position_name='上课老师'")
     List<SysStaff> selectclassteacher();
+
+//教程入库  添加弹框 采购员下拉框查询
+    @Select("SELECT *\n" +
+            "       FROM sys_staff_position sp\n" +
+            "       LEFT JOIN SYS_STAFF s on sp.STAFF_ID=s.staff_Id\n" +
+            "       LEFT JOIN sys_position p on sp.position_id=p.position_id\n" +
+            "\t\t\t WHERE p.position_name='财务'")
+    List<SysStaff> selectcgy();
+
 }

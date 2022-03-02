@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IFinancePayService extends IService<FinancePay> {
-
+//    添加
+    int insertpay(FinancePay financePay);
 }

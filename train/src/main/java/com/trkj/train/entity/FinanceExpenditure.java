@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,8 +14,8 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
- * </p>
+ *
+ * </p >
  *
  * @author 沈杨卓
  * @since 2022-01-17
@@ -34,6 +36,7 @@ public class FinanceExpenditure implements Serializable {
     @TableField("EXPENDITURE_MONEY")
     private Integer expenditureMoney;
 
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("EXPENDITURE_DATE")
     private Date expenditureDate;
 
@@ -52,5 +55,16 @@ public class FinanceExpenditure implements Serializable {
     @TableField("DELETED")
     private Integer deleted;
 
+    @TableField("REMARKS")
+    private String remarks;
+
+    @TableField("EXPENDITURE_MODE")
+    private Integer expenditureMode;
+
+    @TableField("PURPOSE")
+    private String purpose;
+
+    @TableField("DRAWING")
+    private Integer drawing;
 
 }

@@ -27,4 +27,7 @@ public interface IRecruitChannelService extends IService<RecruitChannel> {
     IPage<RecruitChannel> likeselect(int page,int size,String channelName);
     //    删除
     int delectchannel(RecruitChannel channel);
+
+//    查询渠道
+    List<RecruitChannel> selectqd();
 }

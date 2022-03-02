@@ -11,10 +11,24 @@
         <result column="STUDENT_ID" property="studentId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="mapOne" type="com.trkj.train.TyVo.TalkeDo">
+        <result column="STUDENT_ID" property="studentId"/>
+        <result column="STUDENT_NAME" property="studentName"/>
+        <result column="STAFF_ID" property="staffId"/>
+        <result column="staff_name" property="staffName"/>
+        <result column="STUDENTTALK_CONTENT" property="studenttalkContent"/>
+        <result column="STUDENTTALK_DATE" property="studenttalkDate"/>
+        <result column="STUDENTTALK_ID" property="studenttalkId"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         STUDENTTALK_ID, STUDENTTALK_CONTENT, STUDENTTALK_DATE, STAFF_ID, STUDENT_ID, DELETED
     </sql>
+    <select id="selecttalk" resultMap="mapOne">
+        SELECT * FROM recruit_studentTalk r
+                          LEFT JOIN SYS_STAFF s on r.staff_id=s.staff_id
+                          LEFT JOIN RECRUIT_STUDENT t on r.student_id=t.student_id
+        where r.deleted=0 and r.student_id=#{studentId}
+    </select>
 
 </mapper>

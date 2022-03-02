@@ -151,4 +151,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
     public List<SysStaff> selectclassteacher() {
         return mapper.selectclassteacher();
     }
+
+    @Override
+    public List<SysStaff> selectcgy() {
+        return mapper.selectcgy();
+    }
 }

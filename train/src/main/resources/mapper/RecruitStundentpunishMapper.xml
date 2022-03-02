@@ -11,10 +11,22 @@
         <result column="STUDENT_ID" property="studentId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="mapOne" type="com.trkj.train.TyVo.punishDo">
+        <result column="STUDENT_ID" property="studentId"/>
+        <result column="student_name" property="student_name"/>
+        <result column="STUNDENTPUNISH_ID" property="stundentpunishId"/>
+        <result column="STUNDENTPUNISH_GRADE" property="stundentpunishGrade"/>
+        <result column="STUNDENTPUNISH_DATE" property="stundentpunishDate"/>
+        <result column="STUNDENTPUNISH_REASON" property="stundentpunishReason"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         STUNDENTPUNISH_ID, STUNDENTPUNISH_GRADE, STUNDENTPUNISH_DATE, STUNDENTPUNISH_REASON, STUDENT_ID, DELETED
     </sql>
+    <select id="selectpunish" resultMap="mapOne">
+        SELECT * FROM recruit_stundentPunish r
+                          LEFT JOIN recruit_student s on r.student_id=s.student_id
+        WHERE r.deleted=0 and s.STUDENT_ID=#{studentId}
+    </select>
 
 </mapper>

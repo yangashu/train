@@ -11,10 +11,29 @@
         <result column="STAFF_ID" property="staffId" />
         <result column="DELETED" property="deleted" />
     </resultMap>
-
+    <resultMap id="BaseResultMapOne" type="com.trkj.train.TyVo.FinancePurchaseDo">
+        <id column="PURCHASE_ID" property="purchaseId" />
+        <result column="PURCHASE_NAME" property="purchaseName" />
+        <result column="PURCHASE_NUMBER" property="purchaseNumber" />
+        <result column="PURCHASE_PRICE" property="purchaseAount" />
+        <result column="STAFF_ID" property="staffId" />
+        <result column="COURSE_ID" property="courseId" />
+        <result column="PURCHASE_DATE" property="purchaseDate" />
+        <result column="staff_name" property="staffName"/>
+        <result column="course_name" property="courseName"/>
+        <result column="inWarehouse_id" property="inwarehouseId"/>
+        <result column="warehouse_id" property="warehouseId"/>
+    </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         INWAREHOUSE_ID, PURCHASE_ID, INWAREHOUSE_DATE, WAREHOUSE_ID, STAFF_ID, DELETED
     </sql>
+    <select id="selectiptionssrk" resultMap="BaseResultMapOne">
+        SELECT * from ect_inWarehouse e
+                          LEFT JOIN finance_purchase f on e.purchase_id=f.purchase_id
+                          LEFT JOIN sys_staff s on e.staff_id=s.staff_id
+                          LEFT JOIN recruit_course c on c.course_id=f.course_id
+            ${ew.customSqlsegment}
+    </select>
 
 </mapper>

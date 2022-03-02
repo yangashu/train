@@ -9,6 +9,10 @@ import com.trkj.train.service.IRecruitChannelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Transactional
 @Service
 public class RecruitChannelServiceImpl extends ServiceImpl<RecruitChannelMapper, RecruitChannel> implements IRecruitChannelService {
     @Autowired
@@ -32,13 +37,27 @@ public class RecruitChannelServiceImpl extends ServiceImpl<RecruitChannelMapper,
     //添加渠道
     @Override
     public int addqudao(RecruitChannel channel) {
-        int addqudaos=channelMapper.insert(channel);
-        return addqudaos;
+        try {
+            int addqudaos=channelMapper.insert(channel);
+            return addqudaos;
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
     //修改渠道
     @Override
     public int updatequdao(RecruitChannel channel) {
-        return channelMapper.updateById(channel);
+        try {
+            return channelMapper.updateById(channel);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
     }
     //    根据渠道名称分页查询
     @Override
@@ -52,6 +71,18 @@ public class RecruitChannelServiceImpl extends ServiceImpl<RecruitChannelMapper,
 
     @Override
     public int delectchannel(RecruitChannel channel) {
-        return channelMapper.deleteById(channel);
+        try {
+            return channelMapper.deleteById(channel);
+        } catch (Exception e) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            e.printStackTrace();
+            return 1;
+        }
+
+    }
+
+    @Override
+    public List<RecruitChannel> selectqd() {
+        return channelMapper.selectList(null);
     }
 }

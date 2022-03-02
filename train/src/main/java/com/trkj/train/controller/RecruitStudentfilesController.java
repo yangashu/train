@@ -4,6 +4,7 @@ package com.trkj.train.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.trkj.train.TyVo.ConsultationDo;
 import com.trkj.train.TyVo.StudentfilesQudaoDo;
+import com.trkj.train.entity.RecruitStudentfiles;
 import com.trkj.train.service.IRecruitStudentfilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,8 +54,8 @@ public class RecruitStudentfilesController {
 
     //    咨询登记   模糊查询
     @GetMapping("/likeselectipton")
-    public IPage<ConsultationDo> likeselectipton(@RequestParam("page") int page,@RequestParam("size") int size,@RequestParam("downone") String downone,@RequestParam("dowtwo") String dowtwo,@RequestParam("dowthree") String dowthree,@RequestParam("input") String input,@RequestParam("value") String value){
-        IPage<ConsultationDo> consultationDOIPage=iStudentfilesService.selectipton(page, size, downone, dowtwo, dowthree, input,value);
+    public IPage<ConsultationDo> likeselectipton(@RequestParam("page") int page,@RequestParam("size") int size,@RequestParam("downone") String downone,@RequestParam("dowtwo") String dowtwo,@RequestParam("dowthree") String dowthree,@RequestParam("input") String input,@RequestParam("value") String value,@RequestParam("deleted") int deleted){
+        IPage<ConsultationDo> consultationDOIPage=iStudentfilesService.selectipton(page, size, downone, dowtwo, dowthree, input,value,deleted);
         return consultationDOIPage;
     }
 
@@ -62,5 +63,23 @@ public class RecruitStudentfilesController {
     @GetMapping("/selectinput")
     public IPage<ConsultationDo> selectinput(){
         return null;
+    }
+
+//    咨询登记 添加
+    @PostMapping("/insertzxdj")
+    public int insertzxdj(@RequestBody RecruitStudentfiles recruitStudentfiles){
+        return iStudentfilesService.insertzxdj(recruitStudentfiles);
+    }
+
+    //    咨询登记 修改状态为已流失
+    @PostMapping("/updatestudentfiles")
+    public int updatestudentfiles(@RequestBody RecruitStudentfiles recruitStudentfiles){
+        return iStudentfilesService.updatestudentfiles(recruitStudentfiles);
+    }
+
+//    删除
+    @PostMapping("/deletedstudentfiles")
+    public int deletedstudentfiles(@RequestBody RecruitStudentfiles recruitStudentfiles){
+        return iStudentfilesService.deletedstudentfiles(recruitStudentfiles);
     }
 }

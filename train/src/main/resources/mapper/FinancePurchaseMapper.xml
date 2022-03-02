@@ -20,5 +20,17 @@
     <sql id="Base_Column_List">
         PURCHASE_ID, PURCHASE_NAME, PURCHASE_REMARKS, PURCHASE_NUMBER, PURCHASE_PRICE, PURCHASE_AOUNT, STAFF_ID, COURSE_ID, PURCHASE_DATE, DELETED
     </sql>
+<!--    <select id="selectcgjc" resultMap="BaseResultMapOne">-->
+<!--        SELECT * FROM finance_purchase f-->
+<!--                          LEFT JOIN sys_staff s on f.staff_id=s.staff_id-->
+<!--                          LEFT JOIN recruit_course r on f.course_id=r.course_id-->
+<!--        where f.DELETED=0-->
+<!--    </select>-->
+<!--    <select id="selectiptionss" resultMap="BaseResultMapOne">-->
+<!--        SELECT * FROM finance_purchase f-->
+<!--                          LEFT JOIN sys_staff s on f.staff_id=s.staff_id-->
+<!--                          LEFT JOIN recruit_course r on f.course_id=r.course_id-->
+<!--            ${ew.customSqlsegment}-->
+<!--    </select>-->
 
 </mapper>

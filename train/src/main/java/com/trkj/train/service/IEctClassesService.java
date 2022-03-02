@@ -33,8 +33,13 @@ public interface IEctClassesService extends IService<EctClasses> {
     List<EctClasses> selectsyclass();
 
 //    班级管理   搜索
-    public IPage<ClassesManageDO> selectiptionclas(int page,int size,String input,String downOne,String downThree);
+    public IPage<ClassesManageDO> selectiptionclas(int page,int size,String input,String downOne,String downThree,int deleted);
 
 //    排课管理  添加弹框  班级下拉框查询
     List<EctClasses> selectipionbj();
+
+//    班级管理  结课
+    int deleteclass(EctClasses ectClasses);
+
+    Result findByid(int id);
 }

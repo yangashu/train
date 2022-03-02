@@ -26,7 +26,16 @@ public interface IRecruitStudentfilesService extends IService<RecruitStudentfile
 
 //    IPage<ConsultationDO> paging1(Page page, tbss tbss);
     //    咨询登记  下拉框快捷查询
-    IPage<ConsultationDo> selectipton(int page, int size, String downone, String dowtwo, String dowthree, String input, String value);
+    IPage<ConsultationDo> selectipton(int page, int size, String downone, String dowtwo, String dowthree, String input, String value,int deleted);
     //    咨询登记  搜索框查询
-    IPage<ConsultationDo> selectinput(int page,int size,String value,String input);
+    IPage<ConsultationDo> selectinput(int page,int size,String value,String input,int deleted);
+
+//    咨询登记 新增
+    int insertzxdj(RecruitStudentfiles recruitStudentfiles);
+
+//    咨询登记 修改状态为已流失
+    int updatestudentfiles(RecruitStudentfiles recruitStudentfiles);
+
+//    删除
+    int deletedstudentfiles(RecruitStudentfiles recruitStudentfiles);
 }

@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2022-01-17
  */
 public interface EctTransferrecordMapper extends BaseMapper<EctTransferrecord> {
-
 }

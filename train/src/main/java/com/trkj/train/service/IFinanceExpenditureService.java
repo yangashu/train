@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-01-17
  */
 public interface IFinanceExpenditureService extends IService<FinanceExpenditure> {
+//    教程管理  新增教程  支出表添加
+    int insertzckc(FinanceExpenditure financeExpenditure);
 
 }

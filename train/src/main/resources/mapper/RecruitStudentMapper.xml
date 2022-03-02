@@ -34,6 +34,7 @@
         <result column="course_name" property="course_name" />
         <result column="student_entrance" property="student_entrance" />
         <result column="staff_id" property="staff_id"/>
+        <result column="staff_name" property="staff_name"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -41,17 +42,18 @@
     </sql>
 
     <select id="selectpage" resultMap="studentMap">
-        SELECT * FROM recruit_student s
-                          LEFT JOIN ect_classes c on s.classes_id=c.classes_id
-                          LEFT JOIN recruit_course co on s.course_id=co.course_id
-                          LEFT JOIN sys_staff staff on s.staff_id=staff.staff_id
-                          where s.deleted=0
+        SELECT s.student_id,s.STUDENT_NAME,s.STUDENT_SEX,s.STUDENT_AGE,s.STUDENT_BIRTHDAY,s.STUDENT_PHONE,s.PARENT_PHONE,s.STUDENT_SCHOOL,s.STUDENT_LOC,s.STUDENT_ENTRANCE,s.CLASSES_ID,s.COURSE_ID,c.CLASSES_NAME,c.staff_id,co.COURSE_NAME,staff.staff_name FROM recruit_student s
+                                                                                                                                                                                                                                                                       LEFT JOIN ect_classes c on s.classes_id=c.classes_id
+                                                                                                                                                                                                                                                                       LEFT JOIN recruit_course co on s.course_id=co.course_id
+                                                                                                                                                                                                                                                                       LEFT JOIN sys_staff staff on c.staff_id=staff.staff_id
+        where s.deleted=0
     </select>
     <select id="selectipton" resultMap="studentMap">
-        SELECT * FROM recruit_student s
-                          LEFT JOIN ect_classes c on s.classes_id=c.classes_id
-                          LEFT JOIN recruit_course co on s.course_id=co.course_id
-                          LEFT JOIN sys_staff staff on s.staff_id=staff.staff_id
+        SELECT s.student_id,s.STUDENT_NAME,s.STUDENT_SEX,s.STUDENT_AGE,s.STUDENT_BIRTHDAY,s.STUDENT_PHONE,s.PARENT_PHONE,s.STUDENT_SCHOOL,s.STUDENT_LOC,s.STUDENT_ENTRANCE,s.CLASSES_ID,s.COURSE_ID,c.CLASSES_NAME,c.staff_id,co.COURSE_NAME,staff.staff_name FROM recruit_student s
+                                                                                                                                                                                                                                                                       LEFT JOIN ect_classes c on s.classes_id=c.classes_id
+                                                                                                                                                                                                                                                                       LEFT JOIN recruit_course co on s.course_id=co.course_id
+                                                                                                                                                                                                                                                                       LEFT JOIN sys_staff staff on c.staff_id=staff.staff_id
+
             ${ew.customSqlsegment}
     </select>
 </mapper>

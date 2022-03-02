@@ -39,19 +39,19 @@ public class EctTimetable implements Serializable {
     @TableField("TIMETABLE_AFTERNOON")
     private String timetableAfternoon;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @TableField("TIMETABLE_TIME")
     private Date timetableTime;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @TableField("TIMETABLE_MORNINGEND")
     private Date timetableMorningend;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @TableField("TIMETABLE_AFTERNOONSTART")
     private Date timetableAfternoonstart;
 
-    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @TableField("TIMETABLE_AFTERNOONEND")
     private Date timetableAfternoonend;
 

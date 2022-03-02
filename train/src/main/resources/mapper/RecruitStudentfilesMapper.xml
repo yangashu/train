@@ -51,6 +51,7 @@
         <result column="studentFiles_state" property="studentfilesState" />
         <result column="STAFF_NAME" property="staffName" />
         <result column="staff_id" property="staffId"/>
+        <result column="studentFiles_birthday" property="studentfilesBirthday"/>
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -60,6 +61,7 @@
         SELECT * FROM recruit_studentFiles s
                           LEFT JOIN sys_staff a ON s.STAFF_ID = a.STAFF_ID
                           LEFT JOIN recruit_course c ON s.course_id = c.course_id
+where s.deleted=0
     </select>
     <select id="paging1" resultMap="ConsultationResultMap">
         SELECT * FROM recruit_studentFiles s

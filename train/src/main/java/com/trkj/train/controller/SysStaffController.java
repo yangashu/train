@@ -80,4 +80,10 @@ public class SysStaffController {
     public List<SysStaff> selectclassteacher(){
         return service.selectclassteacher();
     }
+
+    //教程入库  添加弹框 采购员下拉框查询
+    @GetMapping("selectcgy")
+    public List<SysStaff> selectcgy(){
+        return service.selectcgy();
+    }
 }
