@@ -36,18 +36,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     private SysDeptMapper mapper;
 
     @Autowired
-    public SysDeptMapper mapper;
-
-    @Autowired
     public SysPositionMapper positionMapper;
 
     @Autowired
     public SysStaffPositionMapper spMapper;
-
-    @Override
-    public List<SysDept> selectDeptList() {
-        return mapper.selectList(new QueryWrapper<SysDept>().orderByAsc("dept_id"));
-    }
 
     @Override
     public List<SysDept> selectDeptList() {

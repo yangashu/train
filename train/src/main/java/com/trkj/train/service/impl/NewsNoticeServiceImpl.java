@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.trkj.train.config.dto.NoticeView;
-import com.trkj.train.config.dto.SendView;
 import com.trkj.train.entity.*;
 import com.trkj.train.mapper.NewsNoticeMapper;
 import com.trkj.train.mapper.SysPositionMapper;
@@ -59,6 +58,7 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
         for(NewsNotice n : list){
             String newDate=format.format(new Date());
             String oldDate=format.format(n.getNoticeDate());
+            System.out.println(newDate+"++++++++"+oldDate);
             if (newDate.equals(oldDate)){
                 list1.add(n);
             }else {
@@ -113,32 +113,33 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
 
     @Override
     public IPage<NoticeView> pageselect(int page, int size,int id) {
+        Page<NewsNotice> page1 = new Page<>(page, size, id);
         QueryWrapper<SysStaffPosition> queryWrapper = new QueryWrapper();
         queryWrapper.eq("STAFF_ID",id);
         List<SysStaffPosition> list1 = sysStaffPositionMapper.selectList(queryWrapper);
-
-        QueryWrapper<SysPosition> sysPositionQueryWrapper = new QueryWrapper<>();
-        sysPositionQueryWrapper.eq("POSITION_ID",list1.get(0).getPositionId());
-        SysPosition sysPosition = sysPositionMapper.selectOne(sysPositionQueryWrapper);
-
-
-        Page<NewsNotice> page1=new Page<>(page,size,id);
-        IPage<NewsNotice> iPage =null;
-        System.out.println("啊啊啊"+sysPosition.getDeptId());
-        QueryWrapper<NewsNotice> newNotQueryWrapper=new QueryWrapper();
-        newNotQueryWrapper.eq("dept_id",sysPosition.getDeptId());
-        newNotQueryWrapper.or().eq("dept_id",0);
-        if(sysPosition.getDeptId()!=null){
-            iPage= newsNoticeMapper.selectPage(page1,newNotQueryWrapper);
-        }else{
-            iPage = newsNoticeMapper.selectPage(page1,null);
+        IPage<NewsNotice> iPage = null;
+        if (list1.size() != 0) {
+            QueryWrapper<SysPosition> sysPositionQueryWrapper = new QueryWrapper<>();
+            sysPositionQueryWrapper.eq("POSITION_ID", list1.get(0).getPositionId());
+            SysPosition sysPosition = sysPositionMapper.selectOne(sysPositionQueryWrapper);
+            System.out.println("啊啊啊" + sysPosition.getDeptId());
+            QueryWrapper<NewsNotice> newNotQueryWrapper = new QueryWrapper();
+            newNotQueryWrapper.eq("dept_id", sysPosition.getDeptId());
+            newNotQueryWrapper.or().eq("dept_id", 0);
+            iPage = newsNoticeMapper.selectPage(page1, newNotQueryWrapper);
+        } else {
+            iPage = newsNoticeMapper.selectPage(page1, null);
         }
+
+
+
+
         IPage<NoticeView> viewIPage = new Page<>();
         List<NoticeView> list = new ArrayList();
 
-        for(int i=0;i<iPage.getRecords().size();i++){
+        for (int i = 0; i < iPage.getRecords().size(); i++) {
             QueryWrapper<SysStaff> queryWrapper1 = new QueryWrapper();
-            queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId());
+            queryWrapper1.eq("staff_id", iPage.getRecords().get(i).getStaffId());
             SysStaff personal = staffMapper.selectOne(queryWrapper1);
             NoticeView noticeView = new NoticeView();
             noticeView.setNoticeId(iPage.getRecords().get(i).getNoticeId());
@@ -157,6 +158,7 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
         viewIPage.setSize(iPage.getSize());
         viewIPage.setTotal(iPage.getTotal());
         return viewIPage;
+
     }
 
     //修改为发布
@@ -168,15 +170,6 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
     }
 
     //修改为暂停
-    @Override
-    public int xiugai(int id) {
-        NewsNotice newsNotice1 = newsNoticeMapper.selectById(id);
-        if (newsNotice1.getState()==0){
-            newsNotice1.setState(1);
-        }else if(newsNotice1.getState()==1){
-            newsNotice1.setState(0);
-        }
-        return newsNoticeMapper.updateById(newsNotice1);
     public int zanting(int id) {
         NewsNotice newsNotice1 = newsNoticeMapper.selectById(id);
         newsNotice1.setState(0);
@@ -198,4 +191,6 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
         newsNotice.setState(0);
         return newsNoticeMapper.insert(newsNotice);
     }
+
+
 }

@@ -122,6 +122,9 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
 
     @Override
     public int xiugai(SysPersonal sysPersonal) {
+        return sysPersonalMapper.updateById(sysPersonal);
+    }
+
     @Override
     public IPage<SysPersonal> selectPer(int page,int size) {
         QueryWrapper<SysPersonal> wrapper=new QueryWrapper();
@@ -129,8 +132,6 @@ public class SysPersonalServiceImpl extends ServiceImpl<SysPersonalMapper, SysPe
         return mapper.selectPage(new Page(page,size),wrapper);
     }
 
-        return sysPersonalMapper.updateById(sysPersonal);
-    }
     //导出
     @Override
     public Result export(HttpServletResponse response, Paging paging)throws Exception {

@@ -43,7 +43,4 @@ public class SysDept implements Serializable {
     @TableField("DELETED")
     private Integer deleted;
 
-    @TableField("DEPT_PARENTID")
-    private Integer deptParentid;
-
 }

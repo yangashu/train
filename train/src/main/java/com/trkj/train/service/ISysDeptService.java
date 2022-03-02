@@ -22,8 +22,6 @@ import java.util.List;
 public interface ISysDeptService extends IService<SysDept> {
     public List<SysDept> selectDeptList();
 
-    public List<SysDept> selectDeptList();
-
     public IPage<staffAndDept> one(int page, int size);
 
     public List<SysDept> three();
