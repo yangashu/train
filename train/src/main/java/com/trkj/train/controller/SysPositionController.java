@@ -9,6 +9,7 @@ import com.trkj.train.entity.SysPosition;
 import com.trkj.train.service.ISysDeptService;
 import com.trkj.train.service.ISysPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class SysPositionController {
     @Autowired
     private ISysDeptService iDeptService;
     //    分页查询
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:list','sys:manage','sing')")
     @GetMapping("/paging")
     public Result<?> paging(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "1") int size, @RequestParam(defaultValue = "") String keyword) {
 
@@ -41,7 +43,7 @@ public class SysPositionController {
        return service.findByid(id);
 
     }
-
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:del','sys:manage')")
     //    根据id删除
     @DeleteMapping("/deleteByid")
     public Result<?> deleteByid(@RequestParam int id) {
@@ -50,12 +52,14 @@ public class SysPositionController {
     }
 
     //    批量删除
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:del','sys:manage')")
     @PostMapping("/deleteBatchIds")
     public Result<?> deleteBatchIds(@RequestBody List<Integer> ids) {
         return service.deleteBatchIds(ids);
     }
 
     //    添加
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:insert','sys:manage')")
     @PostMapping("/insert")
     public Result<?> insert(@RequestBody SysPosition position) {
         boolean x = service.save(position);
@@ -65,6 +69,7 @@ public class SysPositionController {
             return Result.error("-1", "添加失败！！！");
     }
     //    修改
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:edit','sys:manage')")
     @PostMapping("/update")
 //    @PreAuthorize("hasAuthority('sss')")
     public Result<?> update(@RequestBody SysPosition position) {

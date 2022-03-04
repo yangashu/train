@@ -49,11 +49,15 @@ public class PayAndStaffAndstudentVo implements Serializable {
     private Integer incomeState;
 
 
-    @Excel(name = "录入人")
+
     @TableField("STAFF_NAME")
     private String staffName;
 
     @Excel(name = "缴费学员")
     @TableField("STUDENT_NAME")
     private String studentName;
+
+    @Excel(name = "录入人")
+    @TableField("PERSONAL_NAME")
+    private String personalName;
 }

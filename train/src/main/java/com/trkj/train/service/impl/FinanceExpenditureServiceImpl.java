@@ -34,6 +34,7 @@ public class FinanceExpenditureServiceImpl extends ServiceImpl<FinanceExpenditur
     @Override
     public int insertzckc(FinanceExpenditure financeExpenditure) {
         try {
+            System.err.println("==================================="+financeExpenditure);
             return mapper.insert(financeExpenditure);
         } catch (Exception e) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

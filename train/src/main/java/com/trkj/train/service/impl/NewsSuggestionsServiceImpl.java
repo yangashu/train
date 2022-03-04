@@ -49,11 +49,12 @@ public class NewsSuggestionsServiceImpl extends ServiceImpl<NewsSuggestionsMappe
         List<SuggestionsView> list = new ArrayList();
 
 
-
+        System.out.println();
         for(int i=0;i<iPage.getRecords().size();i++){
+
             QueryWrapper<SysStaff> queryWrapper1 = new QueryWrapper();
             SysStaff personal = new SysStaff();
-            if(iPage.getRecords().get(i).getStaffId()==0){
+            if(iPage.getRecords().get(i).getStaffId()==null){
                 personal.setStaffName("该用户已匿名");
             }else{
                 queryWrapper1.eq("staff_id",iPage.getRecords().get(i).getStaffId());

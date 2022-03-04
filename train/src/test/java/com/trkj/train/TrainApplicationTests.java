@@ -22,7 +22,7 @@ class TrainApplicationTests {
 
     public static void main(String[] args) {
         PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-        String encode = passwordEncoder.encode("123456");
+        String encode = passwordEncoder.encode("$2a$10$NtZiFGrChbjxCCtuCL5c5e853Hx.BFUKPVlm8V.7fTGdXO.6RnEUi");
 
         System.out.println(encode+"\n"+encode.equals("123456"));
     }

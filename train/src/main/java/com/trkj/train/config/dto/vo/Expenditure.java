@@ -3,10 +3,7 @@ package com.trkj.train.config.dto.vo;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.trkj.train.entity.EctRefund;
-import com.trkj.train.entity.FinanceExpenditure;
-import com.trkj.train.entity.FinancePurchase;
-import com.trkj.train.entity.SysStaff;
+import com.trkj.train.entity.*;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,4 +26,6 @@ public class Expenditure extends FinanceExpenditure implements Serializable {
     private SysStaff staff;
     @TableField(exist = false)
     private SysStaff drawingrepeat;
+    @TableField(exist = false)
+    private SysPersonal personal;
 }

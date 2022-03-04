@@ -18,7 +18,9 @@ public interface RefundAndLeaveSchoolAndStudentAndStaffMapper extends BaseMapper
             " LEFT JOIN ect_classes cla" +
             " ON stu.classes_id=cla.classes_id"+
             " left JOIN SYS_STAFF sta" +
-            " ON cla.staff_id=sta.staff_id ${ew.customSqlSegment}")
+            " ON cla.staff_id=sta.staff_id " +
+            " LEFT JOIN " +
+            " SYS_PERSONAL per ON sta.PERSONAL_ID=per.personal_id ${ew.customSqlSegment}")
     IPage<RefundAndLeaveSchoolAndStudentAndStaffVo> paging(IPage page, @Param(Constants.WRAPPER) Wrapper<RefundAndLeaveSchoolAndStudentAndStaffVo> queryWrapper);
 
     @Update("update finance_expenditure set payApproval_state=0 where expenditure_id=#{id}")

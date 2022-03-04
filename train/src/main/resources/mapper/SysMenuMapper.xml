@@ -25,17 +25,18 @@
         MENU_ID, MENU_PID, MENU_NAME, MENU_URL, MENU_PERMS, MENU_COMPONENT, MENU_TYPE, MENU_ICON, MENU_ORDERNUM, MENU_CREATED, MENU_UPDATED, MENU_STATE, MENU_DESCRIBE, DELETED
     </sql>
     <select id="selectPermsByStaffId" resultType="java.lang.String">
-        SELECT
-            DISTINCT m.menu_perms
-        FROM
-            SYS_STAFF_POSITION sp
-                LEFT JOIN SYS_POSITION p ON sp.POSITION_ID=p.POSITION_ID
-                LEFT JOIN SYS_POSITION_MENU pm ON sp.POSITION_ID=pm.POSITIONMENU_ID
-                LEFT JOIN SYS_MENU m ON pm.MENU_ID=m.MENU_ID
+        select DISTINCT m.menu_perms from SYS_POSITION_MENU pm
+                                              LEFT JOIN SYS_MENU m ON pm.MENU_ID=m.MENU_ID
+                                              LEFT JOIN SYS_POSITION p ON pm.position_id=p.POSITION_ID
+                                              LEFT JOIN SYS_STAFF_POSITION sp ON sp.POSITION_ID=p.POSITION_ID
         WHERE
             STAFF_ID=#{staffid}
-          AND p.POSITION_STATE=0
-          AND m.MENU_TYPE=0
+          AND  pm.DELETED=0
+          AND  sp.DELETED=0
+          AND  p.POSITION_STATE=0
+          AND  p.DELETED=0
+          AND  m.MENU_STATE=0
+          AND  m.DELETED=0
     </select>
 
 </mapper>

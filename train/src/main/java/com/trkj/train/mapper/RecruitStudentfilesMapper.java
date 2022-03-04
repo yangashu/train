@@ -8,6 +8,7 @@ import com.trkj.train.TyVo.ConsultationDo;
 import com.trkj.train.TyVo.StudentfilesQudaoDo;
 import com.trkj.train.entity.RecruitStudentfiles;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -18,6 +19,7 @@ import org.apache.ibatis.annotations.Param;
  * @author 沈杨卓
  * @since 2022-01-17
  */
+@Mapper
 public interface RecruitStudentfilesMapper extends BaseMapper<RecruitStudentfiles> {
     //咨询登记表格分页查询
     IPage<ConsultationDo> paging(Page<ConsultationDo> page);

@@ -23,10 +23,12 @@ import java.util.List;
  */
 public interface PayAndStaffAndstudentVoMapper extends BaseMapper<PayAndStaffAndstudentVo> {
     @Select("SELECT * FROM finance_pay p " +
-            " LEFT JOIN \n" +
-            " sys_staff s ON p.staff_id= s.STAFF_ID\n" +
-            " LEFT JOIN\n" +
-            " recruit_student stu ON p.student_id=stu.STUDENT_ID ${ew.customSqlSegment}")
+            " LEFT JOIN " +
+            " sys_staff s ON p.staff_id= s.STAFF_ID" +
+            " LEFT JOIN" +
+            " recruit_student stu ON p.student_id=stu.STUDENT_ID" +
+            " LEFT JOIN " +
+            " SYS_PERSONAL per ON s.PERSONAL_ID=per.personal_id ${ew.customSqlSegment}")
     IPage<PayAndStaffAndstudentVo> paging(IPage page, @Param(Constants.WRAPPER) Wrapper<PayAndStaffAndstudentVo> queryWrapper);
 
     @Update("update FINANCE_PAY set INCOME_STATE=0 where paymoney_id=#{id}")

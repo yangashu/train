@@ -22,35 +22,35 @@ public class PayAndStaffAndstudentController implements Serializable {
     @Autowired
     private IPayAndStaffAndstudentService service;
 
-    @PreAuthorize("hasAnyAuthority('finance:payment:list','sys:manage')")
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:list','sys:manage','sing')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);
     }
 
     //    导入
-    @PreAuthorize("hasAnyAuthority('finance:payment:Import','sys:manage')")
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:Import','sys:manage')")
     @PostMapping("/import")
     private Result importExcel(@RequestParam("file") MultipartFile excelFile) throws Exception{
         return service.saveAll(excelFile);
     }
 
     //    导出
-    @PreAuthorize("hasAnyAuthority('finance:payment:export','sys:manage')")
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:export','sys:manage')")
     @RequestMapping("/export")
     public Result export(HttpServletResponse response,@RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
     }
 
     //    根据id导出
-    @PreAuthorize("hasAnyAuthority('finance:payment:print','sys:manage')")
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:export','sys:manage')")
     @RequestMapping("/exportByid")
     public Result exportByid(HttpServletResponse response,@RequestBody int id) throws Exception{
         return service.exportByid(response,id);
     }
 
     //审核通过
-    @PreAuthorize("hasAnyAuthority('finance:payment:examine','sys:manage')")
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:examine','sys:manage')")
     @PutMapping("/update")
     public Result update(@RequestBody List<Integer> ids){
         return service.updateBatchbyid(ids);

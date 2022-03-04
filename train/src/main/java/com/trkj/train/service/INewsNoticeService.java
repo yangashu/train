@@ -5,6 +5,8 @@ import com.trkj.train.config.dto.NoticeView;
 import com.trkj.train.entity.NewsNotice;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -34,4 +36,6 @@ public interface INewsNoticeService extends IService<NewsNotice> {
 
     //工作台查询
     int one();
+
+
 }

@@ -7,6 +7,7 @@ import com.trkj.train.TyVo.StudentfilesQudaoDo;
 import com.trkj.train.entity.RecruitStudentfiles;
 import com.trkj.train.service.IRecruitStudentfilesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,6 +32,7 @@ public class RecruitStudentfilesController {
     //    渠道管理 查看学员表格分页查询
     @GetMapping("/selectstudentfiles")
     private IPage<StudentfilesQudaoDo> selectstudentfiles(@RequestParam("currentPage") int page, @RequestParam("size") int size, @RequestParam("channelid") int channelid){
+        System.out.println("page"+page+"size"+size+"");
         IPage<StudentfilesQudaoDo> selectstudenmt=iStudentfilesService.pagfye(page,size,channelid);
         return selectstudenmt;
     }

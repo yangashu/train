@@ -68,6 +68,8 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
         return list1.size();
     }
 
+
+
     @Override
     public IPage<NoticeView> pageselectLike(int page, int size, String like, String mode,int id) {
         QueryWrapper<SysStaffPosition> queryWrapper = new QueryWrapper();
@@ -113,7 +115,7 @@ public class NewsNoticeServiceImpl extends ServiceImpl<NewsNoticeMapper, NewsNot
 
     @Override
     public IPage<NoticeView> pageselect(int page, int size,int id) {
-        Page<NewsNotice> page1 = new Page<>(page, size, id);
+        Page<NewsNotice> page1 = new Page<>(page, size,id);
         QueryWrapper<SysStaffPosition> queryWrapper = new QueryWrapper();
         queryWrapper.eq("STAFF_ID",id);
         List<SysStaffPosition> list1 = sysStaffPositionMapper.selectList(queryWrapper);

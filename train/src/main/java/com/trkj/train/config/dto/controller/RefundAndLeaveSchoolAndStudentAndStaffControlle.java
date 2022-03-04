@@ -8,6 +8,7 @@ import com.trkj.train.config.dto.service.IRefundAndLeaveSchoolAndStudentAndStaff
 import com.trkj.train.entity.EctRefund;
 import com.trkj.train.mapper.EctRefundMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +24,14 @@ public class RefundAndLeaveSchoolAndStudentAndStaffControlle implements Serializ
     @Autowired
     private IRefundAndLeaveSchoolAndStudentAndStaffService service;
 
+    @PreAuthorize("hasAnyAuthority('finance:refund','finance:refund:list','sys:manage','sing')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);
     }
 
     //    导出
+    @PreAuthorize("hasAnyAuthority('finance:refund','finance:refund:export','sys:manage')")
     @RequestMapping("/export")
 //    @PreAuthorize("hasAnyAuthority('administration:manage')")
     public Result export(HttpServletResponse response, @RequestBody Paging paging) throws Exception{

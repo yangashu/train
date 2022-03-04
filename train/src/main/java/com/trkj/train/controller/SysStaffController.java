@@ -14,6 +14,7 @@ import com.trkj.train.service.ISysPersonalService;
 import com.trkj.train.service.ISysStaffService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,12 +44,14 @@ public class SysStaffController {
 
 
     //    系统管理下的用户管理
+    @PreAuthorize("hasAnyAuthority('sys:user','sys:user:list','sys:manage','sing')")
     @GetMapping("/paging")
     public Result<?> paging(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "") String search){
         IPage<SysStaff> list=service.paging(new Page<SysStaff>(page,size),search);
         return Result.success(list);
     }
 
+    @PreAuthorize("hasAnyAuthority('sys:user','sys:user:insert','sys:manage')")
     @PostMapping("/insert")
     public Result insert(@RequestBody Map<String,Object> map){
 
@@ -87,6 +90,7 @@ public class SysStaffController {
     }
 
     //员工辞退方法
+    @PreAuthorize("hasAnyAuthority('administration:staffManagement','administration:staffManagement:Dismiss','sys:manage')")
     @GetMapping("/three")
     public Result<?> three(@RequestParam("staffId") int staffId){
         int i= service.three(staffId);
@@ -114,12 +118,14 @@ public class SysStaffController {
     }
 
     //人脸更新
+    @PreAuthorize("hasAnyAuthority('administration:staffManagement','administration:staffManagement:update','sys:manage')")
     @PostMapping("/facetwo/{id}")
     public Result facetwo(@PathVariable("id")int id, @RequestParam("url") MultipartFile url) throws Exception {
         return service.updateFace(id, Base64Util.encode(url.getBytes()));
     }
 
     //员工入职
+    @PreAuthorize("hasAnyAuthority('administration:staffManagement','administration:staffManagement:Induction','sys:manage')")
     @PostMapping("/addStaff")
     public Result addStaff(@RequestBody SysStaff staff) throws IOException {
         return service.addStaff(staff);

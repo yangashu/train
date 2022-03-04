@@ -339,7 +339,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
         QueryWrapper queryWrapper=new QueryWrapper();
         queryWrapper.eq("personal_id",s.getPersonalId());
         SysPersonal p=personalMapper.selectOne(queryWrapper);
-        p.setPersonalType(1);
+        p.setPersonalType(0);
         int i=personalMapper.updateById(p);
         return mapper.updateById(s);
     }

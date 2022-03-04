@@ -7,6 +7,7 @@ import com.trkj.train.config.Result;
 import com.trkj.train.entity.vo.staffAndDept;
 import com.trkj.train.service.ISysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,18 +39,22 @@ public class SysDeptController {
     public IPage<staffAndDept> one(@RequestParam("currentPage") int page, @RequestParam("pagesize") int size){
         return service.one(page, size);
     }
+
     //添加方法
+    @PreAuthorize("hasAnyAuthority('administration:deptManagement','administration:deptManagement:added','sys:manage')")
     @GetMapping("/two")
     public Result two(@RequestParam("deptName") String deptName,@RequestParam("deptParentid")int deptPanentid){
         return service.two(deptName,deptPanentid);
     }
     //修改方法
     @GetMapping("/three")
+    @PreAuthorize("hasAnyAuthority('administration:deptManagement','administration:deptManagement:exit','sys:manage')")
     public Result three(@RequestParam("id")int id,@RequestParam("deptName")String deptName,@RequestParam("deptParentid")int deptPanentid){
         return service.four(id,deptName,deptPanentid);
     }
     //删除方法
     @GetMapping("/four")
+    @PreAuthorize("hasAnyAuthority('administration:deptManagement','administration:deptManagement:delete','sys:manage')")
     public Result four(@RequestParam("id")int id){
         return service.five(id);
     }

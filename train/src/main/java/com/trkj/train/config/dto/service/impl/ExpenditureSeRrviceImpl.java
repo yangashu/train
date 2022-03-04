@@ -17,9 +17,11 @@ import com.trkj.train.config.dto.vo.Expenditure;
 import com.trkj.train.config.dto.vo.ExpenditureAndRefundAndPurchaseAndStaffVo;
 import com.trkj.train.entity.EctRefund;
 import com.trkj.train.entity.FinancePurchase;
+import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.entity.SysStaff;
 import com.trkj.train.mapper.EctRefundMapper;
 import com.trkj.train.mapper.FinancePurchaseMapper;
+import com.trkj.train.mapper.SysPersonalMapper;
 import com.trkj.train.mapper.SysStaffMapper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class ExpenditureSeRrviceImpl extends ServiceImpl<ExpenditureMapper, Expe
     private EctRefundMapper refundMapper;
     @Autowired
     private SysStaffMapper staffMapper;
+    @Autowired
+    private SysPersonalMapper personalMapper;
 
     @Override
     public Result paging(Map<String, Object> map) {
@@ -58,8 +62,7 @@ public class ExpenditureSeRrviceImpl extends ServiceImpl<ExpenditureMapper, Expe
         List<SysStaff> sysStaffs = staffMapper.selectList(null);
         List<FinancePurchase> financePurchases = purchaseMapper.selectList(null);
         List<EctRefund> ectRefunds = refundMapper.selectList(null);
-
-
+        List<SysPersonal> personals = personalMapper.selectList(null);
         QueryWrapper<Expenditure> wrapper=new QueryWrapper<>();
         if(!StringUtils.isEmpty(state)){
             if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(data1)){
@@ -108,6 +111,16 @@ public class ExpenditureSeRrviceImpl extends ServiceImpl<ExpenditureMapper, Expe
                 if(e.getRefundId()==item.getRefundId()){
                     e.setEctRefund(item);
                 }
+            });
+        });
+        paging1.getRecords().forEach(e->{
+            personals.forEach(item->{
+                if(e.getStaff().getPersonalId()==item.getPersonalId()){
+                    e.setPersonal(item);
+                }
+                System.err.println("======================名字==================="+item.getPersonalName());
+                System.err.println("======================编号==================="+item.getPersonalId());
+                System.err.println("======================集合大小==================="+personals.size());
             });
         });
         if (!StringUtils.isEmpty(paging1.getRecords())){

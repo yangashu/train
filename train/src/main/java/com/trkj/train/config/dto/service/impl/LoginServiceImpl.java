@@ -41,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
         LoginUser permissions = (LoginUser) authenticate.getPrincipal();
 
         for (String permission : permissions.getPermissions()) {
-            if (permission.equals("sing")) {
+            if (permission.equals("sing") || permission.equals("sys:manage")) {
                 menu = permission;
             }
         }
@@ -52,9 +52,9 @@ public class LoginServiceImpl implements LoginService {
 //            throw new RuntimeException("用户名或密码错误！！！");
         }
 
-//        if (StringUtils.isEmpty(menu)) {
-//            return Result.error("403", "权限不足！！！");
-//        }
+        if (StringUtils.isEmpty(menu)) {
+            return Result.error("403", "权限不足！！！");
+        }
         //如果认真通过了，使用staffid生成一个jwt，jtw存入Result返回
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         int staffId = loginUser.getStaff().getStaffId();
@@ -69,7 +69,6 @@ public class LoginServiceImpl implements LoginService {
 
         redisCache.setCacheobject("login:" + staffId, loginUser);
 
-        System.out.println("loginUser："+loginUser);
         return Result.success("200", "登录成功", loginUser);
     }
 

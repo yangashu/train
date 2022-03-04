@@ -34,7 +34,7 @@ public class RefundAndLeaveSchoolAndStudentAndStaffVo implements Serializable {
     @TableField("STAFF_ID")
     private Integer staffId;
 
-    @Excel(name = "经办人")
+
     @TableField("STAFF_NAME")
     private String staffName;
 
@@ -59,4 +59,8 @@ public class RefundAndLeaveSchoolAndStudentAndStaffVo implements Serializable {
     @Excel(name = "退费明细")
     @TableField("LEAVESCHOOL_REASON")
     private String leaveschoolReason;
+
+    @Excel(name = "经办人")
+    @TableField("PERSONAL_NAME")
+    private String personalName;
 }

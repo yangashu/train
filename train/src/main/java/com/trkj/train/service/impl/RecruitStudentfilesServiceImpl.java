@@ -40,6 +40,7 @@ public class RecruitStudentfilesServiceImpl extends ServiceImpl<RecruitStudentfi
     @Override
     public IPage<StudentfilesQudaoDo> pagfye(int page, int size, int channelid) {
         IPage<StudentfilesQudaoDo> pagefye=studentfilesMapper.pagfye(new Page<>(page,size),channelid);
+        System.out.println("////////"+pagefye.getRecords().size());
         return pagefye;
     }
 

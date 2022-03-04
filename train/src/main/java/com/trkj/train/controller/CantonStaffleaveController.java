@@ -7,6 +7,7 @@ import com.trkj.train.entity.CantonStaffleave;
 import com.trkj.train.entity.vo.staffAndPersonalAndLeave;
 import com.trkj.train.service.ICantonStaffleaveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,12 +33,15 @@ public class CantonStaffleaveController {
         return Result.success(iPage);
     }
 
+    //新增
     @PostMapping("/addLeave")
     public Result addLeave(@RequestBody CantonStaffleave staffleave){
         return service.addLeave(staffleave);
     }
 
+    //审批
     @GetMapping("/approveLeave")
+    @PreAuthorize("hasAnyAuthority('administration:approve','administration:approve:examine','sys:manage')")
     public Result updateLeave(@RequestParam("leaveId") int leaveId,@RequestParam("staffId") int staffId){
         return service.approveLeave(leaveId,staffId);
     }

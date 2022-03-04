@@ -4,6 +4,7 @@ package com.trkj.train.controller;
 import com.trkj.train.entity.RecruitFollow;
 import com.trkj.train.service.IRecruitFollowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.trkj.train.entity.RecruitFollow;
@@ -36,6 +37,7 @@ public class RecruitFollowController {
 
     //    添加跟进
     @PostMapping("/insertgengjin")
+    @PreAuthorize("hasAnyAuthority('recruit:counsulting','recruit:counsulting:addgjr','sys:manage')")
     public int insertgengjin(@RequestBody RecruitFollow recruitFollow){
         return service.insertgengjin(recruitFollow);
     }

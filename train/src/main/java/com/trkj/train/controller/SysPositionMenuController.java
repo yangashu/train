@@ -10,6 +10,7 @@ import com.trkj.train.service.ISysMenuService;
 import com.trkj.train.service.ISysPositionMenuService;
 import com.trkj.train.service.ISysPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public class SysPositionMenuController {
     }
 
     //    分配权限
+    @PreAuthorize("hasAnyAuthority('sys:role','sys:role:perm','sys:manage')")
     @PostMapping("/perm/{roleId}")
 //    @PreAuthorize("hasAuthority('sys:role:perm')")
     public Result perm(@PathVariable int roleId, @RequestBody int[] menuIds) {

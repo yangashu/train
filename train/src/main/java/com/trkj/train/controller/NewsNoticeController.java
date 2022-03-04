@@ -3,6 +3,7 @@ package com.trkj.train.controller;
 
 import com.trkj.train.service.INewsNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,24 +42,28 @@ public class NewsNoticeController {
         return sendIPage;
     }
 
+    @PreAuthorize("hasAnyAuthority('affairs:arrangement','affairs:arrangement:fabu','sys:manage')")
     @PostMapping("/up")
     public int up(@RequestBody NewsNotice newsNotice){
         int a = service.xiugai(newsNotice.getNoticeId());
         return a;
     }
 
+    @PreAuthorize("hasAnyAuthority('affairs:arrangement','affairs:arrangement:zanting','sys:manage')")
     @PostMapping("/zt")
     public int zt(@RequestBody NewsNotice newsNotice){
         int a = service.zanting(newsNotice.getNoticeId());
         return a;
     }
 
+    @PreAuthorize("hasAnyAuthority('affairs:arrangement','affairs:arrangement:del','sys:manage')")
     @PostMapping("/del")
     public int del(@RequestBody NewsNotice newsNotice){
         int a = service.del(newsNotice.getNoticeId());
         return a;
     }
 
+    @PreAuthorize("hasAnyAuthority('affairs:arrangement','affairs:arrangement:add','sys:manage')")
     @PostMapping("/add")
     public int add(@RequestBody NewsNotice newsNotice){
         int a = service.add(newsNotice);

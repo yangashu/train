@@ -5,6 +5,7 @@ import com.trkj.train.config.dto.domain.Paging;
 import com.trkj.train.config.dto.mapper.ExpenditureAndRefundAndPurchaseAndStaffMapper;
 import com.trkj.train.config.dto.service.IExpenditureAndRefundAndPurchaseAndStaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +21,14 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
     @Autowired
     private ExpenditureAndRefundAndPurchaseAndStaffMapper mapper;
 
+    @PreAuthorize("hasAnyAuthority('finance:school','finance:school:lsit','sys:manage','sing')")
     @PostMapping("/paging")
     public Result paging(@RequestBody Map<String,Object> map){
         return service.paging(map);
     }
 
     //    导出
+    @PreAuthorize("hasAnyAuthority('finance:school','finance:school:export','sys:manage')")
     @RequestMapping("/export")
     public Result export(HttpServletResponse response, @RequestBody Paging paging) throws Exception{
         return service.export(response,paging);
@@ -36,6 +39,7 @@ public class ExpenditureAndRefundAndPurchaseAndStaffControlle implements Seriali
         return service.updateBatchbyid(ids);
     }
 
+    @PreAuthorize("hasAnyAuthority('finance:school','finance:school:refund','sys:manage')")
     @GetMapping("/buy")
     public Result<?> buy(@RequestParam("id") int id,@RequestParam("staffId") int staffId,@RequestParam("remarks") String remarks) {
         String payUrl = "http://localhost:9090/alipay/pay?traceNo=" + id + "&staffId=" +staffId + "&remarks=" + remarks;

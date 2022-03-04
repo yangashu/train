@@ -1,5 +1,6 @@
 package com.trkj.train.service;
 
+import com.trkj.train.config.Result;
 import com.trkj.train.entity.SysStaffPosition;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysStaffPositionService extends IService<SysStaffPosition> {
 
+    Result<?> position(int id);
+
+    Result perm(int userId, int[] roleIds);
 }

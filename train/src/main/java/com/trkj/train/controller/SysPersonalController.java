@@ -11,6 +11,7 @@ import com.trkj.train.entity.SysPersonal;
 import com.trkj.train.service.ISysPersonalService;
 import com.trkj.train.service.impl.SysPersonalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,11 +52,13 @@ public class SysPersonalController {
     }
 
     //导出
+    @PreAuthorize("hasAnyAuthority('administration:staffManagement','administration:staffManagement:export','sys:manage')")
     @RequestMapping("/export")
     public Result export(HttpServletResponse response,@RequestBody Paging paging) throws Exception {
         return iPersonalService.export(response,paging);
     }
     //导入
+    @PreAuthorize("hasAnyAuthority('finance:payment','finance:payment:import','sys:manage')")
     @PostMapping("/import")
     public Result saveAll(@RequestParam("file") MultipartFile excelFile) throws Exception {
         return iPersonalService.saveAll(excelFile);

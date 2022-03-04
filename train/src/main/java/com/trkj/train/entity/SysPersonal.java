@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -51,6 +53,7 @@ public class SysPersonal implements Serializable {
 
     @Excel(name = "生日",format = "yyyy年MM月dd日 00时00分00秒")
     @TableField("PERSONAL_BIRTHDAY")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date personalBirthday;
 
     @Excel(name = "身份证号")

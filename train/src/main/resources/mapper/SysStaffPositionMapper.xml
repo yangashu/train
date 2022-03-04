@@ -53,13 +53,14 @@
 
     <select id="selectBystaffid" resultType="com.trkj.train.entity.SysPosition">
         select
-            DISTINCT	p.*
+            DISTINCT   p.*
         from
             sys_STAFF_POSITION sp
                 LEFT JOIN sys_POSITION p on sp.POSITION_ID=p.POSITION_ID
                 LEFT JOIN SYS_STAFF s on sp.STAFF_ID=s.STAFF_ID
         WHERE
             s.STAFF_ID=#{staffid}
+          and sp.deleted=0
     </select>
 
 </mapper>

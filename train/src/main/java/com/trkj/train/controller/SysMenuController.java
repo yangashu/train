@@ -9,6 +9,7 @@ import com.trkj.train.entity.SysMenu;
 import com.trkj.train.mapper.SysMenuMapper;
 import com.trkj.train.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class SysMenuController {
         return Result.success(list);
     }
     //    添加
+    @PreAuthorize("hasAnyAuthority('sys:menu','sys:menu:insert','sys:manage')")
     @PostMapping("/insert")
     public Result<?> insert(@RequestBody SysMenu menu){
         boolean x=iMenuService.save(menu);
@@ -51,6 +53,7 @@ public class SysMenuController {
             return Result.error("-1","出问题了！！！");
     }
     //    修改
+    @PreAuthorize("hasAnyAuthority('sys:menu','sys:menu:edit','sys:manage')")
     @PostMapping("/update")
     public Result<?> update(@RequestBody SysMenu menu){
         boolean x=iMenuService.updateById(menu);
@@ -62,6 +65,7 @@ public class SysMenuController {
     }
 
     //    分页查询
+    @PreAuthorize("hasAnyAuthority('sys:menu','sys:menu:list','sys:manage','sing')")
     @GetMapping("paging")
     public Result<?> paging(@RequestParam(defaultValue = "1") int currentPage,
                             @RequestParam(defaultValue = "1") int pageSize,
@@ -113,6 +117,7 @@ public class SysMenuController {
     }
 
     //    删除
+    @PreAuthorize("hasAnyAuthority('sys:menu','sys:menu:del','sys:manage')")
     @DeleteMapping("/deleteByid")
     public Result<?> deleteByid(int id){
         int x= iMenuService.deelteByid(id);

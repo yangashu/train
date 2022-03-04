@@ -1,6 +1,7 @@
 package com.trkj.train.config.dto.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.trkj.train.config.Result;
 import com.trkj.train.config.dto.domain.LoginUser;
 import com.trkj.train.entity.SysStaff;
 import com.trkj.train.mapper.SysMenuMapper;
@@ -30,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         SysStaff staff=staffMapper.selectOne(wrapper);
         //如果没有查询到用户就抛出异常
         if(Objects.isNull(staff)){
+//            return Result.error("-1","用户名或密码错误");
             throw new RuntimeException("用户名或密码错误");
         }
         //TODO 查询权限信息
